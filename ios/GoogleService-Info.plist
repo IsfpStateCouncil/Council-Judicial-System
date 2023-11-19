@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>519010854094-qu4hdrjofv5fi8epnak62q0kmdcpnaou.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyDiyz6bxt9k7ajDDRiTjqmTcI3YOnqdMms</string>
+	<key>GCM_SENDER_ID</key>
+	<string>519010854094</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.isfp.stc</string>
+	<key>PROJECT_ID</key>
+	<string>stcnotification-cf4bc</string>
+	<key>STORAGE_BUCKET</key>
+	<string>stcnotification-cf4bc.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:519010854094:ios:cf263106516804bc089c9f</string>
+</dict>
+</plist>
