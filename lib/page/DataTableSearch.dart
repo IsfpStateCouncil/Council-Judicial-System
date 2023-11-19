@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import '../cutomwidget/NavBar.dart';
 import '../cutomwidget/customTextFieldCurrentDate.dart';
 import '../cutomwidget/customTextFieldSearch.dart';
+
 import '../model/userModel.dart';
 import '../providerclasses.dart/provicerdatatablesearch.dart';
 import '../api/CRUD.dart';
@@ -52,6 +53,19 @@ class DataTableSearch extends State<parameterSearch> {
 
   @override
   Widget build(BuildContext context) {
+    // SchedulerBinding.instance.addPostFrameCallback((_) async {
+    //   if (await InternetConnectionChecker().hasConnection) {
+    //     Navigator.of(context).pushAndRemoveUntil(
+    //         MaterialPageRoute(builder: (context) {
+    //       return user_exist() == 0 ? Login() : Home();
+    //     }), (Route<dynamic> route) => false);
+    //   } else {
+    //     Navigator.of(context).pushAndRemoveUntil(
+    //         MaterialPageRoute(builder: (context) {
+    //       return ConnectionError();
+    //     }), (Route<dynamic> route) => false);
+    //   }
+    // });
     final languageProvider =
         Provider.of<LanguageProvider>(context, listen: true);
 
@@ -65,8 +79,6 @@ class DataTableSearch extends State<parameterSearch> {
       //providerDataTableSearch.getAllJudgueYears();
       return Scaffold(
         drawer: NavBar(
-          userName: widget.userName,
-          password: widget.password,
           context: context,
           currentRoute: parameterSearch.routeName,
         ),

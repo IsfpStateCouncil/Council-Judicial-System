@@ -21,11 +21,12 @@ dependencies:
   shared_preferences: ^2.2.0
   provider: ^6.0.5
   flutter_launcher_icons: ^0.13.1
-  flutter_native_splash: ^2.3.5
   dashboard: ^0.0.3+1
   intl: ^0.18.0
   badges: ^3.1.1
   awesome_dialog: ^3.1.0
+  internet_connection_checker: ^1.0.0+1
+  flutter_native_splash: ^2.3.5
 
 
 dev_dependencies:
@@ -39,6 +40,17 @@ flutter:
     - assets/images/
     - assets/images/logo.PNG
     - assets/images/error.png
+  fonts:
+    - family: Cairo
+      fonts:
+        - asset: assets/fonts/static/Cairo-ExtraLight.ttf
+        - asset: assets/fonts/static/Cairo-Light.ttf
+        - asset: assets/fonts/static/Cairo-Regular.ttf
+        - asset: assets/fonts/static/Cairo-Medium.ttf
+        - asset: assets/fonts/static/Cairo-SemiBold.ttf
+        - asset: assets/fonts/static/Cairo-Bold.ttf
+        - asset: assets/fonts/static/Cairo-ExtraBold.ttf
+        - asset: assets/fonts/static/Cairo-Black.ttf
 
 
 flutter_launcher_icons:
@@ -46,9 +58,11 @@ flutter_launcher_icons:
   ios: true
   image_path: "assets/images/logo.PNG"
   min_sdk_android: 21 
+  color: "#d5aa6d"
   flutter_test:
     sdk: flutter
-
 flutter_native_splash:
-  color: #F2CC68
-  image: assets/images/logo-open.jpg
+  color: "#d5aa6d"
+  image: assets/images/logo.PNG
+  ios: true
+  android_gravity: center

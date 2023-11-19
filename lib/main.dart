@@ -1,15 +1,12 @@
-import 'package:council_of_state/page/home.dart';
-import 'package:council_of_state/page/login.dart';
+import 'package:council_of_state/page/Splashscreen.dart';
 import 'package:council_of_state/providerclasses.dart/controllerNotification.dart';
 import 'package:council_of_state/providerclasses.dart/provicerdatatablesearch.dart';
 import 'package:council_of_state/providerclasses.dart/providerNotificationAll.dart';
 import 'package:council_of_state/providerclasses.dart/providerUserData.dart';
 import 'package:council_of_state/providerclasses.dart/providerlanguage.dart';
-import 'package:council_of_state/routes.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
 import 'api/firebase_api.dart';
 
 Future<void> main() async {
@@ -40,13 +37,19 @@ Future<void> main() async {
         //   routes: MyRoutes.myRoute(),
         // ),
         MaterialApp(
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData.from(
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: const Color.fromARGB(255, 241, 243, 249),
-        ),
-      ),
-      home: await user_exist() == 0 ? const Login() : const Home(),
-    ),
+            debugShowCheckedModeBanner: false,
+            theme: ThemeData.from(
+              textTheme: TextTheme(),
+              colorScheme: ColorScheme.fromSeed(
+                seedColor: const Color.fromARGB(255, 241, 243, 249),
+              ),
+            ),
+            home: SplashScreen()
+            // await checkConnection()
+            //     ? await user_exist() == 0
+            //         ? const Login()
+            //         : const Home()
+            //     : ConnectionError(),
+            ),
   ));
 }
