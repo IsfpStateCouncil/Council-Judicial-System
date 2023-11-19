@@ -3,7 +3,9 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../cutomwidget/searchTextField.dart';
 import '../data/staticdata.dart';
+import '../functions/AfterBuild.dart';
 import '../functions/sheardpref.dart';
+import '../functions/updatenotification.dart';
 import '../model/NotificationModel.dart';
 import '../api/CRUD.dart';
 import '../cutomwidget/NavBar.dart';
@@ -77,10 +79,7 @@ class _NotificationPageState extends State<NotificationPage> {
               ],
             ),
             drawer: NavBar(
-                context: context,
-                userName: userName,
-                password: password,
-                currentRoute: NotificationPage.routeName),
+                context: context, currentRoute: NotificationPage.routeName),
             body: providerNotificationModel.dataNotificationModel.isEmpty
                 ? Center(
                     child: CircularProgressIndicator(),
@@ -113,6 +112,7 @@ class _NotificationPageState extends State<NotificationPage> {
                               .dataNotificationModel[index];
 
                           return Dismissible(
+                            key: UniqueKey(),
                             background: Container(
                               alignment: Alignment.centerRight,
                               color: Colors
@@ -126,19 +126,29 @@ class _NotificationPageState extends State<NotificationPage> {
                               ),
                             ),
                             onDismissed: (direction) async {
+                              SharedPreferences userData =
+                                  await PublicShread().getSheardUser();
+                              userName =
+                                  userData.getString("userName").toString();
+                              password =
+                                  userData.getString("password").toString();
                               var v = await crud.postRequest(
                                   "${StaticData.urlConnectionConst}${StaticData.editNotifictaionConst}",
                                   {
                                     "notificationId": providerNotificationModel
                                         .dataNotificationModel[index].id
                                         .toString(),
-                                    "opended": "1"
+                                    "opended": providerNotificationModel
+                                        .dataNotificationModel[index].opened
+                                        .toString(),
+                                    "userName": userName,
+                                    "password": password
                                   });
 
                               print(v.toString());
                               // Handle dismiss action
+                              await getDataNotification(context);
                             },
-                            key: Key(notification.id.toString()),
                             child: Card(
                               // Wrap each item in a Card for a better design
                               elevation: 2,

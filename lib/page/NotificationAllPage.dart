@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../data/staticdata.dart';
+import '../functions/AfterBuild.dart';
 import '../functions/sheardpref.dart';
 import '../model/NotificationModel.dart';
 import '../api/CRUD.dart';
@@ -25,6 +26,7 @@ class _NotificationAllPageState extends State<NotificationAllPage> {
   int count = 0;
   String? userName;
   String? password;
+  String? userType;
   TextEditingController searchController = TextEditingController();
   @override
   Widget build(BuildContext context) {
@@ -34,6 +36,7 @@ class _NotificationAllPageState extends State<NotificationAllPage> {
         SharedPreferences userData = await PublicShread().getSheardUser();
         userName = userData.getString("userName").toString();
         password = userData.getString("password").toString();
+        userType = userData.getString("userType");
         final myDataProvider =
             Provider.of<ProviderNotificationAllModel>(context, listen: false);
         await myDataProvider.list_Data_Class(
@@ -94,10 +97,7 @@ class _NotificationAllPageState extends State<NotificationAllPage> {
           ],
         ),
         drawer: NavBar(
-            context: context,
-            userName: userName,
-            password: password,
-            currentRoute: NotificationAllPage.routeName),
+            context: context, currentRoute: NotificationAllPage.routeName),
         body: providerNotificationAllModel.dataNotificationModel.isEmpty
             ? Center(
                 child: CircularProgressIndicator(),
@@ -142,9 +142,21 @@ class _NotificationAllPageState extends State<NotificationAllPage> {
                       return Card(
                         color: providerNotificationAllModel
                                     .dataNotificationModel[index].opened ==
-                                "1"
+                                "3"
                             ? Colors.amber.shade200
-                            : Colors.white,
+                            : userType == 4
+                                ? providerNotificationAllModel
+                                            .dataNotificationModel[index]
+                                            .opened ==
+                                        "1"
+                                    ? Colors.amber.shade200
+                                    : Colors.white
+                                : providerNotificationAllModel
+                                            .dataNotificationModel[index]
+                                            .opened ==
+                                        "2"
+                                    ? Colors.amber.shade200
+                                    : Colors.white,
                         // Wrap each item in a Card for a better design
                         elevation: 2,
                         margin:
@@ -160,7 +172,24 @@ class _NotificationAllPageState extends State<NotificationAllPage> {
                             notification.notificationDesc ?? '',
                             style: TextStyle(fontSize: 16),
                           ),
-                          trailing: Icon(Icons.notifications),
+                          trailing: providerNotificationAllModel
+                                      .dataNotificationModel[index].opened ==
+                                  "3"
+                              ? Icon(Icons.notifications_active)
+                              : userType == 4
+                                  ? providerNotificationAllModel
+                                              .dataNotificationModel[index]
+                                              .opened ==
+                                          "1"
+                                      ? Icon(Icons.notifications_active)
+                                      : Icon(Icons.notifications)
+                                  : providerNotificationAllModel
+                                              .dataNotificationModel[index]
+                                              .opened ==
+                                          "2"
+                                      ? Icon(Icons.notifications_active)
+                                      : Icon(Icons.notifications),
+                          //Icon(Icons.notifications_active),
                         ),
                       );
                     },

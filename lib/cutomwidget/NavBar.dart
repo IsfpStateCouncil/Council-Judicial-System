@@ -1,33 +1,56 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../data/staticdata.dart';
 import '../page/DataTableSearch.dart';
 import '../page/NotificationAllPage.dart';
+import '../page/Splashscreen.dart';
 import '../page/home.dart';
-import '../page/login.dart';
+
+import '../providerclasses.dart/controllerNotification.dart';
+import '../providerclasses.dart/provicerdatatablesearch.dart';
+import '../providerclasses.dart/providerNotificationAll.dart';
 import '../providerclasses.dart/providerlanguage.dart';
 
-class NavBar extends StatelessWidget {
-  final String? userName;
-  final String? password;
+class NavBar extends StatefulWidget {
   final String? currentRoute;
   final BuildContext context;
+
+  // Constructor
+  NavBar({Key? key, required this.context, required this.currentRoute})
+      : super(key: key);
+
+  @override
+  _NavBarState createState() => _NavBarState();
+}
+
+class _NavBarState extends State<NavBar> {
+  String? userName;
+  String? password;
   static const home = 'home_screen';
   static const datatableSearch = 'parameter_search';
   static const lisrNotification = 'notification_list_screen';
-  // Constructor
-  const NavBar(
-      {super.key,
-      required this.context,
-      required this.userName,
-      required this.password,
-      required this.currentRoute});
+
+  @override
+  void initState() {
+    super.initState();
+    getUserData();
+  }
+
+  void getUserData() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    userName = prefs.getString('userName');
+    password = prefs.getString('password');
+    if (mounted) {
+      // Ensure the widget is still in the tree before calling setState
+      setState(() {});
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     final languageProvider =
         Provider.of<LanguageProvider>(this.context, listen: true);
+
     return Drawer(
       child: ListView(
         // Remove padding
@@ -55,7 +78,7 @@ class NavBar extends StatelessWidget {
             title: Text(languageProvider.getCurrentData('mainPage')),
             leading: const Icon(Icons.home),
             onTap: () {
-              if (currentRoute != NavBar.home) {
+              if (widget.currentRoute != home) {
                 Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(builder: (context) => const Home()),
@@ -73,7 +96,7 @@ class NavBar extends StatelessWidget {
               ListTile(
                 title: Text(languageProvider.getCurrentData('mainPage')),
                 onTap: () {
-                  if (currentRoute != NavBar.home) {
+                  if (widget.currentRoute != home) {
                     Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(builder: (context) => const Home()),
@@ -87,7 +110,7 @@ class NavBar extends StatelessWidget {
               ListTile(
                 title: Text(languageProvider.getCurrentData('allNotification')),
                 onTap: () {
-                  if (currentRoute != NavBar.lisrNotification) {
+                  if (widget.currentRoute != lisrNotification) {
                     Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(
@@ -111,7 +134,7 @@ class NavBar extends StatelessWidget {
               ListTile(
                 title: Text(languageProvider.getCurrentData('order')),
                 onTap: () {
-                  if (currentRoute != NavBar.home) {
+                  if (widget.currentRoute != home) {
                     Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(builder: (context) => const Home()),
@@ -125,7 +148,7 @@ class NavBar extends StatelessWidget {
               ListTile(
                 title: Text(languageProvider.getCurrentData('fetchData')),
                 onTap: () {
-                  if (currentRoute != NavBar.lisrNotification) {
+                  if (widget.currentRoute != lisrNotification) {
                     Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(
@@ -149,7 +172,7 @@ class NavBar extends StatelessWidget {
               ListTile(
                 title: Text(languageProvider.getCurrentData('mainPage')),
                 onTap: () {
-                  if (currentRoute != NavBar.home) {
+                  if (widget.currentRoute != home) {
                     Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(builder: (context) => const Home()),
@@ -163,7 +186,7 @@ class NavBar extends StatelessWidget {
               ListTile(
                 title: Text(languageProvider.getCurrentData('fetchData')),
                 onTap: () {
-                  if (currentRoute != NavBar.lisrNotification) {
+                  if (widget.currentRoute != lisrNotification) {
                     Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(
@@ -186,7 +209,7 @@ class NavBar extends StatelessWidget {
               ListTile(
                 title: Text(languageProvider.getCurrentData('mainPage')),
                 onTap: () {
-                  if (currentRoute != NavBar.home) {
+                  if (widget.currentRoute != home) {
                     Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(builder: (context) => const Home()),
@@ -200,7 +223,7 @@ class NavBar extends StatelessWidget {
               ListTile(
                 title: Text(languageProvider.getCurrentData('fetchData')),
                 onTap: () {
-                  if (currentRoute != NavBar.lisrNotification) {
+                  if (widget.currentRoute != lisrNotification) {
                     Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(
@@ -223,7 +246,7 @@ class NavBar extends StatelessWidget {
               ListTile(
                 title: Text(languageProvider.getCurrentData('mainPage')),
                 onTap: () {
-                  if (currentRoute != NavBar.home) {
+                  if (widget.currentRoute != home) {
                     Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(builder: (context) => const Home()),
@@ -237,7 +260,7 @@ class NavBar extends StatelessWidget {
               ListTile(
                 title: Text(languageProvider.getCurrentData('fetchData')),
                 onTap: () {
-                  if (currentRoute != NavBar.lisrNotification) {
+                  if (widget.currentRoute != lisrNotification) {
                     Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(
@@ -257,7 +280,7 @@ class NavBar extends StatelessWidget {
             title: Text(languageProvider.getCurrentData('advancedSearch')),
             leading: const Icon(Icons.wysiwyg),
             onTap: () {
-              if (currentRoute != NavBar.datatableSearch) {
+              if (widget.currentRoute != datatableSearch) {
                 Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
@@ -284,8 +307,20 @@ class NavBar extends StatelessWidget {
               prefs.remove('userId');
               Navigator.pushReplacement(
                 context,
-                MaterialPageRoute(builder: (context) => const Login()),
+                MaterialPageRoute(builder: (context) => const SplashScreen()),
               );
+              final providerNotificationAllModel =
+                  Provider.of<ProviderNotificationAllModel>(this.context,
+                      listen: false);
+              final providerNotificationModel =
+                  Provider.of<ProviderNotificationModel>(this.context,
+                      listen: false);
+              final providerDataTableSearch =
+                  Provider.of<ProviderDataTableSearch>(this.context,
+                      listen: false);
+              providerNotificationAllModel.deleteTempData();
+              providerNotificationModel.deleteTempData();
+              providerDataTableSearch.deleteTempData();
             },
           ),
         ],

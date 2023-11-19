@@ -1,10 +1,13 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:council_of_state/functions/AfterBuild.dart';
+import 'package:council_of_state/page/login.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../cutomwidget/bodyHomePage.dart';
 import '../data/staticdata.dart';
+import '../functions/updatenotification.dart';
 import '../providerclasses.dart/controllerNotification.dart';
 import '../providerclasses.dart/providerlanguage.dart';
 import '../cutomwidget/NavBar.dart';
@@ -26,7 +29,8 @@ class _BarChartAPIState extends State<Home> {
   var fbm = FirebaseMessaging.instance;
   String? userName;
   String? password;
-  int i = 0;
+
+  static int loopingFlag = 0;
   @override
   void initState() {
     fbm.getToken().then((value) {
@@ -45,80 +49,38 @@ class _BarChartAPIState extends State<Home> {
     super.initState();
   }
 
-  void getDataNotification() async {
-    Map<String, List> collections = {
-      "dataNotificationModelRequest": [16, 17, 18, 19, 20],
-      "dataNotificationModelSend": [],
-      "dataNotificationModelSession": [
-        1,
-        2,
-        3,
-        8,
-        9,
-        10,
-        11,
-        12,
-        13,
-        15,
-        21,
-        22
-      ],
-      "dataNotificationModeldSuit": [25, 26],
-      "dataNotificationModelFine": [14],
-      "dataNotificationModelTempSession": [4, 5]
-    };
+  void check_user() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    // await prefs.setString("language", "ar");
+    // languageProvider.language = "ar";
+    userName = prefs.getString('userName');
+    password = prefs.getString('password');
 
-    ProviderNotificationModel provider =
-        Provider.of<ProviderNotificationModel>(context);
-    await provider.list_Data_Class(
-        "${StaticData.urlConnectionConst}${StaticData.notificationConst}?userName=$userName&password=$password",
-        "dataNotificationModel");
-
-    collections.forEach((key, values) async {
-      String notificationEvent = "";
-      for (int value in values) {
-        notificationEvent += "&categories=$value";
-      }
-      final SharedPreferences prefs = await SharedPreferences.getInstance();
-      // await prefs.setString("language", "ar");
-      // languageProvider.language = "ar";
-      userName = prefs.getString('userName');
-      password = prefs.getString('password');
-      print(
-          "${StaticData.urlConnectionConst}${StaticData.getAllNotificationCategory}?userName=$userName&password=$password$notificationEvent");
-      await provider.list_Data_Class(
-          "${StaticData.urlConnectionConst}${StaticData.getAllNotificationCategory}?userName=$userName&password=$password$notificationEvent",
-          "$key");
-    });
+    print(userName);
+    if (userName == null) {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => Login()),
+      );
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    void check_user() async {
-      final SharedPreferences prefs = await SharedPreferences.getInstance();
-      // await prefs.setString("language", "ar");
-      // languageProvider.language = "ar";
-      userName = prefs.getString('userName');
-      password = prefs.getString('password');
+    final Locale appLocale = Localizations.localeOf(context);
+    print(appLocale);
+    ProviderNotificationModel provider =
+        Provider.of<ProviderNotificationModel>(context);
+    if (provider.dataNotificationModel.isEmpty) {
+      if (loopingFlag < 2) {
+        checkConnection(context, Home.routeName);
 
-      print(userName);
-      if (userName == null) {
-        Navigator.of(context)
-            .pushNamedAndRemoveUntil("/login", (Route<dynamic> route) => false);
+        provider.dataNotificationModel.isEmpty;
+        check_user();
+        getDataNotification(context);
+        loopingFlag = loopingFlag + 1;
       }
     }
-
-    if (i < 2) {
-      ProviderNotificationModel provider =
-          Provider.of<ProviderNotificationModel>(context);
-      // if (provider.dataNotificationModel.isEmpty) {
-      provider.dataNotificationModel.isEmpty;
-      check_user();
-      getDataNotification();
-      i++;
-      // }
-    }
-    print(i);
 
     final languageProvider = Provider.of<LanguageProvider>(context);
     final providerNotificationModel =
@@ -127,8 +89,6 @@ class _BarChartAPIState extends State<Home> {
     return Scaffold(
       backgroundColor: Color.fromARGB(255, 183, 173, 201),
       drawer: NavBar(
-        userName: userName,
-        password: password,
         context: context,
         currentRoute: Home.routeName,
       ),
@@ -173,6 +133,9 @@ class _BarChartAPIState extends State<Home> {
         languageProvider: languageProvider,
         providerNotificationModel: providerNotificationModel,
         namePage: Home.routeName,
+        onRefresh: () async {
+          await getDataNotification(context);
+        },
       ),
     );
   }

@@ -1,8 +1,11 @@
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:council_of_state/cutomwidget/textAnimationWidget.dart';
 import 'package:flutter/material.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../functions/mediaquery.dart';
+
 import '../providerclasses.dart/controllerNotification.dart';
 import '../providerclasses.dart/providerlanguage.dart';
 import 'cutomMaterialApp.dart';
@@ -12,12 +15,13 @@ class BodyHomePage extends StatelessWidget {
     super.key,
     required this.languageProvider,
     required this.providerNotificationModel,
-    required this.namePage,
+    required this.namePage, required this.onRefresh,
   });
 
   final LanguageProvider languageProvider;
   final ProviderNotificationModel providerNotificationModel;
   final String namePage;
+  final Future<void> Function() onRefresh;
 
   Future<void> changeLanguage(String type) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -30,7 +34,7 @@ class BodyHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return RefreshIndicator(
-      onRefresh: () async {},
+      onRefresh: onRefresh,
       child: SingleChildScrollView(
         child: Container(
           padding: EdgeInsets.all(5),

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+
+
 class ErrorPage extends StatelessWidget {
   ErrorPage({super.key});
 
@@ -38,6 +40,7 @@ class ErrorPage extends StatelessWidget {
               "خطأ في اسم المستخدم او كلمة السر",
               //_boxLogin.get("errorMessage"),
               style: Theme.of(context).textTheme.headlineLarge,
+              textAlign: TextAlign.center,
             ),
           ],
         ),

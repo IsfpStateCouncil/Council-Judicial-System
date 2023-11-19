@@ -96,6 +96,13 @@ class ProviderDataTableSearch extends ChangeNotifier {
       print(e.toString());
     }
   }
+
+  deleteTempData() {
+    caseStatuslist = [];
+    datacaseDataList = [];
+    JudgicalYears = [];
+    notifyListeners();
+  }
 }
 
 Future<Map<String, String>> getUser() async {

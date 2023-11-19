@@ -47,6 +47,8 @@ class ProviderUserData extends ChangeNotifier {
           prefs.setStringList("modules", modulesList);
           prefs.setString("userName", controllerUsername);
           prefs.setString("password", controllerPassword);
+          prefs.setString("userType", data["userType"]);
+          print(prefs.getString("userType"));
           Navigator.of(context).pushAndRemoveUntil(
               MaterialPageRoute(builder: (context) => Home()),
               (Route<dynamic> route) => false);

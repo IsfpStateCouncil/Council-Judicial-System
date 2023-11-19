@@ -5,6 +5,7 @@
 // gestures. You can also use WidgetTester to find child widgets in the widget
 // tree, read text, and verify that the values of widget properties are correct.
 
+import 'package:council_of_state/page/Splashscreen.dart';
 import 'package:council_of_state/page/home.dart';
 import 'package:council_of_state/page/login.dart';
 import 'package:council_of_state/routes.dart';
@@ -14,8 +15,7 @@ import 'package:flutter_test/flutter_test.dart';
 void main() {
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {
     // Build our app and trigger a frame.
-    await tester
-        .pumpWidget(await user_exist() == 0 ? const Login() : const Home());
+    await tester.pumpWidget(SplashScreen());
 
     // Verify that our counter starts at 0.
     expect(find.text('0'), findsOneWidget);

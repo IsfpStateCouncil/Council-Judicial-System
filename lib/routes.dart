@@ -74,7 +74,7 @@ class MyRoutes {
   }
 }
 
-Future<int> user_exist() async {
+Future<bool> user_exist() async {
   String? userName, password; //,id;
   final SharedPreferences prefs = await SharedPreferences.getInstance();
   //id = prefs.getString("id");
@@ -85,10 +85,10 @@ Future<int> user_exist() async {
 
   if (userName == "-1" && password == "-1") {
     print("need login");
-    return 0;
+    return false;
   } else {
     print("no  need login");
-    return 1;
+    return true;
   }
 }
 

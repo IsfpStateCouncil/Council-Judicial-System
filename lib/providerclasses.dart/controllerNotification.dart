@@ -79,4 +79,17 @@ class ProviderNotificationModel extends ChangeNotifier {
       return []; // Return an empty list in case of an error
     }
   }
+
+  deleteTempData() {
+    dataNotificationModel = [];
+    dataNotificationModelFiltered = [];
+    dataNotificationModelRequest = [];
+    dataNotificationModelSend = [];
+    dataNotificationModelSession = [];
+    dataNotificationModeldSuit = [];
+    dataNotificationModelFine = [];
+    dataNotificationModelTempSession = [];
+    searchValue = "";
+    notifyListeners();
+  }
 }

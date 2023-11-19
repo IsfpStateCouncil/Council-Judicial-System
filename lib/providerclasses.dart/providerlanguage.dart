@@ -12,6 +12,8 @@ class LanguageProvider extends ChangeNotifier {
       "fines": "غرمات",
       "adjurndedSessions": "جلسات مؤجلة",
       "EgyptianStateCouncil": "مجلس الدولة المصري",
+      "errorEnterNet": "خطاء اتصال الانترنت",
+      "requireNetWorkMes": "يجيب توفير اتصال بالانترنت",
       //////////////// login()   /////////////////
       "login": "تسجيل الدخول",
       "userName": "اسم المستخدم",
@@ -26,7 +28,7 @@ class LanguageProvider extends ChangeNotifier {
       "fetchData": "fetchData",
       "deposit": "الأيداع",
       "sessionsTime": "مواعيد الجلسات",
-      "advancedSearch": "البحث المقدم",
+      "advancedSearch": "البحث المتقدم",
       "logout": "تسجيل الخروج"
     }
   };
