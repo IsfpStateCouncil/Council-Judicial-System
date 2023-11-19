@@ -27,6 +27,7 @@ dependencies:
   awesome_dialog: ^3.1.0
   internet_connection_checker: ^1.0.0+1
   flutter_native_splash: ^2.3.5
+  jiffy: ^5.0.1
 
 
 dev_dependencies:

@@ -1,3 +1,4 @@
+import 'package:council_of_state/data/staticdata.dart';
 import 'package:flutter/material.dart';
 
 class SearchTextField extends StatelessWidget {
@@ -16,9 +17,13 @@ class SearchTextField extends StatelessWidget {
       controller: searchController,
       onChanged: onChanged,
       decoration: const InputDecoration(
-        hintText: 'Search...',
-        hintStyle: TextStyle(fontSize: 20),
-        prefixIcon: Icon(Icons.search),
+        hintText: '.....بحث ',
+        hintStyle: TextStyle(
+          fontSize: 20,
+        ),
+        hintTextDirection: StaticData.arabicTextDirection,
+        //prefixIcon: ,
+        suffixIcon: Icon(Icons.search),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.all(Radius.circular(8.0)),
           borderSide: BorderSide(color: Colors.grey),

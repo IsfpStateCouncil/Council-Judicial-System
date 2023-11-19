@@ -15,7 +15,8 @@ class BodyHomePage extends StatelessWidget {
     super.key,
     required this.languageProvider,
     required this.providerNotificationModel,
-    required this.namePage, required this.onRefresh,
+    required this.namePage,
+    required this.onRefresh,
   });
 
   final LanguageProvider languageProvider;
@@ -59,8 +60,8 @@ class BodyHomePage extends StatelessWidget {
                 visible: true,
                 child: Container(
                     padding: EdgeInsets.only(top: 5),
-                    height: GetSizePage(context, 2, 18, namePage),
-                    width: GetSizePage(context, 1, 100, namePage),
+                    height: getSizePage(context, 2, 18, namePage),
+                    width: getSizePage(context, 1, 100, namePage),
                     child: CutomMaterialApp(
                       count: providerNotificationModel
                           .dataNotificationModelRequest.length,
@@ -71,8 +72,8 @@ class BodyHomePage extends StatelessWidget {
               ),
               Container(
                   padding: EdgeInsets.only(top: 5),
-                  height: GetSizePage(context, 2, 18, namePage),
-                  width: GetSizePage(context, 1, 100, namePage),
+                  height: getSizePage(context, 2, 18, namePage),
+                  width: getSizePage(context, 1, 100, namePage),
                   child: CutomMaterialApp(
                     count: providerNotificationModel
                         .dataNotificationModelSend.length,
@@ -82,8 +83,8 @@ class BodyHomePage extends StatelessWidget {
                   )),
               Container(
                   padding: EdgeInsets.only(top: 5),
-                  height: GetSizePage(context, 2, 18, namePage),
-                  width: GetSizePage(context, 1, 100, namePage),
+                  height: getSizePage(context, 2, 18, namePage),
+                  width: getSizePage(context, 1, 100, namePage),
                   child: CutomMaterialApp(
                     count: providerNotificationModel
                         .dataNotificationModelSession.length,
@@ -93,8 +94,8 @@ class BodyHomePage extends StatelessWidget {
                   )),
               Container(
                   padding: EdgeInsets.only(top: 5),
-                  height: GetSizePage(context, 2, 18, namePage),
-                  width: GetSizePage(context, 1, 100, namePage),
+                  height: getSizePage(context, 2, 18, namePage),
+                  width: getSizePage(context, 1, 100, namePage),
                   child: CutomMaterialApp(
                     count: providerNotificationModel
                         .dataNotificationModeldSuit.length,
@@ -104,8 +105,8 @@ class BodyHomePage extends StatelessWidget {
                   )),
               Container(
                   padding: EdgeInsets.only(top: 5),
-                  height: GetSizePage(context, 2, 18, namePage),
-                  width: GetSizePage(context, 1, 100, namePage),
+                  height: getSizePage(context, 2, 18, namePage),
+                  width: getSizePage(context, 1, 100, namePage),
                   child: CutomMaterialApp(
                     count: providerNotificationModel
                         .dataNotificationModelFine.length,
@@ -115,8 +116,8 @@ class BodyHomePage extends StatelessWidget {
                   )),
               Container(
                   padding: EdgeInsets.only(top: 5),
-                  height: GetSizePage(context, 2, 18, namePage),
-                  width: GetSizePage(context, 1, 100, namePage),
+                  height: getSizePage(context, 2, 18, namePage),
+                  width: getSizePage(context, 1, 100, namePage),
                   child: CutomMaterialApp(
                     count: providerNotificationModel
                         .dataNotificationModelTempSession.length,
