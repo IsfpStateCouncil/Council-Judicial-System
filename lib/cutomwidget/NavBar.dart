@@ -79,6 +79,7 @@ class _NavBarState extends State<NavBar> {
             title: Text(languageProvider.getCurrentData('mainPage')),
             leading: const Icon(Icons.home),
             onTap: () {
+              BarChartAPIState.loopingFlag = 0;
               if (widget.currentRoute != home) {
                 Navigator.pushReplacement(
                   context,

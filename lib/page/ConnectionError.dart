@@ -1,4 +1,3 @@
-import 'package:council_of_state/page/Splashscreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:provider/provider.dart';
@@ -8,11 +7,12 @@ import '../functions/AwesomeConnection.dart';
 import '../providerclasses.dart/providerlanguage.dart';
 
 class ConnectionError extends StatelessWidget {
-  ConnectionError({super.key});
+  const ConnectionError({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final languageProvider = Provider.of<LanguageProvider>(context);
+    final LanguageProvider languageProvider =
+        Provider.of<LanguageProvider>(context);
     SchedulerBinding.instance.addPostFrameCallback((_) async {
       createAwesome(context, languageProvider);
     });

@@ -1,15 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../cutomwidget/customAppBar.dart';
 import '../cutomwidget/searchTextField.dart';
 import '../data/staticdata.dart';
+import '../functions/AwesomeConnection.dart';
 import '../functions/mediaquery.dart';
 import '../functions/sheardpref.dart';
 import '../model/NotificationModel.dart';
 import '../api/CRUD.dart';
 import '../cutomwidget/NavBar.dart';
 import '../providerclasses.dart/providerNotificationAll.dart';
+import '../providerclasses.dart/providerlanguage.dart';
 
 class NotificationAllPage extends StatefulWidget {
   // ignore: use_key_in_widget_constructors
@@ -30,6 +34,14 @@ class _NotificationAllPageState extends State<NotificationAllPage> {
   TextEditingController searchController = TextEditingController();
   @override
   Widget build(BuildContext context) {
+    LanguageProvider languageProvider = Provider.of<LanguageProvider>(context);
+    SchedulerBinding.instance.addPostFrameCallback((_) async {
+      if (await InternetConnectionChecker().hasConnection) {
+        //getDataNotification(context);
+      } else {
+        await createAwesome(context, languageProvider);
+      }
+    });
     return Consumer<ProviderNotificationAllModel>(
         builder: (context, providerNotificationAllModel, child) {
       void getDataFromProvider() async {
