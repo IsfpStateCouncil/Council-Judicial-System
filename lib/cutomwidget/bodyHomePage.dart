@@ -184,8 +184,8 @@ class BodyHomePage extends StatelessWidget {
 
           child: Container(
               //padding: EdgeInsets.only(top: 5, left: 5),
-              height: GetSizePage(context, 2, 18, namePage),
-              width: GetSizePage(context, 1, 100, namePage),
+              height: getSizePage(context, 2, 18, namePage),
+              width: getSizePage(context, 1, 100, namePage),
               child: CutomMaterialApp(
                 count: count,
                 name:

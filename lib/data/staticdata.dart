@@ -27,6 +27,8 @@ class StaticData {
   static const Color font = Color(0xFF200908);
   static const Color appBarColor = Color(0xFF200908);
   static const Color backgroundColors = Color(0xFFfcfcfc);
-  //////////////////// font family ///////////////////
+  static const Color borderTextFieldColor = Color(0xFF200908);
+
+//////////////////// font family ///////////////////
   static String fontFamily = "Cairo";
 }
