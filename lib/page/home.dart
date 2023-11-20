@@ -7,6 +7,7 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../cutomwidget/bodyHomePage.dart';
 import '../data/staticdata.dart';
+import '../functions/arabicTime.dart';
 import '../functions/updatenotification.dart';
 import '../providerclasses.dart/controllerNotification.dart';
 import '../providerclasses.dart/providerlanguage.dart';
@@ -51,8 +52,7 @@ class _BarChartAPIState extends State<Home> {
 
   void check_user() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    // await prefs.setString("language", "ar");
-    // languageProvider.language = "ar";
+    await prefs.setString("language", "ar");
     userName = prefs.getString('userName');
     password = prefs.getString('password');
 
@@ -65,16 +65,17 @@ class _BarChartAPIState extends State<Home> {
     }
   }
 
+  Future<void> changeLanguage() async {}
   @override
   Widget build(BuildContext context) {
-    final Locale appLocale = Localizations.localeOf(context);
-    print(appLocale);
+    // arabicTime();
+    //   Locale myLocale = Localizations.localeOf(context);
+    //   print(myLocale.languageCode);
     ProviderNotificationModel provider =
         Provider.of<ProviderNotificationModel>(context);
     if (provider.dataNotificationModel.isEmpty) {
       if (loopingFlag < 2) {
         checkConnection(context, Home.routeName);
-
         provider.dataNotificationModel.isEmpty;
         check_user();
         getDataNotification(context);

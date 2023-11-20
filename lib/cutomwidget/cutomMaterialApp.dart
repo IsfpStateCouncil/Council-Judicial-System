@@ -18,8 +18,8 @@ class CutomMaterialApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialButton(
       onPressed: () {
-        print(GetSizePage(context, 1, 100,""));
-        print(GetSizePage(context, 1, 100,""));
+        print(getSizePage(context, 1, 100, ""));
+        print(getSizePage(context, 1, 100, ""));
       },
       color: color,
       child: Container(

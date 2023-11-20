@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../api/CRUD.dart';
+import '../functions/arabicTime.dart';
 import '../model/NotificationModel.dart';
 
 class ProviderNotificationModel extends ChangeNotifier {
@@ -35,13 +36,13 @@ class ProviderNotificationModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<Map<String, dynamic>> Fun_get_response(String url) async {
+  Future<Map<String, dynamic>> funGetResponse(String url) async {
     return await _crud.getRequest(url); // Await the response
   }
 
-  Future<List<dynamic>> list_Data_Class(String url, String type) async {
+  Future<List<dynamic>> getUnreadNotifications(String url, String type) async {
     try {
-      Map<String, dynamic> data_response = await Fun_get_response(url);
+      Map<String, dynamic> data_response = await funGetResponse(url);
       if (data_response.isNotEmpty) {
         List<NotificationModel> caseDataList =
             data_response['mobileNotificationsMessagesData'] != null
@@ -50,21 +51,27 @@ class ProviderNotificationModel extends ChangeNotifier {
                     return NotificationModel.fromJson(i);
                   }).toList()
                 : [];
-        if (type == "dataNotificationModel")
-          dataNotificationModel = caseDataList;
-        else if (type == "dataNotificationModelRequest") {
-          dataNotificationModelRequest = caseDataList;
-        } else if (type == "dataNotificationModelSend")
-          dataNotificationModelSend = caseDataList;
-        else if (type == "dataNotificationModelSession")
-          dataNotificationModelSession = caseDataList;
-        else if (type == "dataNotificationModeldSuit")
-          dataNotificationModeldSuit = caseDataList;
-        else if (type == "dataNotificationModelFine")
-          dataNotificationModelFine = caseDataList;
-        else if (type == "dataNotificationModelTempSession")
-          dataNotificationModelTempSession = caseDataList;
 
+        if (type == "dataNotificationModel") {
+          dataNotificationModel = caseDataList;
+        } else if (type == "dataNotificationModelRequest") {
+          dataNotificationModelRequest = caseDataList;
+        } else if (type == "dataNotificationModelSend") {
+          dataNotificationModelSend = caseDataList;
+        } else if (type == "dataNotificationModelSession") {
+          dataNotificationModelSession = caseDataList;
+        } else if (type == "dataNotificationModeldSuit") {
+          dataNotificationModeldSuit = caseDataList;
+        } else if (type == "dataNotificationModelFine") {
+          dataNotificationModelFine = caseDataList;
+        } else if (type == "dataNotificationModelTempSession") {
+          dataNotificationModelTempSession = caseDataList;
+        }
+
+        for (int i = 0; dataNotificationModel.length - 1 > i; i++) {
+          dataNotificationModel[i].notificationDataArabic =
+              await arabicTime(dataNotificationModel[i].notificationData!);
+        }
         notifyListeners();
         // print('casesData length: ${caseDataList.length}');
         // print(caseDataList[1].notificationDesc.toString());

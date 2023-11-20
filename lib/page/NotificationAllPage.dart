@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../cutomwidget/customAppBar.dart';
+import '../cutomwidget/searchTextField.dart';
 import '../data/staticdata.dart';
-import '../functions/AfterBuild.dart';
+import '../functions/mediaquery.dart';
 import '../functions/sheardpref.dart';
 import '../model/NotificationModel.dart';
 import '../api/CRUD.dart';
 import '../cutomwidget/NavBar.dart';
-import 'package:badges/badges.dart' as badges;
-
 import '../providerclasses.dart/providerNotificationAll.dart';
-import '../providerclasses.dart/controllerNotification.dart';
 
 class NotificationAllPage extends StatefulWidget {
+  // ignore: use_key_in_widget_constructors
   const NotificationAllPage({Key? key});
   static const routeName = "notification_All_list_screen";
   @override
@@ -38,6 +38,7 @@ class _NotificationAllPageState extends State<NotificationAllPage> {
         password = userData.getString("password").toString();
         userType = userData.getString("userType");
         final myDataProvider =
+            // ignore: use_build_context_synchronously
             Provider.of<ProviderNotificationAllModel>(context, listen: false);
         await myDataProvider.list_Data_Class(
             "${StaticData.urlConnectionConst}${StaticData.searchForNotificationsListData}?userName=$userName&password=$password");
@@ -52,81 +53,28 @@ class _NotificationAllPageState extends State<NotificationAllPage> {
         }
       }
       return Scaffold(
-        appBar: AppBar(
-          backgroundColor: Color.fromARGB(255, 240, 162, 46), //<-- SEE HERE
-          title: const Text("مجلس الدولة المصري"),
-          elevation: 0,
-          actions: [
-            badges.Badge(
-              badgeContent: Consumer<ProviderNotificationModel>(
-                  builder: (context, providerNotificationModel, child) {
-                return Text(
-                    "${providerNotificationModel.dataNotificationModel.length}");
-              }),
-              position: badges.BadgePosition.topEnd(top: 0, end: 0),
-              child: IconButton(
-                icon: Icon(
-                  Icons.notifications,
-                  size: 35,
-                ),
-                onPressed: () {
-                  print("tabbb");
-                  //Navigator.pushNamed(context, '/Notification');
-                },
-              ),
-              onTap: () {
-                print("tabbb");
-                //Navigator.pushNamed(context, '/Notification');
-              },
-            ),
-            // Padding(
-            //   padding: const EdgeInsets.all(8.0),
-            //   child: DecoratedBox(
-            //     decoration: BoxDecoration(
-            //       shape: BoxShape.circle,
-            //       border: Border.all(color: Colors.white),
-            //     ),
-            //     child: IconButton(
-            //       onPressed: () async {
-            //         Navigator.pushReplacementNamed(context, 'home');
-            //       },
-            //       icon: const Icon(Icons.arrow_back),
-            //     ),
-            //   ),
-            // ),
-          ],
-        ),
+        appBar: PreferredSize(
+            preferredSize:
+                Size.fromHeight(getSizePage(context, 2, 7, "appBar")),
+            child: CustomAppBar()),
         drawer: NavBar(
             context: context, currentRoute: NotificationAllPage.routeName),
         body: providerNotificationAllModel.dataNotificationModel.isEmpty
-            ? Center(
+            ? const Center(
                 child: CircularProgressIndicator(),
               )
             : Column(children: [
-                TextField(
-                  controller: searchController,
+                SearchTextField(
+                  searchController: searchController,
                   onChanged: (value) {
                     providerNotificationAllModel.filterData(value);
-                    print(providerNotificationAllModel
-                        .dataNotificationModelFiltered.length);
                   },
                 ),
-                // MaterialButton(
-                //   onPressed: () async {
-                //     await providerNotificationModel.list_Data_Class(
-                //         "${StaticData.urlConnectionConst}${StaticData.notificationConst}?userName=$userName&password=$password");
-                //   },
-                //   child: Text("click"),
-                // ),
                 Expanded(
-                  // Wrap the ListView.builder with a Container
-                  // height: MediaQuery.of(context)
-                  //     .size
-                  //     .height, // Set a fixed height or adjust as needed
                   child: ListView.separated(
                     shrinkWrap: true,
                     separatorBuilder: (context, index) {
-                      return Divider(
+                      return const Divider(
                         thickness: 4,
                       );
                     },
@@ -138,13 +86,12 @@ class _NotificationAllPageState extends State<NotificationAllPage> {
                     itemBuilder: (context, index) {
                       final notification = providerNotificationAllModel
                           .dataNotificationModel[index];
-
                       return Card(
                         color: providerNotificationAllModel
                                     .dataNotificationModel[index].opened ==
                                 "3"
                             ? Colors.amber.shade200
-                            : userType == 4
+                            : userType == "4"
                                 ? providerNotificationAllModel
                                             .dataNotificationModel[index]
                                             .opened ==
@@ -159,37 +106,47 @@ class _NotificationAllPageState extends State<NotificationAllPage> {
                                     : Colors.white,
                         // Wrap each item in a Card for a better design
                         elevation: 2,
-                        margin:
-                            EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                        margin: const EdgeInsets.symmetric(
+                            horizontal: 16, vertical: 8),
                         child: ListTile(
-                          contentPadding: EdgeInsets.all(16),
+                          contentPadding: const EdgeInsets.all(16),
                           title: Text(
-                            notification.notificationData ?? '',
+                            providerNotificationAllModel
+                                .dataNotificationModel[index]
+                                .notificationDataArabic!,
+                            textDirection: StaticData.arabicTextDirection,
                             style: TextStyle(
-                                fontSize: 18, fontWeight: FontWeight.bold),
+                                color: StaticData.font,
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                                fontFamily: StaticData.fontFamily),
                           ),
                           subtitle: Text(
                             notification.notificationDesc ?? '',
-                            style: TextStyle(fontSize: 16),
+                            textDirection: StaticData.arabicTextDirection,
+                            style: TextStyle(
+                                color: StaticData.font,
+                                fontSize: 16,
+                                fontFamily: StaticData.fontFamily),
                           ),
                           trailing: providerNotificationAllModel
                                       .dataNotificationModel[index].opened ==
                                   "3"
-                              ? Icon(Icons.notifications_active)
-                              : userType == 4
+                              ? const Icon(Icons.notifications_active)
+                              // ignore: unrelated_type_equality_checks
+                              : userType == "4"
                                   ? providerNotificationAllModel
                                               .dataNotificationModel[index]
                                               .opened ==
                                           "1"
-                                      ? Icon(Icons.notifications_active)
-                                      : Icon(Icons.notifications)
+                                      ? const Icon(Icons.notifications_active)
+                                      : const Icon(Icons.notifications)
                                   : providerNotificationAllModel
                                               .dataNotificationModel[index]
                                               .opened ==
                                           "2"
-                                      ? Icon(Icons.notifications_active)
-                                      : Icon(Icons.notifications),
-                          //Icon(Icons.notifications_active),
+                                      ? const Icon(Icons.notifications_active)
+                                      : const Icon(Icons.notifications),
                         ),
                       );
                     },
