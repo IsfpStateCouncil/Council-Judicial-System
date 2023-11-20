@@ -71,7 +71,7 @@ class _NavBarState extends State<NavBar> {
                 fontFamily: StaticData.fontFamily),
             textAlign: TextAlign.right,
           ),
-            const Divider(thickness: 2),
+          const Divider(thickness: 2),
           Align(
             alignment: Alignment.centerRight,
             child: ListTile(
@@ -101,7 +101,7 @@ class _NavBarState extends State<NavBar> {
               },
             ),
           ),
-            const Divider(thickness: 2),
+          const Divider(thickness: 2),
           Align(
             alignment: Alignment.centerRight,
             child: ListTile(

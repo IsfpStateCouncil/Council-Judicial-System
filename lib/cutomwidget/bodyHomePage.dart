@@ -1,7 +1,4 @@
-import 'package:awesome_dialog/awesome_dialog.dart';
-import 'package:council_of_state/cutomwidget/textAnimationWidget.dart';
 import 'package:flutter/material.dart';
-import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../data/staticdata.dart';
@@ -29,8 +26,6 @@ class BodyHomePage extends StatelessWidget {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setString("language", type);
     languageProvider.language = prefs.getString("language");
-    print(languageProvider.language);
-    print(languageProvider.language);
   }
 
   @override
@@ -38,13 +33,12 @@ class BodyHomePage extends StatelessWidget {
     return RefreshIndicator(
       onRefresh: onRefresh,
       child: Container(
-        padding: EdgeInsets.all(5),
-        child: GridView.count(
+        padding: const EdgeInsets.all(5),
+        child: GridView(
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2, crossAxisSpacing: 10, mainAxisSpacing: 10),
           primary: false,
           padding: const EdgeInsets.all(10),
-          crossAxisSpacing: 10,
-          mainAxisSpacing: 10,
-          crossAxisCount: 2,
           children: <Widget>[
             cellDesign(context, "requestedOrder", Icons.south_outlined,
                 providerNotificationModel.dataNotificationModelRequest.length),

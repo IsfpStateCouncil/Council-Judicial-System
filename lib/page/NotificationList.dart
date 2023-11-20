@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../cutomwidget/customAppBar.dart';
 import '../cutomwidget/searchTextField.dart';
 import '../data/staticdata.dart';
+import '../functions/AwesomeConnection.dart';
 import '../functions/mediaquery.dart';
 import '../functions/sheardpref.dart';
 import '../functions/updatenotification.dart';
@@ -11,6 +14,7 @@ import '../model/NotificationModel.dart';
 import '../api/CRUD.dart';
 import '../cutomwidget/NavBar.dart';
 import '../providerclasses.dart/controllerNotification.dart';
+import '../providerclasses.dart/providerlanguage.dart';
 import '../providerclasses.dart/providerlanguage.dart';
 
 class NotificationPage extends StatefulWidget {
@@ -29,6 +33,7 @@ class _NotificationPageState extends State<NotificationPage> {
   TextEditingController searchController = TextEditingController();
   @override
   Widget build(BuildContext context) {
+    final languageProvider = Provider.of<LanguageProvider>(context);
     return Selector<ProviderNotificationModel, List<NotificationModel>>(
         selector: (context, providerNotificationModel) =>
             providerNotificationModel.myNotificationList,
@@ -50,12 +55,20 @@ class _NotificationPageState extends State<NotificationPage> {
           if (myDataProvider.dataNotificationModel.isEmpty) {
             getDataFromProvider();
           }
-          final languageProvider = Provider.of<LanguageProvider>(context);
+          SchedulerBinding.instance.addPostFrameCallback((_) async {
+            if (await InternetConnectionChecker().hasConnection) {
+              //getDataNotification(context);
+            } else {
+              await createAwesome(context, languageProvider);
+            }
+          });
           return Scaffold(
             appBar: PreferredSize(
                 preferredSize:
                     Size.fromHeight(getSizePage(context, 2, 7, "appBar")),
-                child: CustomAppBar(languageProvider: languageProvider,)),
+                child: CustomAppBar(
+                  languageProvider: languageProvider,
+                )),
             endDrawer: NavBar(
                 context: context, currentRoute: NotificationPage.routeName),
             body: providerNotificationModel.dataNotificationModel.isEmpty

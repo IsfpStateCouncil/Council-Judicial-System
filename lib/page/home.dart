@@ -1,13 +1,14 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
-import 'package:council_of_state/functions/AfterBuild.dart';
 import 'package:council_of_state/page/login.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../cutomwidget/bodyHomePage.dart';
 import '../data/staticdata.dart';
-import '../functions/arabicTime.dart';
+import '../functions/AwesomeConnection.dart';
 import '../functions/updatenotification.dart';
 import '../providerclasses.dart/controllerNotification.dart';
 import '../providerclasses.dart/providerlanguage.dart';
@@ -71,22 +72,26 @@ class BarChartAPIState extends State<Home> {
     // arabicTime();
     //   Locale myLocale = Localizations.localeOf(context);
     //   print(myLocale.languageCode);
-    ProviderNotificationModel provider =
-        Provider.of<ProviderNotificationModel>(context);
-    if (provider.dataNotificationModel.isEmpty) {
-      if (loopingFlag < 2) {
-        checkConnection(context, Home.routeName);
-        provider.dataNotificationModel.isEmpty;
-        check_user();
-        getDataNotification(context);
-        loopingFlag = loopingFlag + 1;
-      }
+    // ProviderNotificationModel provider =
+    //     Provider.of<ProviderNotificationModel>(context);
+    if (loopingFlag < 2) {
+      //checkConnection(context, Home.routeName);
+      check_user();
+      getDataNotification(context);
+      loopingFlag = loopingFlag + 1;
     }
 
     final languageProvider = Provider.of<LanguageProvider>(context);
     final providerNotificationModel =
         Provider.of<ProviderNotificationModel>(context);
 
+    SchedulerBinding.instance.addPostFrameCallback((_) async {
+      if (await InternetConnectionChecker().hasConnection) {
+        //getDataNotification(context);
+      } else {
+        await createAwesome(context, languageProvider);
+      }
+    });
     return Scaffold(
       backgroundColor: StaticData.backgroundColors,
       endDrawer: NavBar(
