@@ -1,17 +1,26 @@
+import 'package:council_of_state/data/staticdata.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-
+import '../providerclasses.dart/providerlanguage.dart';
 
 class ErrorPage extends StatelessWidget {
   ErrorPage({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final languageProvider = Provider.of<LanguageProvider>(context);
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color.fromARGB(255, 240, 162, 46), //<-- SEE HERE
+        backgroundColor: StaticData.appBarColor, //<-- SEE HERE
+        title: Text(
+          "${languageProvider.getCurrentData('EgyptianStateCouncil')}",
+          style: TextStyle(
+            fontFamily: StaticData.fontFamily,
+            // Add other text styles as needed
+          ),
+        ),
 
-        title: const Text("مجلس الدولة المصري"),
         elevation: 0,
         actions: [
           Padding(
@@ -19,7 +28,7 @@ class ErrorPage extends StatelessWidget {
             child: DecoratedBox(
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                border: Border.all(color: Colors.white),
+                border: Border.all(color: StaticData.backgroundColors),
               ),
             ),
           )
@@ -39,7 +48,10 @@ class ErrorPage extends StatelessWidget {
             Text(
               "خطأ في اسم المستخدم او كلمة السر",
               //_boxLogin.get("errorMessage"),
-              style: Theme.of(context).textTheme.headlineLarge,
+              style: TextStyle(
+                fontFamily: StaticData.fontFamily,fontSize: 20,color: StaticData.font
+                // Add other text styles as needed
+              ),
               textAlign: TextAlign.center,
             ),
           ],
