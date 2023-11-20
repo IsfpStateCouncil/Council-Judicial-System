@@ -22,10 +22,10 @@ class Home extends StatefulWidget {
   static const routeName = 'home_screen';
 
   @override
-  State<Home> createState() => _BarChartAPIState();
+  State<Home> createState() => BarChartAPIState();
 }
 
-class _BarChartAPIState extends State<Home> {
+class BarChartAPIState extends State<Home> {
   bool loading = true;
   var fbm = FirebaseMessaging.instance;
   String? userName;

@@ -2,43 +2,56 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:badges/badges.dart' as badges;
 import '../data/staticdata.dart';
+import '../page/NotificationList.dart';
 import '../providerclasses.dart/controllerNotification.dart';
 
 class CustomAppBar extends StatelessWidget {
   CustomAppBar({
-    super.key,
+    super.key, this.languageProvider,
   });
-
+final languageProvider ;
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      backgroundColor: const Color.fromARGB(255, 240, 162, 46), //<-- SEE HERE
-      title: Text("مجلس الدولة المصري",
+        backgroundColor: StaticData.appBarColor, //<-- SEE HERE
+        title: Text(
+          "${languageProvider.getCurrentData('EgyptianStateCouncil')}",
           style: TextStyle(
             fontFamily: StaticData.fontFamily,
-          )),
-      centerTitle: true,
-      elevation: 0,
-      actions: [
-        badges.Badge(
+            // Add other text styles as needed
+          ),
+        ),
+        centerTitle: true,
+        elevation: 0,
+        leading: badges.Badge(
           badgeContent: Consumer<ProviderNotificationModel>(
               builder: (context, providerNotificationModel, child) {
             return Text(
-              "${providerNotificationModel.dataNotificationModel.length}",
-              style: TextStyle(fontFamily: StaticData.fontFamily),
-            );
+                "${providerNotificationModel.dataNotificationModel.length}");
           }),
-          position: badges.BadgePosition.topEnd(top: 0, end: 0),
+          position: badges.BadgePosition.topEnd(top: 5, end: 5),
           child: IconButton(
-            icon: const Icon(
+            icon: Icon(
               Icons.notifications,
+              color: StaticData.button,
               size: 35,
             ),
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => const NotificationPage()),
+              );
+            },
           ),
-          onTap: () {},
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const NotificationPage()),
+            );
+          },
         ),
-      ],
-    );
+        actions: [],
+      );
   }
 }

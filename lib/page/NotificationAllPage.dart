@@ -10,6 +10,7 @@ import '../model/NotificationModel.dart';
 import '../api/CRUD.dart';
 import '../cutomwidget/NavBar.dart';
 import '../providerclasses.dart/providerNotificationAll.dart';
+import '../providerclasses.dart/providerlanguage.dart';
 
 class NotificationAllPage extends StatefulWidget {
   // ignore: use_key_in_widget_constructors
@@ -52,12 +53,13 @@ class _NotificationAllPageState extends State<NotificationAllPage> {
           count++;
         }
       }
+      final languageProvider = Provider.of<LanguageProvider>(context);
       return Scaffold(
         appBar: PreferredSize(
             preferredSize:
                 Size.fromHeight(getSizePage(context, 2, 7, "appBar")),
-            child: CustomAppBar()),
-        drawer: NavBar(
+            child: CustomAppBar(languageProvider: languageProvider,)),
+        endDrawer: NavBar(
             context: context, currentRoute: NotificationAllPage.routeName),
         body: providerNotificationAllModel.dataNotificationModel.isEmpty
             ? const Center(

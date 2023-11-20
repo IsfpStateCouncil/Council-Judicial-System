@@ -11,6 +11,7 @@ import '../model/NotificationModel.dart';
 import '../api/CRUD.dart';
 import '../cutomwidget/NavBar.dart';
 import '../providerclasses.dart/controllerNotification.dart';
+import '../providerclasses.dart/providerlanguage.dart';
 
 class NotificationPage extends StatefulWidget {
   const NotificationPage({super.key});
@@ -49,12 +50,13 @@ class _NotificationPageState extends State<NotificationPage> {
           if (myDataProvider.dataNotificationModel.isEmpty) {
             getDataFromProvider();
           }
+          final languageProvider = Provider.of<LanguageProvider>(context);
           return Scaffold(
             appBar: PreferredSize(
                 preferredSize:
                     Size.fromHeight(getSizePage(context, 2, 7, "appBar")),
-                child: CustomAppBar()),
-            drawer: NavBar(
+                child: CustomAppBar(languageProvider: languageProvider,)),
+            endDrawer: NavBar(
                 context: context, currentRoute: NotificationPage.routeName),
             body: providerNotificationModel.dataNotificationModel.isEmpty
                 ? const Center(

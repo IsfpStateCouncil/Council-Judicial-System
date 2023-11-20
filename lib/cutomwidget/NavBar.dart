@@ -57,272 +57,158 @@ class _NavBarState extends State<NavBar> {
         // Remove padding
         padding: EdgeInsets.zero,
         children: [
-          UserAccountsDrawerHeader(
-            accountName: Text("$userName",
-                style: const TextStyle(fontSize: 40, color: StaticData.font)),
-            accountEmail: const Text(''),
-            currentAccountPicture: CircleAvatar(
-              backgroundColor: StaticData.backgroundColors,
-              child: ClipOval(
-                child: Image.asset('assets/images/logo.PNG'),
+          SizedBox(height: 50),
+          Image.asset(
+            'assets/images/logo.PNG',
+            width: 70, // Set your desired width
+            height: 70, // Set your desired height
+          ),
+          Text(
+            "$userName",
+            style: TextStyle(
+                fontSize: 40,
+                color: StaticData.font,
+                fontFamily: StaticData.fontFamily),
+            textAlign: TextAlign.right,
+          ),
+            const Divider(thickness: 2),
+          Align(
+            alignment: Alignment.centerRight,
+            child: ListTile(
+              trailing: const Icon(
+                Icons.home, color: StaticData.button, // Set your desired color
+                size: 32,
               ),
+              title: Text(
+                languageProvider.getCurrentData('mainPage'),
+                style: TextStyle(
+                    fontSize: 20,
+                    color: StaticData.font,
+                    fontFamily: StaticData.fontFamily),
+                textAlign: TextAlign.right,
+              ),
+              //leading: const Icon(Icons.home),
+              onTap: () {
+                BarChartAPIState.loopingFlag = 0;
+                if (widget.currentRoute != home) {
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(builder: (context) => const Home()),
+                  );
+                } else {
+                  Navigator.of(context).pop();
+                }
+              },
             ),
-            decoration: const BoxDecoration(
-                //color: Color.fromARGB(255, 234, 149, 13),
-                // image: DecorationImage(
-                //   fit: BoxFit.fill,
-                //   image: AssetImage(StaticData.drawerImage), // Use AssetImage
-                // ),
-                ),
           ),
-          ListTile(
-            title: Text(languageProvider.getCurrentData('mainPage')),
-            leading: const Icon(Icons.home),
-            onTap: () {
-              if (widget.currentRoute != home) {
+            const Divider(thickness: 2),
+          Align(
+            alignment: Alignment.centerRight,
+            child: ListTile(
+              trailing: const Icon(
+                Icons.notifications,
+                color: StaticData.button, // Set your desired color
+                size: 32,
+              ),
+              title: Text(
+                languageProvider.getCurrentData('allNotification'),
+                style: TextStyle(
+                    fontSize: 20,
+                    color: StaticData.font,
+                    fontFamily: StaticData.fontFamily),
+                textAlign: TextAlign.right,
+              ),
+              //leading: const Icon(Icons.home),
+              onTap: () {
+                BarChartAPIState.loopingFlag = 0;
+                if (widget.currentRoute != lisrNotification) {
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const NotificationAllPage()),
+                  );
+                } else {
+                  Navigator.of(context).pop();
+                }
+              },
+            ),
+          ),
+          const Divider(thickness: 2),
+          Align(
+            alignment: Alignment.centerRight,
+            child: ListTile(
+              trailing: const Icon(
+                Icons.wysiwyg,
+                color: StaticData.button, // Set your desired color
+                size: 32,
+              ),
+              title: Text(
+                languageProvider.getCurrentData('advancedSearch'),
+                style: TextStyle(
+                    fontSize: 20,
+                    color: StaticData.font,
+                    fontFamily: StaticData.fontFamily),
+                textAlign: TextAlign.right,
+              ),
+              onTap: () {
+                BarChartAPIState.loopingFlag = 0;
+                if (widget.currentRoute != datatableSearch) {
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => parameterSearch(
+                              password: password!,
+                              userName: userName!,
+                            )),
+                  );
+                } else {
+                  Navigator.of(context).pop();
+                }
+              },
+            ),
+          ),
+          const Divider(thickness: 2),
+          Align(
+            alignment: Alignment.centerRight,
+            child: ListTile(
+              trailing: const Icon(
+                Icons.exit_to_app,
+                color: StaticData.button, // Set your desired color
+                size: 32,
+              ),
+              title: Text(
+                languageProvider.getCurrentData('logout'),
+                style: TextStyle(
+                    fontSize: 20,
+                    color: StaticData.font,
+                    fontFamily: StaticData.fontFamily),
+                textAlign: TextAlign.right,
+              ),
+              onTap: () async {
+                BarChartAPIState.loopingFlag = 0;
+                final SharedPreferences prefs =
+                    await SharedPreferences.getInstance();
+                await prefs.clear();
+                prefs.remove('userToken');
+                prefs.remove('userId');
                 Navigator.pushReplacement(
                   context,
-                  MaterialPageRoute(builder: (context) => const Home()),
+                  MaterialPageRoute(builder: (context) => const SplashScreen()),
                 );
-              } else {
-                Navigator.of(context).pop();
-              }
-            },
-          ),
-          ExpansionTile(
-            title: Text(languageProvider.getCurrentData('deposit')),
-            leading: const Icon(Icons.attach_money), //add icon
-            childrenPadding: const EdgeInsets.only(left: 60), //children padding
-            children: [
-              ListTile(
-                title: Text(languageProvider.getCurrentData('mainPage')),
-                onTap: () {
-                  if (widget.currentRoute != home) {
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(builder: (context) => const Home()),
-                    );
-                  } else {
-                    Navigator.of(context).pop();
-                  }
-                },
-              ),
-
-              ListTile(
-                title: Text(languageProvider.getCurrentData('allNotification')),
-                onTap: () {
-                  if (widget.currentRoute != lisrNotification) {
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const NotificationAllPage()),
-                    );
-                  } else {
-                    Navigator.of(context).pop();
-                  }
-                },
-              ),
-
-              //more child menu
-            ],
-          ),
-          //if (components.contains("Follow Requests"))
-          ExpansionTile(
-            title: Text(languageProvider.getCurrentData('mainPage')),
-            leading: const Icon(Icons.addchart), //add icon
-            childrenPadding: const EdgeInsets.only(left: 60), //children padding
-            children: [
-              ListTile(
-                title: Text(languageProvider.getCurrentData('order')),
-                onTap: () {
-                  if (widget.currentRoute != home) {
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(builder: (context) => const Home()),
-                    );
-                  } else {
-                    Navigator.of(context).pop();
-                  }
-                },
-              ),
-
-              ListTile(
-                title: Text(languageProvider.getCurrentData('fetchData')),
-                onTap: () {
-                  if (widget.currentRoute != lisrNotification) {
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const NotificationAllPage()),
-                    );
-                  } else {
-                    Navigator.of(context).pop();
-                  }
-                },
-              ),
-
-              //more child menu
-            ],
-          ),
-          //if (components.contains("Schedule Hearing"))
-          ExpansionTile(
-            title: Text(languageProvider.getCurrentData('sessionsTime')),
-            leading: const Icon(Icons.calendar_month), //add icon
-            childrenPadding: const EdgeInsets.only(left: 60), //children padding
-            children: [
-              ListTile(
-                title: Text(languageProvider.getCurrentData('mainPage')),
-                onTap: () {
-                  if (widget.currentRoute != home) {
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(builder: (context) => const Home()),
-                    );
-                  } else {
-                    Navigator.of(context).pop();
-                  }
-                },
-              ),
-
-              ListTile(
-                title: Text(languageProvider.getCurrentData('fetchData')),
-                onTap: () {
-                  if (widget.currentRoute != lisrNotification) {
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const NotificationAllPage()),
-                    );
-                  } else {
-                    Navigator.of(context).pop();
-                  }
-                },
-              ),
-
-              //more child menu
-            ],
-          ),
-          ExpansionTile(
-            title: Text(languageProvider.getCurrentData('adjurndedSessions')),
-            leading: const Icon(Icons.calendar_view_week_outlined), //add icon
-            childrenPadding: const EdgeInsets.only(left: 60), //children padding
-            children: [
-              ListTile(
-                title: Text(languageProvider.getCurrentData('mainPage')),
-                onTap: () {
-                  if (widget.currentRoute != home) {
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(builder: (context) => const Home()),
-                    );
-                  } else {
-                    Navigator.of(context).pop();
-                  }
-                },
-              ),
-
-              ListTile(
-                title: Text(languageProvider.getCurrentData('fetchData')),
-                onTap: () {
-                  if (widget.currentRoute != lisrNotification) {
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const NotificationAllPage()),
-                    );
-                  } else {
-                    Navigator.of(context).pop();
-                  }
-                },
-              ),
-
-              //more child menu
-            ],
-          ),
-          ExpansionTile(
-            title: Text(languageProvider.getCurrentData('fines')),
-            leading: const Icon(Icons.balance_rounded), //add icon
-            childrenPadding: const EdgeInsets.only(left: 60), //children padding
-            children: [
-              ListTile(
-                title: Text(languageProvider.getCurrentData('mainPage')),
-                onTap: () {
-                  if (widget.currentRoute != home) {
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(builder: (context) => const Home()),
-                    );
-                  } else {
-                    Navigator.of(context).pop();
-                  }
-                },
-              ),
-
-              ListTile(
-                title: Text(languageProvider.getCurrentData('fetchData')),
-                onTap: () {
-                  if (widget.currentRoute != lisrNotification) {
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const NotificationAllPage()),
-                    );
-                  } else {
-                    Navigator.of(context).pop();
-                  }
-                },
-              ),
-
-              //more child menu
-            ],
-          ),
-          const Divider(),
-          ListTile(
-            title: Text(languageProvider.getCurrentData('advancedSearch')),
-            leading: const Icon(Icons.wysiwyg),
-            onTap: () {
-              if (widget.currentRoute != datatableSearch) {
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => parameterSearch(
-                            password: password!,
-                            userName: userName!,
-                          )),
-                );
-              } else {
-                Navigator.of(context).pop();
-              }
-            },
-          ),
-
-          const Divider(),
-          ListTile(
-            title: Text(languageProvider.getCurrentData('logout')),
-            leading: const Icon(Icons.exit_to_app),
-            onTap: () async {
-              final SharedPreferences prefs =
-                  await SharedPreferences.getInstance();
-              await prefs.clear();
-              prefs.remove('userToken');
-              prefs.remove('userId');
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(builder: (context) => const SplashScreen()),
-              );
-              final providerNotificationAllModel =
-                  Provider.of<ProviderNotificationAllModel>(this.context,
-                      listen: false);
-              final providerNotificationModel =
-                  Provider.of<ProviderNotificationModel>(this.context,
-                      listen: false);
-              final providerDataTableSearch =
-                  Provider.of<ProviderDataTableSearch>(this.context,
-                      listen: false);
-              providerNotificationAllModel.deleteTempData();
-              providerNotificationModel.deleteTempData();
-              providerDataTableSearch.deleteTempData();
-            },
+                final providerNotificationAllModel =
+                    Provider.of<ProviderNotificationAllModel>(this.context,
+                        listen: false);
+                final providerNotificationModel =
+                    Provider.of<ProviderNotificationModel>(this.context,
+                        listen: false);
+                final providerDataTableSearch =
+                    Provider.of<ProviderDataTableSearch>(this.context,
+                        listen: false);
+                providerNotificationAllModel.deleteTempData();
+                providerNotificationModel.deleteTempData();
+                providerDataTableSearch.deleteTempData();
+              },
+            ),
           ),
         ],
       ),
