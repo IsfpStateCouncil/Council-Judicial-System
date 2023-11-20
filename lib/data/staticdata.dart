@@ -25,5 +25,8 @@ class StaticData {
   static const String drawerImage = 'assets/images/drawerImage.png';
   static const Color button = Color(0xFFD5AA6D);
   static const Color font = Color(0xFF200908);
+  static const Color appBarColor = Color(0xFF200908);
   static const Color backgroundColors = Color(0xFFfcfcfc);
+  //////////////////// font family ///////////////////
+  static String fontFamily = "Cairo";
 }

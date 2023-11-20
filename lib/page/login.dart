@@ -46,10 +46,10 @@ class _LoginState extends State<Login> {
                 const SizedBox(height: 10),
                 Text(
                   "${languageProvider.getCurrentData('login')}",
-                  style: const TextStyle(
+                  style: TextStyle(
                       fontSize: 40,
                       color: StaticData.font,
-                      fontFamily: 'Cairo'),
+                      fontFamily: StaticData.fontFamily),
                   textAlign: TextAlign.center,
                 ),
                 const SizedBox(height: 60),
@@ -67,7 +67,7 @@ class _LoginState extends State<Login> {
                       borderRadius: BorderRadius.circular(10),
                     ),
                     labelStyle: TextStyle(
-                      fontFamily: 'Cairo',
+                      fontFamily: StaticData.fontFamily,
                     ),
                   ),
                   onEditingComplete: () => _focusNodePassword.requestFocus(),
@@ -107,7 +107,7 @@ class _LoginState extends State<Login> {
                       borderRadius: BorderRadius.circular(10),
                     ),
                     labelStyle: TextStyle(
-                      fontFamily: 'Cairo',
+                      fontFamily: StaticData.fontFamily,
                     ),
                   ),
                   validator: (String? value) {
@@ -140,8 +140,8 @@ class _LoginState extends State<Login> {
                               _controllerPassword.text);
                         },
                         child: Text(languageProvider.getCurrentData('login'),
-                            style: const TextStyle(
-                                fontSize: 20, fontFamily: 'Cairo')),
+                            style:  TextStyle(
+                                fontSize: 20, fontFamily: StaticData.fontFamily)),
                       );
                     })
                   ],

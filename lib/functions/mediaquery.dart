@@ -4,7 +4,7 @@ double GetSizePage(BuildContext context, int diemestion, int precentage,String n
   try {
     double size;
     if (MediaQuery.of(context).orientation.toString() ==
-        "Orientation.landscape" && namePage =="home") {
+        "Orientation.landscape" && namePage =="home_screen") {
       if (diemestion == 1) //width
       {
         size = (MediaQuery.of(context).size.width * precentage) / 100;

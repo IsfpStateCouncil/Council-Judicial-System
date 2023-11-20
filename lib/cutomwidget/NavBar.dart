@@ -1,3 +1,4 @@
+import 'package:council_of_state/data/staticdata.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -58,10 +59,10 @@ class _NavBarState extends State<NavBar> {
         children: [
           UserAccountsDrawerHeader(
             accountName: Text("$userName",
-                style: const TextStyle(fontSize: 30, color: Colors.black)),
+                style: const TextStyle(fontSize: 40, color: StaticData.font)),
             accountEmail: const Text(''),
             currentAccountPicture: CircleAvatar(
-              backgroundColor: const Color.fromARGB(255, 255, 255, 255),
+              backgroundColor: StaticData.backgroundColors,
               child: ClipOval(
                 child: Image.asset('assets/images/logo.PNG'),
               ),

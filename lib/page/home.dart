@@ -87,39 +87,36 @@ class _BarChartAPIState extends State<Home> {
         Provider.of<ProviderNotificationModel>(context);
 
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 183, 173, 201),
-      drawer: NavBar(
+      backgroundColor: StaticData.backgroundColors,
+      endDrawer: NavBar(
         context: context,
         currentRoute: Home.routeName,
       ),
       appBar: AppBar(
-        backgroundColor: Color.fromARGB(255, 240, 162, 46), //<-- SEE HERE
-        title:
-            Text("${languageProvider.getCurrentData('EgyptianStateCouncil')}"),
+        backgroundColor: StaticData.appBarColor, //<-- SEE HERE
+        title: Text(
+          "${languageProvider.getCurrentData('EgyptianStateCouncil')}",
+          style: TextStyle(
+            fontFamily: StaticData.fontFamily,
+            // Add other text styles as needed
+          ),
+        ),
         centerTitle: true,
         elevation: 0,
-        actions: [
-          badges.Badge(
-            badgeContent: Consumer<ProviderNotificationModel>(
-                builder: (context, providerNotificationModel, child) {
-              return Text(
-                  "${providerNotificationModel.dataNotificationModel.length}");
-            }),
-            position: badges.BadgePosition.topEnd(top: 0, end: 0),
-            child: IconButton(
-              icon: Icon(
-                Icons.notifications,
-                size: 35,
-              ),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => const NotificationPage()),
-                );
-              },
+        leading: badges.Badge(
+          badgeContent: Consumer<ProviderNotificationModel>(
+              builder: (context, providerNotificationModel, child) {
+            return Text(
+                "${providerNotificationModel.dataNotificationModel.length}");
+          }),
+          position: badges.BadgePosition.topEnd(top: 5, end: 5),
+          child: IconButton(
+            icon: Icon(
+              Icons.notifications,
+              color: StaticData.button,
+              size: 35,
             ),
-            onTap: () {
+            onPressed: () {
               Navigator.push(
                 context,
                 MaterialPageRoute(
@@ -127,7 +124,14 @@ class _BarChartAPIState extends State<Home> {
               );
             },
           ),
-        ],
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const NotificationPage()),
+            );
+          },
+        ),
+        actions: [],
       ),
       body: BodyHomePage(
         languageProvider: languageProvider,
