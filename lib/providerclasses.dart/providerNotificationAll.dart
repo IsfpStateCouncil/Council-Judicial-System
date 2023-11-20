@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../api/CRUD.dart';
+import '../functions/arabicTime.dart';
 import '../model/NotificationModel.dart';
 
 class ProviderNotificationAllModel extends ChangeNotifier {
@@ -32,6 +33,11 @@ class ProviderNotificationAllModel extends ChangeNotifier {
                   }).toList()
                 : [];
         dataNotificationModel = caseDataList;
+        for (int i = 0; dataNotificationModel.length - 1 > i; i++) {
+          dataNotificationModel[i].notificationDataArabic =
+              await arabicTime(dataNotificationModel[i].notificationData!);
+        }
+        print('casesData length: ${caseDataList.length}');
         notifyListeners();
         print('casesData length: ${caseDataList.length}');
 

@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../cutomwidget/customAppBar.dart';
+import '../cutomwidget/searchTextField.dart';
 import '../data/staticdata.dart';
-import '../functions/arabicTime.dart';
 import '../functions/mediaquery.dart';
 import '../functions/sheardpref.dart';
 import '../model/NotificationModel.dart';
@@ -64,14 +64,8 @@ class _NotificationAllPageState extends State<NotificationAllPage> {
                 child: CircularProgressIndicator(),
               )
             : Column(children: [
-                TextField(
-                  textDirection: StaticData.arabicTextDirection,
-                  decoration: InputDecoration(
-                      prefixIcon: const Icon(Icons.search),
-                      border: InputBorder.none,
-                      hintStyle: TextStyle(fontFamily: StaticData.fontFamily),
-                      hintText: "بحث"),
-                  controller: searchController,
+                SearchTextField(
+                  searchController: searchController,
                   onChanged: (value) {
                     providerNotificationAllModel.filterData(value);
                   },
@@ -92,8 +86,6 @@ class _NotificationAllPageState extends State<NotificationAllPage> {
                     itemBuilder: (context, index) {
                       final notification = providerNotificationAllModel
                           .dataNotificationModel[index];
-                      String data =
-                          arabicTime(context, notification.notificationData!);
                       return Card(
                         color: providerNotificationAllModel
                                     .dataNotificationModel[index].opened ==
@@ -119,9 +111,12 @@ class _NotificationAllPageState extends State<NotificationAllPage> {
                         child: ListTile(
                           contentPadding: const EdgeInsets.all(16),
                           title: Text(
-                            data,
+                            providerNotificationAllModel
+                                .dataNotificationModel[index]
+                                .notificationDataArabic!,
                             textDirection: StaticData.arabicTextDirection,
                             style: TextStyle(
+                                color: StaticData.font,
                                 fontSize: 18,
                                 fontWeight: FontWeight.bold,
                                 fontFamily: StaticData.fontFamily),
@@ -130,6 +125,7 @@ class _NotificationAllPageState extends State<NotificationAllPage> {
                             notification.notificationDesc ?? '',
                             textDirection: StaticData.arabicTextDirection,
                             style: TextStyle(
+                                color: StaticData.font,
                                 fontSize: 16,
                                 fontFamily: StaticData.fontFamily),
                           ),

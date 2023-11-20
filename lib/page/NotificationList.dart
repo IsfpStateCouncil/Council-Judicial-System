@@ -4,7 +4,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../cutomwidget/customAppBar.dart';
 import '../cutomwidget/searchTextField.dart';
 import '../data/staticdata.dart';
-import '../functions/arabicTime.dart';
 import '../functions/mediaquery.dart';
 import '../functions/sheardpref.dart';
 import '../functions/updatenotification.dart';
@@ -40,7 +39,7 @@ class _NotificationPageState extends State<NotificationPage> {
             userName = userData.getString("userName").toString();
             password = userData.getString("password").toString();
 
-            await providerNotificationModel.list_Data_Class(
+            await providerNotificationModel.getUnreadNotifications(
                 "${StaticData.urlConnectionConst}${StaticData.notificationConst}?userName=$userName&password=$password",
                 "dataNotificationModel");
           }
@@ -85,19 +84,22 @@ class _NotificationPageState extends State<NotificationPage> {
                         itemBuilder: (context, index) {
                           final notification = providerNotificationModel
                               .dataNotificationModel[index];
-                          String data = arabicTime(
-                              context, notification.notificationData!);
+                          // String data = arabicTime(
+                          //     context, notification.notificationData!);
                           return Dismissible(
                             key: UniqueKey(),
                             background: Container(
                               alignment: Alignment.centerRight,
-                              color: Colors
-                                  .orange, // Change the background color to your desired color
+                              color: StaticData
+                                  .button, // Change the background color to your desired color
                               child: const Padding(
                                 padding: EdgeInsets.only(right: 16),
-                                child: Icon(
-                                  Icons.delete,
-                                  color: Colors.white,
+                                child: Center(
+                                  child: Icon(
+                                    Icons.delete,
+                                    color: Colors.white,
+                                    size: 70,
+                                  ),
                                 ),
                               ),
                             ),
@@ -132,16 +134,24 @@ class _NotificationPageState extends State<NotificationPage> {
                               child: ListTile(
                                 contentPadding: const EdgeInsets.all(16),
                                 title: Text(
-                                  data ?? '',
+                                  providerNotificationModel
+                                          .dataNotificationModel[index]
+                                          .notificationDataArabic ??
+                                      '',
                                   textDirection: StaticData.arabicTextDirection,
-                                  style: const TextStyle(
+                                  style: TextStyle(
+                                      color: StaticData.font,
+                                      fontFamily: StaticData.fontFamily,
                                       fontSize: 18,
                                       fontWeight: FontWeight.bold),
                                 ),
                                 subtitle: Text(
                                   notification.notificationDesc ?? '',
                                   textDirection: StaticData.arabicTextDirection,
-                                  style: const TextStyle(fontSize: 16),
+                                  style: TextStyle(
+                                      color: StaticData.font,
+                                      fontSize: 16,
+                                      fontFamily: StaticData.fontFamily),
                                 ),
                                 trailing: const Icon(Icons.notifications),
                               ),

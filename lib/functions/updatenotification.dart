@@ -20,7 +20,7 @@ Future<void> getDataNotification(context) async {
   String? password = prefs.getString('password');
   ProviderNotificationModel provider =
       Provider.of<ProviderNotificationModel>(context, listen: false);
-  await provider.list_Data_Class(
+  await provider.getUnreadNotifications(
       "${StaticData.urlConnectionConst}${StaticData.notificationConst}?userName=$userName&password=$password",
       "dataNotificationModel");
 
@@ -29,7 +29,7 @@ Future<void> getDataNotification(context) async {
     for (int value in values) {
       notificationEvent += "&categories=$value";
     }
-    await provider.list_Data_Class(
+    await provider.getUnreadNotifications(
         "${StaticData.urlConnectionConst}${StaticData.getAllNotificationCategory}?userName=$userName&password=$password$notificationEvent",
         key);
   });
