@@ -2,7 +2,7 @@ import 'dart:ui';
 
 class StaticData {
   static const String urlConnectionConst =
-      'http://10.0.65.51:7001/EWebService/rest/'; //10.0.15.117 10.9.100.225:7011
+      'http://10.9.100.225:7011/EWebService/rest/'; //10.0.15.117 10.9.100.225:7011   10.0.65.51:7001
   static const String loginConst = "${urlConnectionConst}core/Login";
   static const String notificationConst =
       'notificationsList/getAllUnreadNotification';
