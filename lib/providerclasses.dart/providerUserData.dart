@@ -18,6 +18,7 @@ class ProviderUserData extends ChangeNotifier {
 
   Future<dynamic> login(BuildContext context, String controllerUsername,
       String controllerPassword) async {
+        BarChartAPIState.loopingFlag = 0;
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     try {
       final Response response = await post(

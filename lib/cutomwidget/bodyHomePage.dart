@@ -35,7 +35,9 @@ class BodyHomePage extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.all(5),
         child: GridView(
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          gridDelegate: MediaQuery.of(context).orientation.toString() ==
+        "Orientation.landscape" ?SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 3, crossAxisSpacing: 10, mainAxisSpacing: 10) :SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 2, crossAxisSpacing: 10, mainAxisSpacing: 10),
           primary: false,
           padding: const EdgeInsets.all(10),
