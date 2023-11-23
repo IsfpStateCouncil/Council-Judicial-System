@@ -33,6 +33,9 @@ class ProviderUserData extends ChangeNotifier {
       print(response.toString());
       if (response.statusCode == 200) {
         var data = jsonDecode(utf8.decode(response.bodyBytes));
+        Encoding? encoding = Encoding.getByName('utf-8');
+        var decodedResponse = encoding!.decode(response.bodyBytes);
+        Map<String, dynamic> responseJson = jsonDecode(decodedResponse);
         if (data['success'] == 0) {
           Navigator.push(
             context,
@@ -48,7 +51,9 @@ class ProviderUserData extends ChangeNotifier {
           prefs.setString("userName", controllerUsername);
           prefs.setString("password", controllerPassword);
           prefs.setString("userType", data["userType"]);
-          print(prefs.getString("userType"));
+          Encoding? encoding = Encoding.getByName('utf-8');
+          prefs.setString("arabicFullName", responseJson["arabicFullName"]);
+          print(prefs.getString("arabicFullName"));
           Navigator.of(context).pushAndRemoveUntil(
               MaterialPageRoute(builder: (context) => Home()),
               (Route<dynamic> route) => false);

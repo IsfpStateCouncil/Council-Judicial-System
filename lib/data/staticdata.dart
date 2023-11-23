@@ -8,6 +8,7 @@ class StaticData {
       'notificationsList/getAllUnreadNotification';
   static const String editNotifictaionConst =
       'notificationsList/EditNotifictaions';
+  static const String insertTokenForUser = 'notificationsList/userToken';
   static const String findAllCaseStatusConst = "cases/findAllCaseStatus";
   static const String searchCasesDataConst = "cases/searchCasesData";
   static const String getAllJudgueYears = "cases/getAllJudgueYears";

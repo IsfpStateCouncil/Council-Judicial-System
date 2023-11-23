@@ -14,7 +14,7 @@ void checkConnection(BuildContext context, String pageName) {
     if (!await InternetConnectionChecker().hasConnection) {
       Navigator.of(context).pushAndRemoveUntil(
           MaterialPageRoute(builder: (context) {
-        return ConnectionError();
+        return const ConnectionError();
       }), (Route<dynamic> route) => false);
     } else {
       String pageExist = "splash_screen";
@@ -22,7 +22,7 @@ void checkConnection(BuildContext context, String pageName) {
         bool isExist = await user_exist();
         Navigator.of(context)
             .pushReplacement(MaterialPageRoute(builder: (context) {
-          return isExist ? Home() : Login();
+          return isExist ? const Home() : const Login();
         }));
       }
       print("continue");
@@ -37,7 +37,7 @@ void continueConnection(
     if (await InternetConnectionChecker().hasConnection) {
       Navigator.of(context)
           .pushReplacement(MaterialPageRoute(builder: (context) {
-        return isExist ? Home() : Login();
+        return isExist ? const Home() : const Login();
       }));
     } else {
       createAwesome(context, languageProvider);

@@ -41,7 +41,7 @@ class _NotificationPageState extends State<NotificationPage> {
           final providerNotificationModel =
               Provider.of<ProviderNotificationModel>(context, listen: false);
           void getDataFromProvider() async {
-            SharedPreferences userData = await PublicShread().getSheardUser();
+            SharedPreferences userData = await PublicShread.getSheardUser();
             userName = userData.getString("userName").toString();
             password = userData.getString("password").toString();
 
@@ -69,7 +69,7 @@ class _NotificationPageState extends State<NotificationPage> {
                 child: CustomAppBar(
                   languageProvider: languageProvider,
                 )),
-            endDrawer: NavBar(
+            drawer: NavBar(
                 context: context, currentRoute: NotificationPage.routeName),
             body: providerNotificationModel.dataNotificationModel.isEmpty
                 ? const Center(
@@ -120,7 +120,7 @@ class _NotificationPageState extends State<NotificationPage> {
                             ),
                             onDismissed: (direction) async {
                               SharedPreferences userData =
-                                  await PublicShread().getSheardUser();
+                                  await PublicShread.getSheardUser();
                               userName =
                                   userData.getString("userName").toString();
                               password =

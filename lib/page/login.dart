@@ -45,7 +45,7 @@ class _LoginState extends State<Login> {
                 ),
                 const SizedBox(height: 10),
                 Text(
-                  "${languageProvider.getCurrentData('login')}",
+                  languageProvider.getCurrentData('login'),
                   style: TextStyle(
                       fontSize: 40,
                       color: StaticData.font,
@@ -56,9 +56,9 @@ class _LoginState extends State<Login> {
                 TextFormField(
                   controller: _controllerUsername,
                   keyboardType: TextInputType.name,
-                  textDirection: TextDirection.rtl,
+                  //textDirection: TextDirection.rtl,
                   decoration: InputDecoration(
-                    labelText: "${languageProvider.getCurrentData('userName')}",
+                    labelText: languageProvider.getCurrentData('userName'),
                     prefixIcon: const Icon(Icons.person_outline),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10),
@@ -73,7 +73,8 @@ class _LoginState extends State<Login> {
                   onEditingComplete: () => _focusNodePassword.requestFocus(),
                   validator: (String? value) {
                     if (value == null || value.isEmpty) {
-                      return "${languageProvider.getCurrentData('plzEnterUserName')}";
+                      return languageProvider
+                          .getCurrentData('plzEnterUserName');
                     }
                     return null;
                   },
@@ -83,10 +84,10 @@ class _LoginState extends State<Login> {
                   controller: _controllerPassword,
                   focusNode: _focusNodePassword,
                   obscureText: _obscurePassword,
-                  textDirection: TextDirection.rtl,
+                  //textDirection: TextDirection.rtl,
                   //keyboardType: TextInputType.visiblePassword,
                   decoration: InputDecoration(
-                    labelText: "${languageProvider.getCurrentData('password')}",
+                    labelText: languageProvider.getCurrentData('password'),
                     prefixIcon: const Icon(Icons.password_outlined),
                     suffixIcon: IconButton(
                         onPressed: () {
@@ -112,7 +113,8 @@ class _LoginState extends State<Login> {
                   ),
                   validator: (String? value) {
                     if (value == null || value.isEmpty) {
-                      return "${languageProvider.getCurrentData('plzEnterPassword')}";
+                      return languageProvider
+                          .getCurrentData('plzEnterPassword');
                     }
 
                     return null;
@@ -125,7 +127,8 @@ class _LoginState extends State<Login> {
                         builder: (context, user_data, child) {
                       return ElevatedButton(
                         style: ElevatedButton.styleFrom(
-                          primary: StaticData.button, // Background color
+                          backgroundColor:
+                              StaticData.button, // Background color
                           minimumSize: const Size.fromHeight(50),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(20),
@@ -140,8 +143,9 @@ class _LoginState extends State<Login> {
                               _controllerPassword.text);
                         },
                         child: Text(languageProvider.getCurrentData('login'),
-                            style:  TextStyle(
-                                fontSize: 20, fontFamily: StaticData.fontFamily)),
+                            style: TextStyle(
+                                fontSize: 20,
+                                fontFamily: StaticData.fontFamily)),
                       );
                     })
                   ],

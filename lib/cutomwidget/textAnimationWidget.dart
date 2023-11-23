@@ -17,7 +17,7 @@ class _TextAnimationWidgetState extends State<TextAnimationWidget>
 
     // Create an animation controller
     _controller = AnimationController(
-      duration: Duration(seconds: 1),
+      duration: const Duration(seconds: 1),
       vsync: this,
     );
 
@@ -29,8 +29,8 @@ class _TextAnimationWidgetState extends State<TextAnimationWidget>
 
     // Create a position animation
     _positionAnimation = Tween<Offset>(
-      begin: Offset(-5.0, 0.0),
-      end: Offset(5.0, 0.0),
+      begin: const Offset(-5.0, 0.0),
+      end: const Offset(5.0, 0.0),
     ).animate(_controller);
 
     // Start the animation
@@ -55,8 +55,8 @@ class _TextAnimationWidgetState extends State<TextAnimationWidget>
           offset: _positionAnimation.value,
           child: Opacity(
             opacity: _fadeAnimation.value,
-            child: Text(
-              'التنبهات',
+            child: const Text(
+              '',
               style: TextStyle(
                 fontSize: 24.0,
               ),

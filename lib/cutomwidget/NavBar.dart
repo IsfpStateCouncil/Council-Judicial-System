@@ -27,6 +27,7 @@ class NavBar extends StatefulWidget {
 class _NavBarState extends State<NavBar> {
   String? userName;
   String? password;
+  String? arabicName;
   static const home = 'home_screen';
   static const datatableSearch = 'parameter_search';
   static const lisrNotification = 'notification_list_screen';
@@ -41,6 +42,7 @@ class _NavBarState extends State<NavBar> {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     userName = prefs.getString('userName');
     password = prefs.getString('password');
+    arabicName = prefs.getString('arabicFullName');
     if (mounted) {
       // Ensure the widget is still in the tree before calling setState
       setState(() {});
@@ -64,12 +66,14 @@ class _NavBarState extends State<NavBar> {
             height: 70, // Set your desired height
           ),
           Text(
-            "$userName",
+            "$arabicName",
+            textAlign: TextAlign.center,
             style: TextStyle(
-                fontSize: 40,
-                color: StaticData.font,
-                fontFamily: StaticData.fontFamily),
-            textAlign: TextAlign.right,
+              fontSize: 25,
+              color: StaticData.font,
+              fontFamily: StaticData.fontFamily,
+            ),
+            //textAlign: TextAlign.right,
           ),
           const Divider(thickness: 2),
           Align(
@@ -85,7 +89,7 @@ class _NavBarState extends State<NavBar> {
                     fontSize: 20,
                     color: StaticData.font,
                     fontFamily: StaticData.fontFamily),
-                textAlign: TextAlign.right,
+                //textAlign: TextAlign.right,
               ),
               //leading: const Icon(Icons.home),
               onTap: () {
@@ -116,7 +120,7 @@ class _NavBarState extends State<NavBar> {
                     fontSize: 20,
                     color: StaticData.font,
                     fontFamily: StaticData.fontFamily),
-                textAlign: TextAlign.right,
+                //  textAlign: TextAlign.right,
               ),
               //leading: const Icon(Icons.home),
               onTap: () {
@@ -148,7 +152,7 @@ class _NavBarState extends State<NavBar> {
                     fontSize: 20,
                     color: StaticData.font,
                     fontFamily: StaticData.fontFamily),
-                textAlign: TextAlign.right,
+                //  textAlign: TextAlign.right,
               ),
               onTap: () {
                 BarChartAPIState.loopingFlag = 0;
@@ -182,7 +186,7 @@ class _NavBarState extends State<NavBar> {
                     fontSize: 20,
                     color: StaticData.font,
                     fontFamily: StaticData.fontFamily),
-                textAlign: TextAlign.right,
+                //  textAlign: TextAlign.right,
               ),
               onTap: () async {
                 BarChartAPIState.loopingFlag = 0;
