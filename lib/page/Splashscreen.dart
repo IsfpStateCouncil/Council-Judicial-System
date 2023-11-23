@@ -21,14 +21,15 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
+    print("object");
     checkConnection(context, "splash_screen");
-    return Scaffold(
+    return const Scaffold(
       body: CircularProgressIndicator(),
     );
   }
 }
 
-Future<int> user_exist() async {
+Future<int> userExist() async {
   String? userName, password; //,id;
   final SharedPreferences prefs = await SharedPreferences.getInstance();
   //id = prefs.getString("id");

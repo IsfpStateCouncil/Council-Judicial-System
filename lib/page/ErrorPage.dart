@@ -12,15 +12,9 @@ class ErrorPage extends StatelessWidget {
     final languageProvider = Provider.of<LanguageProvider>(context);
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: StaticData.appBarColor, //<-- SEE HERE
-        title: Text(
-          "${languageProvider.getCurrentData('EgyptianStateCouncil')}",
-          style: TextStyle(
-            fontFamily: StaticData.fontFamily,
-            // Add other text styles as needed
-          ),
-        ),
+        backgroundColor: Color.fromARGB(255, 240, 162, 46), //<-- SEE HERE
 
+        title: Text(languageProvider.getCurrentData('EgyptianStateCouncil')),
         elevation: 0,
         actions: [
           Padding(
@@ -46,7 +40,7 @@ class ErrorPage extends StatelessWidget {
             ),
             const SizedBox(height: 100),
             Text(
-              "خطأ في اسم المستخدم او كلمة السر",
+              languageProvider.getCurrentData('errorinusernameorpassword'),
               //_boxLogin.get("errorMessage"),
               style: TextStyle(
                 fontFamily: StaticData.fontFamily,fontSize: 20,color: StaticData.font

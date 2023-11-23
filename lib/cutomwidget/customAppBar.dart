@@ -7,23 +7,25 @@ import '../providerclasses.dart/controllerNotification.dart';
 
 class CustomAppBar extends StatelessWidget {
   CustomAppBar({
-    super.key, this.languageProvider,
+    super.key,
+    this.languageProvider,
   });
-final languageProvider ;
+  final languageProvider;
   @override
   Widget build(BuildContext context) {
     return AppBar(
-        backgroundColor: StaticData.appBarColor, //<-- SEE HERE
-        title: Text(
-          "${languageProvider.getCurrentData('EgyptianStateCouncil')}",
-          style: TextStyle(
-            fontFamily: StaticData.fontFamily,
-            // Add other text styles as needed
-          ),
+      backgroundColor: StaticData.appBarColor, //<-- SEE HERE
+      title: Text(
+        "${languageProvider.getCurrentData('EgyptianStateCouncil')}",
+        style: TextStyle(
+          fontFamily: StaticData.fontFamily,
+          // Add other text styles as needed
         ),
-        centerTitle: true,
-        elevation: 0,
-        leading: badges.Badge(
+      ),
+      centerTitle: true,
+      elevation: 0,
+      actions: [
+        badges.Badge(
           badgeContent: Consumer<ProviderNotificationModel>(
               builder: (context, providerNotificationModel, child) {
             return Text(
@@ -51,7 +53,7 @@ final languageProvider ;
             );
           },
         ),
-        actions: [],
-      );
+      ],
+    );
   }
 }

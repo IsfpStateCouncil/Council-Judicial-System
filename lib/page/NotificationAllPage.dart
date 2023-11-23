@@ -45,7 +45,7 @@ class _NotificationAllPageState extends State<NotificationAllPage> {
     return Consumer<ProviderNotificationAllModel>(
         builder: (context, providerNotificationAllModel, child) {
       void getDataFromProvider() async {
-        SharedPreferences userData = await PublicShread().getSheardUser();
+        SharedPreferences userData = await PublicShread.getSheardUser();
         userName = userData.getString("userName").toString();
         password = userData.getString("password").toString();
         userType = userData.getString("userType");
@@ -69,8 +69,10 @@ class _NotificationAllPageState extends State<NotificationAllPage> {
         appBar: PreferredSize(
             preferredSize:
                 Size.fromHeight(getSizePage(context, 2, 7, "appBar")),
-            child: CustomAppBar(languageProvider: languageProvider,)),
-        endDrawer: NavBar(
+            child: CustomAppBar(
+              languageProvider: languageProvider,
+            )),
+        drawer: NavBar(
             context: context, currentRoute: NotificationAllPage.routeName),
         body: providerNotificationAllModel.dataNotificationModel.isEmpty
             ? const Center(

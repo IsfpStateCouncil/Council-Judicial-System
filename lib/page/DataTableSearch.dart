@@ -37,10 +37,6 @@ class DataTableSearch extends State<parameterSearch> {
   final TextEditingController _controllerCaseNumber = TextEditingController();
   final TextEditingController _controllerFromDate = TextEditingController();
   final TextEditingController _controllerToDate = TextEditingController();
-  String serailNumber = "رقم المسلسل";
-  String year = "السنة";
-  String dateFrom = "من تاريخ";
-  String dateTo = "الي تاريخ";
   String routeName = "/parameterSearch";
   void Function()? onTapDate;
   Future<List<UserData>> data = Future.value([]);
@@ -95,16 +91,17 @@ class DataTableSearch extends State<parameterSearch> {
             children: [
               CustomTextFieldSearch(
                   controllerCaseNumber: _controllerCaseNumber,
-                  labelText: serailNumber),
+                  labelText: languageProvider.getCurrentData('squance')),
               CustomTextFieldSearch(
-                  controllerCaseNumber: _controllerCaseYear, labelText: year),
-              const Text(
-                "حالة الدعوي",
-                style: TextStyle(fontWeight: FontWeight.bold),
+                  controllerCaseNumber: _controllerCaseYear,
+                  labelText: languageProvider.getCurrentData('year')),
+              Text(
+                languageProvider.getCurrentData('casestatus'),
+                style: const TextStyle(fontWeight: FontWeight.bold),
               ),
               DropdownButton(
                 value: dropdownvalue,
-                hint: const Text('حالة الدعوي'),
+                hint: Text(languageProvider.getCurrentData('casestatus')),
                 items: providerDataTableSearch.datacaseDataList.map((item) {
                   return DropdownMenuItem(
                     value: item.id.toString(),
@@ -119,13 +116,13 @@ class DataTableSearch extends State<parameterSearch> {
                   });
                 },
               ),
-              const Text(
-                "العام القضائي",
-                style: TextStyle(fontWeight: FontWeight.bold),
+              Text(
+                languageProvider.getCurrentData('casestatus'),
+                style: const TextStyle(fontWeight: FontWeight.bold),
               ),
               DropdownButton<String>(
                 value: dropdownvalueJudgicalYea,
-                hint: const Text('العام القضائي"'),
+                hint: Text(languageProvider.getCurrentData('casestatus')),
                 items: providerDataTableSearch.JudgicalYears.map<
                     DropdownMenuItem<String>>((item) {
                   return DropdownMenuItem<String>(
@@ -146,9 +143,10 @@ class DataTableSearch extends State<parameterSearch> {
               ),
               CustomTextFieldCurrenDate(
                   controllerFromDate: _controllerFromDate,
-                  lableString: dateFrom),
+                  lableString: languageProvider.getCurrentData('datefrom')),
               CustomTextFieldCurrenDate(
-                  controllerFromDate: _controllerToDate, lableString: dateTo),
+                  controllerFromDate: _controllerToDate,
+                  lableString: languageProvider.getCurrentData('dateTo')),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   primary: StaticData.button, // Background color
@@ -174,28 +172,28 @@ class DataTableSearch extends State<parameterSearch> {
                     print("Length of data: $length");
                   });
                 },
-                child: const Text("بحث"),
+                child: Text(languageProvider.getCurrentData('search')),
               ),
               const SizedBox(
                 height: 20,
               ),
-              const ListTile(
+              ListTile(
                 leading: CircleAvatar(
-                  child: Text(
-                    "رقم الدعوى",
-                    style: TextStyle(fontSize: 13),
-                  ),
                   radius: 40,
+                  child: Text(
+                    languageProvider.getCurrentData('EgyptianStateCouncil'),
+                    style: const TextStyle(fontSize: 13),
+                  ),
                 ),
-                title: Text("المحكمة",
-                    style: TextStyle(
+                title: Text(languageProvider.getCurrentData('thecourt'),
+                    style: const TextStyle(
                         fontSize: 20,
                         color: Colors.black,
                         fontWeight: FontWeight.bold)),
-                subtitle: Text(""),
+                subtitle: const Text(""),
                 trailing: Text(
-                  "الجلسة القادمة",
-                  style: TextStyle(fontWeight: FontWeight.bold),
+                  languageProvider.getCurrentData('thenextsession'),
+                  style: const TextStyle(fontWeight: FontWeight.bold),
                 ),
               ),
               FutureBuilder<List<UserData>>(
