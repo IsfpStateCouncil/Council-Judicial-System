@@ -80,7 +80,9 @@ class CustomAppBarState extends State<CustomAppBar> {
           badgeContent: Consumer<ProviderNotificationModel>(
               builder: (context, providerNotificationModel, child) {
             return Text(
-                "${providerNotificationModel.dataNotificationModel.length}");
+              "${providerNotificationModel.dataNotificationModel.length}",
+              style: TextStyle(color: Colors.white),
+            );
           }),
           position: badges.BadgePosition.topEnd(top: 5, end: 5),
           child: IconButton(
@@ -93,14 +95,14 @@ class CustomAppBarState extends State<CustomAppBar> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => const NotificationPage()),
+                    builder: (context) => const NotificationPage( notificationType: '',)),
               );
             },
           ),
           onTap: () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => const NotificationPage()),
+              MaterialPageRoute(builder: (context) => const NotificationPage(notificationType: '',)),
             );
           },
         ),

@@ -4,6 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../data/staticdata.dart';
 import '../functions/mediaquery.dart';
 
+import '../page/NotificationList.dart';
 import '../providerclasses.dart/controllerNotification.dart';
 import '../providerclasses.dart/providerlanguage.dart';
 import 'cutomMaterialApp.dart';
@@ -35,8 +36,12 @@ class BodyHomePage extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.all(5),
         child: GridView(
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2, crossAxisSpacing: 10, mainAxisSpacing: 10),
+          gridDelegate: MediaQuery.of(context).orientation.toString() ==
+                  "Orientation.landscape"
+              ? SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 3, crossAxisSpacing: 10, mainAxisSpacing: 10)
+              : SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2, crossAxisSpacing: 10, mainAxisSpacing: 10),
           primary: false,
           padding: const EdgeInsets.all(10),
           children: <Widget>[
@@ -63,31 +68,65 @@ class BodyHomePage extends StatelessWidget {
   }
 
   Widget cellDesign(
-      BuildContext context, String type, IconData icon, int count) {
+    BuildContext context,
+    String type,
+    IconData icon,
+    int count,
+  ) {
     return Visibility(
-        visible: true,
+      visible: true,
+      child: GestureDetector(
+        onTap: () {
+          Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) =>  NotificationPage(notificationType: type,)),
+            );
+        },
         child: Card(
           elevation: 10,
-          color:
-              StaticData.appBarColor, // Adjust the shadow elevation as needed
+          color: StaticData.button,
           shape: RoundedRectangleBorder(
-            borderRadius:
-                BorderRadius.circular(5), // Adjust the corner radius as needed
+            borderRadius: BorderRadius.circular(5),
           ),
-
           child: Container(
-              //padding: EdgeInsets.only(top: 5, left: 5),
-              height: getSizePage(context, 2, 18, namePage),
-              width: getSizePage(context, 1, 100, namePage),
-              child: CutomMaterialApp(
-                count: count,
-                name:
-                    languageProvider.getCurrentData(type), //"adjurndedSessions"
-                color: StaticData.button,
-                iconData: icon,
-                textColor: StaticData.backgroundColors,
-                fontFamily: StaticData.fontFamily,
-              )),
-        ));
+            padding: EdgeInsets.all(10), // Adjust padding as needed
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Icon(
+                  icon,
+                  size: 40, // Adjust the size according to your needs
+                  color: StaticData.backgroundColors, // Add color to the icon
+                ),
+                SizedBox(height: 5),
+                Text(
+                  languageProvider.getCurrentData(type),
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                    color: StaticData.backgroundColors,
+                    fontFamily: StaticData.fontFamily,
+                    fontSize:
+                        17, // Adjust the font size according to your needs
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                SizedBox(height: 5),
+                Text(
+                  '$count',
+                  style: TextStyle(
+                    color: StaticData.backgroundColors,
+                    fontFamily: StaticData.fontFamily,
+                    fontSize:
+                        20, // Adjust the font size according to your needs
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
   }
 }

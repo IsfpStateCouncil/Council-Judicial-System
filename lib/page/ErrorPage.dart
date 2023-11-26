@@ -1,3 +1,4 @@
+import 'package:council_of_state/data/staticdata.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -21,7 +22,7 @@ class ErrorPage extends StatelessWidget {
             child: DecoratedBox(
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                border: Border.all(color: Colors.white),
+                border: Border.all(color: StaticData.backgroundColors),
               ),
             ),
           )
@@ -41,7 +42,10 @@ class ErrorPage extends StatelessWidget {
             Text(
               languageProvider.getCurrentData('errorinusernameorpassword'),
               //_boxLogin.get("errorMessage"),
-              style: Theme.of(context).textTheme.headlineLarge,
+              style: TextStyle(
+                fontFamily: StaticData.fontFamily,fontSize: 20,color: StaticData.font
+                // Add other text styles as needed
+              ),
               textAlign: TextAlign.center,
             ),
           ],

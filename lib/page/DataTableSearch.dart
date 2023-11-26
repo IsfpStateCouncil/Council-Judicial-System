@@ -2,14 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import '../cutomwidget/NavBar.dart';
+import '../cutomwidget/customAppBar.dart';
 import '../cutomwidget/customTextFieldCurrentDate.dart';
 import '../cutomwidget/customTextFieldSearch.dart';
 
+import '../functions/mediaquery.dart';
 import '../model/userModel.dart';
 import '../providerclasses.dart/provicerdatatablesearch.dart';
 import '../api/CRUD.dart';
 import '../providerclasses.dart/providerlanguage.dart';
 import '../data/staticdata.dart';
+import 'NotificationAllPage.dart';
 
 class parameterSearch extends StatefulWidget {
   const parameterSearch({
@@ -73,17 +76,16 @@ class DataTableSearch extends State<parameterSearch> {
         i++;
       }
       //providerDataTableSearch.getAllJudgueYears();
+      final languageProvider = Provider.of<LanguageProvider>(context);
       return Scaffold(
-        drawer: NavBar(
-          context: context,
-          currentRoute: parameterSearch.routeName,
-        ),
-        appBar: AppBar(
-          backgroundColor:
-              const Color.fromARGB(255, 240, 162, 46), //<-- SEE HERE
-          title: Text(languageProvider.getCurrentData('EgyptianStateCouncil')),
-          elevation: 0,
-        ),
+        appBar: PreferredSize(
+            preferredSize:
+                Size.fromHeight(getSizePage(context, 2, 7, "appBar")),
+            child: CustomAppBar(
+              languageProvider: languageProvider,
+            )),
+        endDrawer: NavBar(
+            context: context, currentRoute: NotificationAllPage.routeName),
         body: SingleChildScrollView(
           child: Column(
             children: [
@@ -147,7 +149,7 @@ class DataTableSearch extends State<parameterSearch> {
                   lableString: languageProvider.getCurrentData('dateTo')),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  primary: Colors.orange, // Background color
+                  primary: StaticData.button, // Background color
                   minimumSize: const Size.fromHeight(50),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(20),

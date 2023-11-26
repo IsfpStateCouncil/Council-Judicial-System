@@ -125,15 +125,15 @@ class _NavBarState extends State<NavBar> {
               //leading: const Icon(Icons.home),
               onTap: () {
                 BarChartAPIState.loopingFlag = 0;
-                if (widget.currentRoute != lisrNotification) {
+                //if (widget.currentRoute != lisrNotification) {
                   Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(
                         builder: (context) => const NotificationAllPage()),
                   );
-                } else {
-                  Navigator.of(context).pop();
-                }
+                //} else {
+                //  Navigator.of(context).pop();
+               // }
               },
             ),
           ),
