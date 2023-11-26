@@ -29,7 +29,9 @@ class CustomAppBar extends StatelessWidget {
           badgeContent: Consumer<ProviderNotificationModel>(
               builder: (context, providerNotificationModel, child) {
             return Text(
-                "${providerNotificationModel.dataNotificationModel.length}");
+              "${providerNotificationModel.dataNotificationModel.length}",
+              style: TextStyle(color: Colors.white),
+            );
           }),
           position: badges.BadgePosition.topEnd(top: 5, end: 5),
           child: IconButton(
@@ -42,14 +44,14 @@ class CustomAppBar extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => const NotificationPage()),
+                    builder: (context) => const NotificationPage( notificationType: '',)),
               );
             },
           ),
           onTap: () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => const NotificationPage()),
+              MaterialPageRoute(builder: (context) => const NotificationPage(notificationType: '',)),
             );
           },
         ),
