@@ -129,7 +129,7 @@ class _NotificationAllPageState extends State<NotificationAllPage> {
                             providerNotificationAllModel
                                 .dataNotificationModel[index]
                                 .notificationDataArabic!,
-                            textDirection: StaticData.arabicTextDirection,
+                            // textDirection: StaticData.arabicTextDirection,
                             style: TextStyle(
                                 color: StaticData.font,
                                 fontSize: 18,
@@ -138,7 +138,7 @@ class _NotificationAllPageState extends State<NotificationAllPage> {
                           ),
                           subtitle: Text(
                             notification.notificationDesc ?? '',
-                            textDirection: StaticData.arabicTextDirection,
+                            // textDirection: StaticData.arabicTextDirection,
                             style: TextStyle(
                                 color: StaticData.font,
                                 fontSize: 16,

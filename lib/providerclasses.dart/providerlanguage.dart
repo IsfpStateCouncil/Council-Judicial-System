@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 class LanguageProvider extends ChangeNotifier {
   String? language;
+  Locale? locale;
   Map<String, dynamic> languageDataAr = {
     'ar': {
       //////////////// Home() ////////////
@@ -86,17 +87,17 @@ class LanguageProvider extends ChangeNotifier {
       "texthintsearch": "Search .....",
     }
   };
-  void changelanguage(String type) {
+  void changelanguage(String? type) {
     language = type;
+    locale = Locale(type!);
     notifyListeners();
   }
 
   String getCurrentData(String key) {
-    print(language);
     if (language == "en") {
       return languageDataEn['en'][key];
     } else {
-      return languageDataEn['en'][key];
+      return languageDataAr['ar'][key];
     }
   }
 }

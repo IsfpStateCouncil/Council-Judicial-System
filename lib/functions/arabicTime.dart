@@ -1,7 +1,16 @@
+import 'package:intl/intl.dart';
 import 'package:jiffy/jiffy.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-Future<String> arabicTime(String date) async {
-  await Jiffy.locale("ar");
+Future<String> dataWithCurrentLanguage(String date) async {
+  SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+  String? language = sharedPreferences.getString("language");
+  await Jiffy.locale(language);
   String? arabicDate = Jiffy(date).yMMMMEEEEdjm;
   return arabicDate;
+}
+
+Future<String> englishDate(DateTime date) async {
+  String formattedDate = await DateFormat.yMMMEd().format(date);
+  return formattedDate;
 }

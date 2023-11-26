@@ -3,6 +3,7 @@ class NotificationModel {
   String? notificationData;
   String? notificationDesc;
   String? notificationDataArabic;
+  String? notificationDataEnglish;
   String? opened;
   int? userId;
 
@@ -12,7 +13,8 @@ class NotificationModel {
       this.notificationDesc,
       this.opened,
       this.userId,
-      this.notificationDataArabic});
+      this.notificationDataArabic,
+      this.notificationDataEnglish});
 
   NotificationModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];

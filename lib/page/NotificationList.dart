@@ -150,10 +150,9 @@ class _NotificationPageState extends State<NotificationPage> {
                                 contentPadding: const EdgeInsets.all(16),
                                 title: Text(
                                   providerNotificationModel
-                                          .dataNotificationModel[index]
-                                          .notificationDataArabic ??
-                                      '',
-                                  textDirection: StaticData.arabicTextDirection,
+                                      .dataNotificationModel[index]
+                                      .notificationDataArabic!,
+                                  // textDirection: StaticData.arabicTextDirection,
                                   style: TextStyle(
                                       color: StaticData.font,
                                       fontFamily: StaticData.fontFamily,
@@ -162,7 +161,7 @@ class _NotificationPageState extends State<NotificationPage> {
                                 ),
                                 subtitle: Text(
                                   notification.notificationDesc ?? '',
-                                  textDirection: StaticData.arabicTextDirection,
+                                  // textDirection: StaticData.arabicTextDirection,
                                   style: TextStyle(
                                       color: StaticData.font,
                                       fontSize: 16,

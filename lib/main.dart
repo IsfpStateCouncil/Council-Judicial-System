@@ -20,11 +20,17 @@ Future<void> main() async {
   await FirebaseApi().initNotifications();
   SharedPreferences sharedPreferences = await PublicShread.getSheardUser();
   currentLanguage = sharedPreferences.getString("language");
+  if (currentLanguage == "") {
+    sharedPreferences.setString("language", "en");
+    currentLanguage = sharedPreferences.getString("language");
+  }
+
   runApp(MultiProvider(
     providers: [
       ChangeNotifierProvider(create: (context) => ProviderNotificationModel()),
-      ChangeNotifierProvider<LanguageProvider>(
-          create: (context) => LanguageProvider()),
+      ChangeNotifierProvider<LanguageProvider>(create: (context) {
+        return LanguageProvider();
+      }),
       ChangeNotifierProvider<ProviderDataTableSearch>(
           create: (context) => ProviderDataTableSearch()),
       ChangeNotifierProvider(
@@ -42,7 +48,7 @@ Future<void> main() async {
           Locale('ar'),
         ],
         locale: currentLanguage == null
-            ? const Locale('ar')
+            ? const Locale('en')
             : Locale(currentLanguage),
         debugShowCheckedModeBanner: false,
         theme: ThemeData.from(
