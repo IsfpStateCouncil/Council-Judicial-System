@@ -128,7 +128,7 @@ class _NavBarState extends State<NavBar> {
               onTap: () {
                 BarChartAPIState.loopingFlag = 0;
                 //if (widget.currentRoute != lisrNotification) {
-                Navigator.pushReplacement(
+                Navigator.push(
                   context,
                   MaterialPageRoute(
                       builder: (context) => const NotificationAllPage()),
@@ -136,40 +136,6 @@ class _NavBarState extends State<NavBar> {
                 //} else {
                 //  Navigator.of(context).pop();
                 // }
-              },
-            ),
-          ),
-          const Divider(thickness: 2),
-          Align(
-            alignment: Alignment.centerRight,
-            child: ListTile(
-              trailing: const Icon(
-                Icons.wysiwyg,
-                color: StaticData.button, // Set your desired color
-                size: 32,
-              ),
-              title: Text(
-                languageProvider.getCurrentData('advancedSearch'),
-                style: TextStyle(
-                    fontSize: 20,
-                    color: StaticData.font,
-                    fontFamily: StaticData.fontFamily),
-                //  textAlign: TextAlign.right,
-              ),
-              onTap: () {
-                BarChartAPIState.loopingFlag = 0;
-                if (widget.currentRoute != datatableSearch) {
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => parameterSearch(
-                              password: password!,
-                              userName: userName!,
-                            )),
-                  );
-                } else {
-                  Navigator.of(context).pop();
-                }
               },
             ),
           ),

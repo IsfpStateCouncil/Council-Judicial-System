@@ -18,7 +18,9 @@ import '../providerclasses.dart/providerlanguage.dart';
 
 class NotificationPage extends StatefulWidget {
   final String? notificationType;
-  const NotificationPage({super.key, required this.notificationType});
+  final int? lengthNotification;
+  const NotificationPage(
+      {super.key, required this.notificationType, this.lengthNotification});
   static const routeName = "notification_list_screen";
   @override
   State<NotificationPage> createState() => _NotificationPageState();
@@ -34,7 +36,8 @@ class _NotificationPageState extends State<NotificationPage> {
   @override
   Widget build(BuildContext context) {
     final languageProvider = Provider.of<LanguageProvider>(context);
-    if (widget.notificationType == "sessions") {
+    if (widget.notificationType == "sessions" &&
+        widget.lengthNotification != 0) {
       return Selector<ProviderNotificationModel, List<NotificationModel>>(
           selector: (context, providerNotificationModel) =>
               providerNotificationModel.dataNotificationModelSession,
@@ -69,9 +72,8 @@ class _NotificationPageState extends State<NotificationPage> {
                       Size.fromHeight(getSizePage(context, 2, 7, "appBar")),
                   child: CustomAppBar(
                     languageProvider: languageProvider,
+                    namePage: NotificationPage.routeName,
                   )),
-              drawer: NavBar(
-                  context: context, currentRoute: NotificationPage.routeName),
               body: providerNotificationModel
                       .dataNotificationModelSession.isEmpty
                   ? const Center(
@@ -186,7 +188,8 @@ class _NotificationPageState extends State<NotificationPage> {
                     ]),
             );
           });
-    } else if (widget.notificationType == "adjurndedSessions") {
+    } else if (widget.notificationType == "adjurndedSessions" &&
+        widget.lengthNotification != 0) {
       return Selector<ProviderNotificationModel, List<NotificationModel>>(
           selector: (context, providerNotificationModel) =>
               providerNotificationModel.dataNotificationModelTempSession,
@@ -221,9 +224,8 @@ class _NotificationPageState extends State<NotificationPage> {
                       Size.fromHeight(getSizePage(context, 2, 7, "appBar")),
                   child: CustomAppBar(
                     languageProvider: languageProvider,
+                    namePage: NotificationPage.routeName,
                   )),
-              drawer: NavBar(
-                  context: context, currentRoute: NotificationPage.routeName),
               body: providerNotificationModel
                       .dataNotificationModelTempSession.isEmpty
                   ? const Center(
@@ -340,10 +342,11 @@ class _NotificationPageState extends State<NotificationPage> {
                     ]),
             );
           });
-    } else if (widget.notificationType == "requestedOrder" ||
-        widget.notificationType == "sendedOrder" ||
-        widget.notificationType == "suits" ||
-        widget.notificationType == "fines") {
+    } else if ((widget.notificationType == "requestedOrder" ||
+            widget.notificationType == "sendedOrder" ||
+            widget.notificationType == "suits" ||
+            widget.notificationType == "fines") &&
+        widget.lengthNotification != 0) {
       return Selector<ProviderNotificationModel, List<NotificationModel>>(
           selector: (context, providerNotificationModel) =>
               providerNotificationModel.dataNotificationModelFine,
@@ -378,9 +381,8 @@ class _NotificationPageState extends State<NotificationPage> {
                       Size.fromHeight(getSizePage(context, 2, 7, "appBar")),
                   child: CustomAppBar(
                     languageProvider: languageProvider,
+                    namePage: NotificationPage.routeName,
                   )),
-              drawer: NavBar(
-                  context: context, currentRoute: NotificationPage.routeName),
               body: providerNotificationModel.dataNotificationModelFine.isEmpty
                   ? const Center(
                       child: CircularProgressIndicator(),
@@ -493,6 +495,54 @@ class _NotificationPageState extends State<NotificationPage> {
                     ]),
             );
           });
+    } else if (widget.lengthNotification == 0) {
+      return Selector<ProviderNotificationModel, List<NotificationModel>>(
+        selector: (context, providerNotificationModel) =>
+            providerNotificationModel.myNotificationList,
+        builder: (context, myNotificationList, child) {
+          final providerNotificationModel =
+              Provider.of<ProviderNotificationModel>(context, listen: false);
+
+          // Check if the length of notifications is zero
+          if (myNotificationList.isEmpty) {
+            return Scaffold(
+              appBar: PreferredSize(
+                preferredSize:
+                    Size.fromHeight(getSizePage(context, 2, 7, "appBar")),
+                child: CustomAppBar(
+                  languageProvider: languageProvider,
+                  namePage: NotificationPage.routeName,
+                ),
+              ),
+              body: Center(
+                child: Text('No notifications available.'),
+              ),
+            );
+          }
+
+          // Rest of your existing code...
+          return Scaffold(
+            appBar: PreferredSize(
+              preferredSize:
+                  Size.fromHeight(getSizePage(context, 2, 7, "appBar")),
+              child: CustomAppBar(
+                languageProvider: languageProvider,namePage: NotificationPage.routeName,
+              ),
+            ),
+            body: Column(
+              children: [
+                SearchTextField(
+                  searchController: searchController,
+                  onChanged: (value) {
+                    providerNotificationModel.searchValue = value;
+                    providerNotificationModel.filterData(value);
+                  },
+                ),
+              ],
+            ),
+          );
+        },
+      );
     } else {
       return Selector<ProviderNotificationModel, List<NotificationModel>>(
           selector: (context, providerNotificationModel) =>
@@ -528,9 +578,8 @@ class _NotificationPageState extends State<NotificationPage> {
                       Size.fromHeight(getSizePage(context, 2, 7, "appBar")),
                   child: CustomAppBar(
                     languageProvider: languageProvider,
+                    namePage: NotificationPage.routeName,
                   )),
-              drawer: NavBar(
-                  context: context, currentRoute: NotificationPage.routeName),
               body: providerNotificationModel.dataNotificationModel.isEmpty
                   ? const Center(
                       child: CircularProgressIndicator(),

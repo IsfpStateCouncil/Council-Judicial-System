@@ -67,10 +67,12 @@ class _NotificationAllPageState extends State<NotificationAllPage> {
       final languageProvider = Provider.of<LanguageProvider>(context);
       return Scaffold(
         appBar: PreferredSize(
-            preferredSize:
-                Size.fromHeight(getSizePage(context, 2, 7, "appBar")),
+            preferredSize: 
+            MediaQuery.of(context).orientation.toString() ==
+            "Orientation.landscape" ?
+               Size.fromHeight(getSizePage(context, 1, 7, "appBar")) :  Size.fromHeight(getSizePage(context, 2, 7, "appBar")), 
             child: CustomAppBar(
-              languageProvider: languageProvider,
+              languageProvider: languageProvider,namePage: NotificationAllPage.routeName,
             )),
         drawer: NavBar(
             context: context, currentRoute: NotificationAllPage.routeName),

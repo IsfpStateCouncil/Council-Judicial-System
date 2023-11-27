@@ -87,7 +87,7 @@ class _LoginState extends State<Login> {
                   ),
                   onEditingComplete: () => _focusNodePassword.requestFocus(),
                   validator: (String? value) {
-                    if (value == null || value.isEmpty) {
+                    if (value == null || value.trim().isEmpty) {
                       return languageProvider
                           .getCurrentData('plzEnterUserName');
                     }
@@ -150,12 +150,13 @@ class _LoginState extends State<Login> {
                           ),
                         ),
                         onPressed: () async {
-                          user_data.setterUser(_controllerUsername.text,
-                              _controllerPassword.text);
+                          var userName = _controllerUsername.text.trim();
+                          user_data.setterUser(userName,
+                              _controllerPassword.text.trim());
                           await user_data.login(
                               context,
-                              _controllerUsername.text,
-                              _controllerPassword.text);
+                              _controllerUsername.text.trim(),
+                              _controllerPassword.text.trim());
                         },
                         child: Text(languageProvider.getCurrentData('login'),
                             style: TextStyle(

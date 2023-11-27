@@ -101,7 +101,9 @@ class BarChartAPIState extends State<Home> {
         currentRoute: Home.routeName,
       ),
       appBar: PreferredSize(
-          preferredSize: Size.fromHeight(getSizePage(context, 2, 7, "appBar")),
+          preferredSize:   MediaQuery.of(context).orientation.toString() ==
+            "Orientation.landscape" ?
+               Size.fromHeight(getSizePage(context, 1, 7, "appBar")) :  Size.fromHeight(getSizePage(context, 2, 7, "appBar")),
           child: CustomAppBar(
             languageProvider: languageProvider,
           )),

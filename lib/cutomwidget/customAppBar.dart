@@ -9,10 +9,10 @@ import 'package:council_of_state/main.dart' as mainapp;
 
 class CustomAppBar extends StatefulWidget {
   final languageProvider;
-
+  final String? namePage;
   CustomAppBar({
     Key? key,
-    this.languageProvider,
+    this.languageProvider, this.namePage,
   }) : super(key: key);
 
   @override
@@ -21,7 +21,6 @@ class CustomAppBar extends StatefulWidget {
 
 class CustomAppBarState extends State<CustomAppBar> {
   String? currentLanguage;
-
   Future<void> getCurrentLanguage() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     currentLanguage = sharedPreferences.getString("language");
@@ -36,6 +35,7 @@ class CustomAppBarState extends State<CustomAppBar> {
   @override
   Widget build(BuildContext context) {
     getCurrentLanguage();
+    
     return AppBar(
       backgroundColor: StaticData.appBarColor, //<-- SEE HERE
       title: Text(
@@ -76,7 +76,7 @@ class CustomAppBarState extends State<CustomAppBar> {
                   style: const TextStyle(color: StaticData.button),
                 ),
         ),
-        badges.Badge(
+      widget.namePage != "notification_list_screen" && widget.namePage != "notification_All_list_screen" ?   badges.Badge(
           badgeContent: Consumer<ProviderNotificationModel>(
               builder: (context, providerNotificationModel, child) {
             return Text(
@@ -85,7 +85,8 @@ class CustomAppBarState extends State<CustomAppBar> {
             );
           }),
           position: badges.BadgePosition.topEnd(top: 5, end: 5),
-          child: IconButton(
+          
+               child: IconButton(
             icon: const Icon(
               Icons.notifications,
               color: StaticData.button,
@@ -104,8 +105,10 @@ class CustomAppBarState extends State<CustomAppBar> {
               context,
               MaterialPageRoute(builder: (context) => const NotificationPage(notificationType: '',)),
             );
-          },
-        ),
+          }
+         
+          ,
+        ) : Text(""),
       ],
     );
   }

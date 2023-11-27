@@ -79,7 +79,7 @@ class BodyHomePage extends StatelessWidget {
         onTap: () {
           Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) =>  NotificationPage(notificationType: type,)),
+              MaterialPageRoute(builder: (context) =>  NotificationPage(notificationType: type,lengthNotification:count )),
             );
         },
         child: Card(
