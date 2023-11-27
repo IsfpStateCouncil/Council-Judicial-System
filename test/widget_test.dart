@@ -6,9 +6,6 @@
 // tree, read text, and verify that the values of widget properties are correct.
 
 import 'package:council_of_state/page/Splashscreen.dart';
-import 'package:council_of_state/page/home.dart';
-import 'package:council_of_state/page/login.dart';
-import 'package:council_of_state/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 

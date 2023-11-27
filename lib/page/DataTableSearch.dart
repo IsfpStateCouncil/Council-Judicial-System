@@ -52,22 +52,6 @@ class DataTableSearch extends State<parameterSearch> {
 
   @override
   Widget build(BuildContext context) {
-    // SchedulerBinding.instance.addPostFrameCallback((_) async {
-    //   if (await InternetConnectionChecker().hasConnection) {
-    //     Navigator.of(context).pushAndRemoveUntil(
-    //         MaterialPageRoute(builder: (context) {
-    //       return user_exist() == 0 ? Login() : Home();
-    //     }), (Route<dynamic> route) => false);
-    //   } else {
-    //     Navigator.of(context).pushAndRemoveUntil(
-    //         MaterialPageRoute(builder: (context) {
-    //       return ConnectionError();
-    //     }), (Route<dynamic> route) => false);
-    //   }
-    // });
-    final languageProvider =
-        Provider.of<LanguageProvider>(context, listen: true);
-
     return MaterialApp(home: Consumer<ProviderDataTableSearch>(
         builder: (context, providerDataTableSearch, child) {
       if (i < 3) {

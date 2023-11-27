@@ -55,7 +55,6 @@ class BarChartAPIState extends State<Home> {
 
   void checkUser() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.setString("language", "ar");
     userName = prefs.getString('userName');
     password = prefs.getString('password');
 
@@ -68,16 +67,9 @@ class BarChartAPIState extends State<Home> {
     }
   }
 
-  Future<void> changeLanguage() async {}
   @override
   Widget build(BuildContext context) {
-    // arabicTime();
-    //   Locale myLocale = Localizations.localeOf(context);
-    //   print(myLocale.languageCode);
-    // ProviderNotificationModel provider =
-    //     Provider.of<ProviderNotificationModel>(context);
     if (loopingFlag < 1) {
-      //checkConnection(context, Home.routeName);
       checkUser();
       getDataNotification(context);
       loopingFlag = loopingFlag + 1;

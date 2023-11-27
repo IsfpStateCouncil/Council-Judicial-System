@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:council_of_state/data/staticdata.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -126,14 +128,14 @@ class _NavBarState extends State<NavBar> {
               onTap: () {
                 BarChartAPIState.loopingFlag = 0;
                 //if (widget.currentRoute != lisrNotification) {
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const NotificationAllPage()),
-                  );
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const NotificationAllPage()),
+                );
                 //} else {
                 //  Navigator.of(context).pop();
-               // }
+                // }
               },
             ),
           ),
@@ -192,9 +194,12 @@ class _NavBarState extends State<NavBar> {
                 BarChartAPIState.loopingFlag = 0;
                 final SharedPreferences prefs =
                     await SharedPreferences.getInstance();
+                String? name = prefs.getString("language");
                 await prefs.clear();
                 prefs.remove('userToken');
                 prefs.remove('userId');
+                prefs.remove("language");
+                //prefs.setString("language", name!);
                 Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(builder: (context) => const SplashScreen()),

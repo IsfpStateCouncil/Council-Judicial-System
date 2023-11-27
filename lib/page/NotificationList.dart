@@ -15,7 +15,6 @@ import '../api/CRUD.dart';
 import '../cutomwidget/NavBar.dart';
 import '../providerclasses.dart/controllerNotification.dart';
 import '../providerclasses.dart/providerlanguage.dart';
-import '../providerclasses.dart/providerlanguage.dart';
 
 class NotificationPage extends StatefulWidget {
   final String? notificationType;
@@ -341,7 +340,10 @@ class _NotificationPageState extends State<NotificationPage> {
                     ]),
             );
           });
-    } else if (widget.notificationType == "requestedOrder" || widget.notificationType == "sendedOrder"||widget.notificationType == "suits" ||widget.notificationType == "fines") {
+    } else if (widget.notificationType == "requestedOrder" ||
+        widget.notificationType == "sendedOrder" ||
+        widget.notificationType == "suits" ||
+        widget.notificationType == "fines") {
       return Selector<ProviderNotificationModel, List<NotificationModel>>(
           selector: (context, providerNotificationModel) =>
               providerNotificationModel.dataNotificationModelFine,
@@ -379,8 +381,7 @@ class _NotificationPageState extends State<NotificationPage> {
                   )),
               drawer: NavBar(
                   context: context, currentRoute: NotificationPage.routeName),
-              body: providerNotificationModel
-                      .dataNotificationModelFine.isEmpty
+              body: providerNotificationModel.dataNotificationModelFine.isEmpty
                   ? const Center(
                       child: CircularProgressIndicator(),
                     )
@@ -439,13 +440,11 @@ class _NotificationPageState extends State<NotificationPage> {
                                     {
                                       "notificationId":
                                           providerNotificationModel
-                                              .dataNotificationModelFine[
-                                                  index]
+                                              .dataNotificationModelFine[index]
                                               .id
                                               .toString(),
                                       "opended": providerNotificationModel
-                                          .dataNotificationModelFine[
-                                              index]
+                                          .dataNotificationModelFine[index]
                                           .opened
                                           .toString(),
                                       "userName": userName,
@@ -464,8 +463,7 @@ class _NotificationPageState extends State<NotificationPage> {
                                   contentPadding: const EdgeInsets.all(16),
                                   title: Text(
                                     providerNotificationModel
-                                            .dataNotificationModelFine[
-                                                index]
+                                            .dataNotificationModelFine[index]
                                             .notificationDataArabic ??
                                         '',
                                     textDirection:
@@ -601,45 +599,45 @@ class _NotificationPageState extends State<NotificationPage> {
                                       "password": password
                                     });
 
-                              // ignore: use_build_context_synchronously
-                              await getDataNotification(context);
-                            },
-                            child: Card(
-                              // Wrap each item in a Card for a better design
-                              elevation: 2,
-                              margin: const EdgeInsets.symmetric(
-                                  horizontal: 16, vertical: 8),
-                              child: ListTile(
-                                contentPadding: const EdgeInsets.all(16),
-                                title: Text(
-                                  providerNotificationModel
-                                      .dataNotificationModel[index]
-                                      .notificationDataArabic!,
-                                  // textDirection: StaticData.arabicTextDirection,
-                                  style: TextStyle(
-                                      color: StaticData.font,
-                                      fontFamily: StaticData.fontFamily,
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.bold),
+                                // ignore: use_build_context_synchronously
+                                await getDataNotification(context);
+                              },
+                              child: Card(
+                                // Wrap each item in a Card for a better design
+                                elevation: 2,
+                                margin: const EdgeInsets.symmetric(
+                                    horizontal: 16, vertical: 8),
+                                child: ListTile(
+                                  contentPadding: const EdgeInsets.all(16),
+                                  title: Text(
+                                    providerNotificationModel
+                                        .dataNotificationModel[index]
+                                        .notificationDataArabic!,
+                                    // textDirection: StaticData.arabicTextDirection,
+                                    style: TextStyle(
+                                        color: StaticData.font,
+                                        fontFamily: StaticData.fontFamily,
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                  subtitle: Text(
+                                    notification.notificationDesc ?? '',
+                                    // textDirection: StaticData.arabicTextDirection,
+                                    style: TextStyle(
+                                        color: StaticData.font,
+                                        fontSize: 16,
+                                        fontFamily: StaticData.fontFamily),
+                                  ),
+                                  trailing: const Icon(Icons.notifications),
                                 ),
-                                subtitle: Text(
-                                  notification.notificationDesc ?? '',
-                                  // textDirection: StaticData.arabicTextDirection,
-                                  style: TextStyle(
-                                      color: StaticData.font,
-                                      fontSize: 16,
-                                      fontFamily: StaticData.fontFamily),
-                                ),
-                                trailing: const Icon(Icons.notifications),
                               ),
-                            ),
-                          );
-                        },
+                            );
+                          },
+                        ),
                       ),
-                    ),
-                  ]),
-          );
-        });
+                    ]),
+            );
+          });
+    }
   }
-}
 }

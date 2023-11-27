@@ -89,11 +89,9 @@ class LanguageProvider extends ChangeNotifier {
   };
   void changelanguage(String? type) {
     language = type;
-    locale = Locale(type!);
-    notifyListeners();
   }
 
-  String getCurrentData(String key) {
+  getCurrentData(String key) {
     if (language == "en") {
       return languageDataEn['en'][key];
     } else {

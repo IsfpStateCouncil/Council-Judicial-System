@@ -1,6 +1,7 @@
 import 'package:council_of_state/functions/AfterBuild.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../data/staticdata.dart';
 import '../providerclasses.dart/providerUserData.dart';
 import '../providerclasses.dart/providerlanguage.dart';
@@ -24,11 +25,25 @@ class _LoginState extends State<Login> {
   final TextEditingController _controllerPassword = TextEditingController();
   bool _obscurePassword = true;
 
+  late SharedPreferences _sharedPreferences;
+  String? languge;
+  void initState() {
+    super.initState();
+    _loadLanguage(); // Load stored data when the widget initializes
+  }
+
+  Future<void> _loadLanguage() async {
+    _sharedPreferences = await SharedPreferences.getInstance();
+    setState(() {
+      languge = _sharedPreferences.getString('language') ?? '';
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     checkConnection(context, Login.routeName);
-    final languageProvider =
-        Provider.of<LanguageProvider>(context, listen: true);
+    final languageProvider = Provider.of<LanguageProvider>(context);
+    languageProvider.changelanguage(languge);
     return Scaffold(
       body: Container(
         color: StaticData.backgroundColors,

@@ -89,6 +89,26 @@ class ProviderNotificationModel extends ChangeNotifier {
     }
   }
 
+  Future<void> changeDataToCurrentLanguage() async {
+    for (int i = 0; dataNotificationModel.length - 1 > i; i++) {
+      dataNotificationModel[i].notificationDataArabic =
+          await dataWithCurrentLanguage(
+              dataNotificationModel[i].notificationData!);
+    }
+    for (int i = 0; dataNotificationModel.length - 1 > i; i++) {
+      dataNotificationModel[i].notificationDataArabic =
+          await dataWithCurrentLanguage(
+              dataNotificationModel[i].notificationData!);
+    }
+  }
+
+  Future<void> changeDateInList(List<NotificationModel> myList) async {
+    for (int i = 0; myList.length - 1 > i; i++) {
+      myList[i].notificationDataArabic =
+          await dataWithCurrentLanguage(myList[i].notificationData!);
+    }
+  }
+
   deleteTempData() {
     dataNotificationModel = [];
     dataNotificationModelFiltered = [];

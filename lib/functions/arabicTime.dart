@@ -9,8 +9,3 @@ Future<String> dataWithCurrentLanguage(String date) async {
   String? arabicDate = Jiffy(date).yMMMMEEEEdjm;
   return arabicDate;
 }
-
-Future<String> englishDate(DateTime date) async {
-  String formattedDate = await DateFormat.yMMMEd().format(date);
-  return formattedDate;
-}
