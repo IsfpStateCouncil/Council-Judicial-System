@@ -68,8 +68,12 @@ class _NotificationPageState extends State<NotificationPage> {
             });
             return Scaffold(
               appBar: PreferredSize(
-                  preferredSize:
-                      Size.fromHeight(getSizePage(context, 2, 7, "appBar")),
+                  preferredSize: MediaQuery.of(context)
+                              .orientation
+                              .toString() ==
+                          "Orientation.landscape"
+                      ? Size.fromHeight(getSizePage(context, 1, 7, "appBar"))
+                      : Size.fromHeight(getSizePage(context, 2, 7, "appBar")),
                   child: CustomAppBar(
                     languageProvider: languageProvider,
                     namePage: NotificationPage.routeName,
@@ -220,8 +224,12 @@ class _NotificationPageState extends State<NotificationPage> {
             });
             return Scaffold(
               appBar: PreferredSize(
-                  preferredSize:
-                      Size.fromHeight(getSizePage(context, 2, 7, "appBar")),
+                  preferredSize: MediaQuery.of(context)
+                              .orientation
+                              .toString() ==
+                          "Orientation.landscape"
+                      ? Size.fromHeight(getSizePage(context, 1, 7, "appBar"))
+                      : Size.fromHeight(getSizePage(context, 2, 7, "appBar")),
                   child: CustomAppBar(
                     languageProvider: languageProvider,
                     namePage: NotificationPage.routeName,
@@ -377,8 +385,12 @@ class _NotificationPageState extends State<NotificationPage> {
             });
             return Scaffold(
               appBar: PreferredSize(
-                  preferredSize:
-                      Size.fromHeight(getSizePage(context, 2, 7, "appBar")),
+                  preferredSize: MediaQuery.of(context)
+                              .orientation
+                              .toString() ==
+                          "Orientation.landscape"
+                      ? Size.fromHeight(getSizePage(context, 1, 7, "appBar"))
+                      : Size.fromHeight(getSizePage(context, 2, 7, "appBar")),
                   child: CustomAppBar(
                     languageProvider: languageProvider,
                     namePage: NotificationPage.routeName,
@@ -507,8 +519,10 @@ class _NotificationPageState extends State<NotificationPage> {
           if (myNotificationList.isEmpty) {
             return Scaffold(
               appBar: PreferredSize(
-                preferredSize:
-                    Size.fromHeight(getSizePage(context, 2, 7, "appBar")),
+                preferredSize: MediaQuery.of(context).orientation.toString() ==
+                        "Orientation.landscape"
+                    ? Size.fromHeight(getSizePage(context, 1, 7, "appBar"))
+                    : Size.fromHeight(getSizePage(context, 2, 7, "appBar")),
                 child: CustomAppBar(
                   languageProvider: languageProvider,
                   namePage: NotificationPage.routeName,
@@ -523,10 +537,13 @@ class _NotificationPageState extends State<NotificationPage> {
           // Rest of your existing code...
           return Scaffold(
             appBar: PreferredSize(
-              preferredSize:
-                  Size.fromHeight(getSizePage(context, 2, 7, "appBar")),
+              preferredSize: MediaQuery.of(context).orientation.toString() ==
+                      "Orientation.landscape"
+                  ? Size.fromHeight(getSizePage(context, 1, 7, "appBar"))
+                  : Size.fromHeight(getSizePage(context, 2, 7, "appBar")),
               child: CustomAppBar(
-                languageProvider: languageProvider,namePage: NotificationPage.routeName,
+                languageProvider: languageProvider,
+                namePage: NotificationPage.routeName,
               ),
             ),
             body: Column(
@@ -574,8 +591,12 @@ class _NotificationPageState extends State<NotificationPage> {
             });
             return Scaffold(
               appBar: PreferredSize(
-                  preferredSize:
-                      Size.fromHeight(getSizePage(context, 2, 7, "appBar")),
+                  preferredSize: MediaQuery.of(context)
+                              .orientation
+                              .toString() ==
+                          "Orientation.landscape"
+                      ? Size.fromHeight(getSizePage(context, 1, 7, "appBar"))
+                      : Size.fromHeight(getSizePage(context, 2, 7, "appBar")),
                   child: CustomAppBar(
                     languageProvider: languageProvider,
                     namePage: NotificationPage.routeName,

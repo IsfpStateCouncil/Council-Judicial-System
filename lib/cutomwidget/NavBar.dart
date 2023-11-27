@@ -32,7 +32,7 @@ class _NavBarState extends State<NavBar> {
   String? arabicName;
   static const home = 'home_screen';
   static const datatableSearch = 'parameter_search';
-  static const lisrNotification = 'notification_list_screen';
+  static const lisrNotification = 'notification_All_list_screen';
 
   @override
   void initState() {
@@ -97,7 +97,7 @@ class _NavBarState extends State<NavBar> {
               onTap: () {
                 BarChartAPIState.loopingFlag = 0;
                 if (widget.currentRoute != home) {
-                  Navigator.pushReplacement(
+                  Navigator.push(
                     context,
                     MaterialPageRoute(builder: (context) => const Home()),
                   );
@@ -127,15 +127,15 @@ class _NavBarState extends State<NavBar> {
               //leading: const Icon(Icons.home),
               onTap: () {
                 BarChartAPIState.loopingFlag = 0;
-                //if (widget.currentRoute != lisrNotification) {
+                if (widget.currentRoute != lisrNotification) {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
                       builder: (context) => const NotificationAllPage()),
                 );
-                //} else {
-                //  Navigator.of(context).pop();
-                // }
+                } else {
+                  Navigator.of(context).pop();
+                 }
               },
             ),
           ),
