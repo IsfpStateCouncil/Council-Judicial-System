@@ -12,9 +12,13 @@ class ErrorPage extends StatelessWidget {
     final languageProvider = Provider.of<LanguageProvider>(context);
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color.fromARGB(255, 240, 162, 46), //<-- SEE HERE
+        backgroundColor: StaticData.appBarColor, //<-- SEE HERE
 
-        title: Text(languageProvider.getCurrentData('EgyptianStateCouncil')),
+        title: Text(languageProvider.getCurrentData('EgyptianStateCouncil'),  style: TextStyle(
+                fontFamily: StaticData.fontFamily,fontSize: 20,color: StaticData.backgroundColors
+                // Add other text styles as needed
+              ),
+        ),
         elevation: 0,
         actions: [
           Padding(
