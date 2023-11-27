@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../data/staticdata.dart';
+import '../providerclasses.dart/providerlanguage.dart';
 
 class SearchTextField extends StatelessWidget {
   const SearchTextField({
@@ -14,6 +16,7 @@ class SearchTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final languageProvider = Provider.of<LanguageProvider>(context);
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
       child: TextField(
@@ -38,7 +41,7 @@ class SearchTextField extends StatelessWidget {
                 fontFamily: StaticData.fontFamily,
               ),
               hintTextDirection: StaticData.arabicTextDirection,
-              hintText: "بحث ....."),
+              hintText: languageProvider.getCurrentData('texthintsearch')),
           controller: searchController,
           onChanged: onChanged),
     );

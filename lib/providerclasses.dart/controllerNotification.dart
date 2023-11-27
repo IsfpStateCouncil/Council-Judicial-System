@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 import '../api/CRUD.dart';
 import '../functions/arabicTime.dart';
@@ -70,7 +71,8 @@ class ProviderNotificationModel extends ChangeNotifier {
 
         for (int i = 0; dataNotificationModel.length - 1 > i; i++) {
           dataNotificationModel[i].notificationDataArabic =
-              await arabicTime(dataNotificationModel[i].notificationData!);
+              await dataWithCurrentLanguage(
+                  dataNotificationModel[i].notificationData!);
         }
         notifyListeners();
         // print('casesData length: ${caseDataList.length}');
@@ -84,6 +86,26 @@ class ProviderNotificationModel extends ChangeNotifier {
     } catch (e) {
       print('Error fetching data: $e');
       return []; // Return an empty list in case of an error
+    }
+  }
+
+  Future<void> changeDataToCurrentLanguage() async {
+    for (int i = 0; dataNotificationModel.length - 1 > i; i++) {
+      dataNotificationModel[i].notificationDataArabic =
+          await dataWithCurrentLanguage(
+              dataNotificationModel[i].notificationData!);
+    }
+    for (int i = 0; dataNotificationModel.length - 1 > i; i++) {
+      dataNotificationModel[i].notificationDataArabic =
+          await dataWithCurrentLanguage(
+              dataNotificationModel[i].notificationData!);
+    }
+  }
+
+  Future<void> changeDateInList(List<NotificationModel> myList) async {
+    for (int i = 0; myList.length - 1 > i; i++) {
+      myList[i].notificationDataArabic =
+          await dataWithCurrentLanguage(myList[i].notificationData!);
     }
   }
 

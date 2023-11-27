@@ -15,20 +15,15 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
   @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     checkConnection(context, "splash_screen");
-    return Scaffold(
-      body: CircularProgressIndicator(),
+    return const Scaffold(
+      body: Center(child: CircularProgressIndicator()),
     );
   }
 }
 
-Future<int> user_exist() async {
+Future<int> userExist() async {
   String? userName, password; //,id;
   final SharedPreferences prefs = await SharedPreferences.getInstance();
   //id = prefs.getString("id");

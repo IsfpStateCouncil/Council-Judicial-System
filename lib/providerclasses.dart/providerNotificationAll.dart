@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 import '../api/CRUD.dart';
 import '../functions/arabicTime.dart';
@@ -35,7 +36,13 @@ class ProviderNotificationAllModel extends ChangeNotifier {
         dataNotificationModel = caseDataList;
         for (int i = 0; dataNotificationModel.length - 1 > i; i++) {
           dataNotificationModel[i].notificationDataArabic =
-              await arabicTime(dataNotificationModel[i].notificationData!);
+              await dataWithCurrentLanguage(
+                  dataNotificationModel[i].notificationData!);
+          // DateTime date = DateFormat("yyyy-MM-dd hh:mm:ss")
+          //     .parse(dataNotificationModel[i].notificationData!);
+          // // DateTime date = DateTime(dataNotificationModel[i].notificationData!)
+          // dataNotificationModel[i].notificationDataEnglish =
+          //     await englishDate(date);
         }
         print('casesData length: ${caseDataList.length}');
         notifyListeners();

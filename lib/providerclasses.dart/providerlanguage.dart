@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 class LanguageProvider extends ChangeNotifier {
   String? language;
+  Locale? locale;
   Map<String, dynamic> languageDataAr = {
     'ar': {
       //////////////// Home() ////////////
@@ -29,19 +30,68 @@ class LanguageProvider extends ChangeNotifier {
       "deposit": "الأيداع",
       "sessionsTime": "مواعيد الجلسات",
       "advancedSearch": "البحث المتقدم",
-      "logout": "تسجيل الخروج"
+      "logout": "تسجيل الخروج",
+      ///////////////////DataTAbleSearch()////////
+      "year": "السنة",
+      "casenumber": "رقم الدعوى",
+      "casestatus": "حالة الدعوي",
+      "judicialyear": "العام القضائي",
+      "search": "بحث",
+      "thecourt": "المحكمة",
+      "thenextsession": "الجلسة القادمة",
+      "datefrom": "من تاريخ",
+      "dateTo": "إلي تاريخ",
+      "errorinusernameorpassword": "خطأ في اسم المستخدم او كلمة السر",
+      "texthintsearch": "بحث .....",
     }
   };
   Map<String, dynamic> languageDataEn = {
-    'en': {1: "hellow"}
+    'en': {
+      //////////////// Home() ////////////
+      "requestedOrder": "Requested Order",
+      "sendedOrder": "Sended Order",
+      "sessions": "Sessions",
+      "suits": "Suits",
+      "fines": "Fines",
+      "adjurndedSessions": "Adjurnded Sessions",
+      "EgyptianStateCouncil": "Egyptian State Council",
+      "errorEnterNet": "Error In Enternet",
+      "requireNetWorkMes": "Provides internet connectivity",
+      //////////////// login()   /////////////////
+      "login": "Login",
+      "userName": "User Name",
+      "plzEnterUserName": "Please Enter The Username",
+      "password": "Password",
+      "plzEnterPassword": "Please Enter The Password",
+      "squance": "Serial Number",
+      //////////////////// Navbar()//////////////////
+      "mainPage": "Home Screen",
+      "allNotification": "All Notifications",
+      "order": "Orders",
+      "fetchData": "FetchData",
+      "deposit": "Deposit",
+      "sessionsTime": "Session Schedules",
+      "advancedSearch": "Advanced Search",
+      "logout": "Log out",
+      ///////////////////DataTAbleSearch()////////
+      "year": "Year",
+      "casenumber": "Case Number",
+      "casestatus": "Case Status",
+      "judicialyear": "Judicial Year",
+      "search": "Search",
+      "thecourt": "The Court",
+      "thenextsession": "The Next Session",
+      "datefrom": "Date From",
+      "dateTo": "Date To",
+      "errorinusernameorpassword": "Error In Username Or Password",
+      "texthintsearch": "Search .....",
+    }
   };
-  void changelanguage(String type) {
+  void changelanguage(String? type) {
     language = type;
-    notifyListeners();
   }
 
-  String getCurrentData(String key) {
-    print(language);
+  getCurrentData(String key) {
     if (language == "en") {
       return languageDataEn['en'][key];
     } else {

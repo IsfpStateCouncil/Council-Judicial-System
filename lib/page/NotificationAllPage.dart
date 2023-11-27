@@ -45,7 +45,7 @@ class _NotificationAllPageState extends State<NotificationAllPage> {
     return Consumer<ProviderNotificationAllModel>(
         builder: (context, providerNotificationAllModel, child) {
       void getDataFromProvider() async {
-        SharedPreferences userData = await PublicShread().getSheardUser();
+        SharedPreferences userData = await PublicShread.getSheardUser();
         userName = userData.getString("userName").toString();
         password = userData.getString("password").toString();
         userType = userData.getString("userType");
@@ -67,10 +67,14 @@ class _NotificationAllPageState extends State<NotificationAllPage> {
       final languageProvider = Provider.of<LanguageProvider>(context);
       return Scaffold(
         appBar: PreferredSize(
-            preferredSize:
-                Size.fromHeight(getSizePage(context, 2, 7, "appBar")),
-            child: CustomAppBar(languageProvider: languageProvider,)),
-        endDrawer: NavBar(
+            preferredSize: 
+            MediaQuery.of(context).orientation.toString() ==
+            "Orientation.landscape" ?
+               Size.fromHeight(getSizePage(context, 1, 7, "appBar")) :  Size.fromHeight(getSizePage(context, 2, 7, "appBar")), 
+            child: CustomAppBar(
+              languageProvider: languageProvider,namePage: NotificationAllPage.routeName,
+            )),
+        drawer: NavBar(
             context: context, currentRoute: NotificationAllPage.routeName),
         body: providerNotificationAllModel.dataNotificationModel.isEmpty
             ? const Center(
@@ -127,7 +131,7 @@ class _NotificationAllPageState extends State<NotificationAllPage> {
                             providerNotificationAllModel
                                 .dataNotificationModel[index]
                                 .notificationDataArabic!,
-                            textDirection: StaticData.arabicTextDirection,
+                            // textDirection: StaticData.arabicTextDirection,
                             style: TextStyle(
                                 color: StaticData.font,
                                 fontSize: 18,
@@ -136,7 +140,7 @@ class _NotificationAllPageState extends State<NotificationAllPage> {
                           ),
                           subtitle: Text(
                             notification.notificationDesc ?? '',
-                            textDirection: StaticData.arabicTextDirection,
+                            // textDirection: StaticData.arabicTextDirection,
                             style: TextStyle(
                                 color: StaticData.font,
                                 fontSize: 16,

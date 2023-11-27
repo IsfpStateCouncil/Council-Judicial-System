@@ -6,16 +6,16 @@ import 'package:flutter/scheduler.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../api/CRUD.dart';
 import '../cutomwidget/bodyHomePage.dart';
+import '../cutomwidget/customAppBar.dart';
 import '../data/staticdata.dart';
 import '../functions/AwesomeConnection.dart';
+import '../functions/mediaquery.dart';
 import '../functions/updatenotification.dart';
 import '../providerclasses.dart/controllerNotification.dart';
 import '../providerclasses.dart/providerlanguage.dart';
 import '../cutomwidget/NavBar.dart';
-import 'package:badges/badges.dart' as badges;
-
-import 'NotificationList.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -31,14 +31,16 @@ class BarChartAPIState extends State<Home> {
   var fbm = FirebaseMessaging.instance;
   String? userName;
   String? password;
-
+  String? userToken;
+  Crud crud = Crud();
   static int loopingFlag = 0;
   @override
   void initState() {
     fbm.getToken().then((value) {
-      print(value);
+      final Locale locale = Localizations.localeOf(context);
+      print(locale);
+      userToken = value;
       FirebaseMessaging.onMessage.listen((event) {
-        print(event.notification?.body);
         AwesomeDialog(
                 title: "${event.notification?.title}",
                 context: context,
@@ -51,9 +53,8 @@ class BarChartAPIState extends State<Home> {
     super.initState();
   }
 
-  void check_user() async {
+  void checkUser() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.setString("language", "ar");
     userName = prefs.getString('userName');
     password = prefs.getString('password');
 
@@ -66,17 +67,10 @@ class BarChartAPIState extends State<Home> {
     }
   }
 
-  Future<void> changeLanguage() async {}
   @override
   Widget build(BuildContext context) {
-    // arabicTime();
-    //   Locale myLocale = Localizations.localeOf(context);
-    //   print(myLocale.languageCode);
-    // ProviderNotificationModel provider =
-    //     Provider.of<ProviderNotificationModel>(context);
-    if (loopingFlag < 2) {
-      //checkConnection(context, Home.routeName);
-      check_user();
+    if (loopingFlag < 1) {
+      checkUser();
       getDataNotification(context);
       loopingFlag = loopingFlag + 1;
     }
@@ -87,58 +81,32 @@ class BarChartAPIState extends State<Home> {
 
     SchedulerBinding.instance.addPostFrameCallback((_) async {
       if (await InternetConnectionChecker().hasConnection) {
-        //getDataNotification(context);
+        if (loopingFlag == 1) {
+          crud.postRequest(
+              StaticData.urlConnectionConst + StaticData.insertTokenForUser, {
+            "userName": userName,
+            "password": password,
+            "userToken": userToken
+          });
+        }
       } else {
+        // ignore: use_build_context_synchronously
         await createAwesome(context, languageProvider);
       }
     });
     return Scaffold(
       backgroundColor: StaticData.backgroundColors,
-      endDrawer: NavBar(
+      drawer: NavBar(
         context: context,
         currentRoute: Home.routeName,
       ),
-      appBar: AppBar(
-        backgroundColor: StaticData.appBarColor, //<-- SEE HERE
-        title: Text(
-          "${languageProvider.getCurrentData('EgyptianStateCouncil')}",
-          style: TextStyle(
-            fontFamily: StaticData.fontFamily,
-            // Add other text styles as needed
-          ),
-        ),
-        centerTitle: true,
-        elevation: 0,
-        leading: badges.Badge(
-          badgeContent: Consumer<ProviderNotificationModel>(
-              builder: (context, providerNotificationModel, child) {
-            return Text(
-                "${providerNotificationModel.dataNotificationModel.length}");
-          }),
-          position: badges.BadgePosition.topEnd(top: 5, end: 5),
-          child: IconButton(
-            icon: Icon(
-              Icons.notifications,
-              color: StaticData.button,
-              size: 35,
-            ),
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => const NotificationPage()),
-              );
-            },
-          ),
-          onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => const NotificationPage()),
-            );
-          },
-        ),
-        actions: [],
-      ),
+      appBar: PreferredSize(
+          preferredSize:   MediaQuery.of(context).orientation.toString() ==
+            "Orientation.landscape" ?
+               Size.fromHeight(getSizePage(context, 1, 7, "appBar")) :  Size.fromHeight(getSizePage(context, 2, 7, "appBar")),
+          child: CustomAppBar(
+            languageProvider: languageProvider,
+          )),
       body: BodyHomePage(
         languageProvider: languageProvider,
         providerNotificationModel: providerNotificationModel,
