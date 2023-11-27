@@ -165,7 +165,7 @@ class _NavBarState extends State<NavBar> {
                 prefs.remove('userToken');
                 prefs.remove('userId');
                 prefs.remove("language");
-                //prefs.setString("language", name!);
+                prefs.setString("language", name!);
                 Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(builder: (context) => const SplashScreen()),

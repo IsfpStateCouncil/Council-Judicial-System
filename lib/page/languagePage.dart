@@ -17,7 +17,7 @@ class _LanguagePageState extends State<LanguagePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-          child: Column(
+          child: ListView(
         children: [
           Image.asset(
             StaticData.imageLogo,
