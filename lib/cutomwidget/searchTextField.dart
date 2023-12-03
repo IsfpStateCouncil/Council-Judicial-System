@@ -40,7 +40,8 @@ class SearchTextField extends StatelessWidget {
                 fontFamily: StaticData.fontFamily,
               ),
               hintTextDirection: StaticData.arabicTextDirection,
-              hintText: languageProvider.getCurrentData('texthintsearch')),
+              hintText:
+                  languageProvider.getCurrentData('texthintsearch', context)),
           controller: searchController,
           onChanged: onChanged),
     );

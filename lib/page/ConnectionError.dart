@@ -20,7 +20,8 @@ class ConnectionError extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Color.fromARGB(255, 240, 162, 46), //<-- SEE HERE
         centerTitle: true,
-        title: Text(languageProvider.getCurrentData("EgyptianStateCouncil")),
+        title: Text(
+            languageProvider.getCurrentData("EgyptianStateCouncil", context)),
         elevation: 0,
         leading: IconButton(icon: Icon(Icons.arrow_back), onPressed: () {}),
         actions: [
@@ -48,7 +49,7 @@ class ConnectionError extends StatelessWidget {
             const SizedBox(height: 100),
             Center(
               child: Text(
-                languageProvider.getCurrentData("requireNetWorkMes"),
+                languageProvider.getCurrentData("requireNetWorkMes", context),
                 textAlign: TextAlign.center,
                 //_boxLogin.get("errorMessage"),
                 style: Theme.of(context).textTheme.headlineLarge,

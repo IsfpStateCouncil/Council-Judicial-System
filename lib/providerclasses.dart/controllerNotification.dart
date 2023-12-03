@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 import '../api/CRUD.dart';
-import '../functions/arabicTime.dart';
+import '../functions/currentDate.dart';
 import '../model/NotificationModel.dart';
 
 class ProviderNotificationModel extends ChangeNotifier {
@@ -17,14 +17,6 @@ class ProviderNotificationModel extends ChangeNotifier {
   List<NotificationModel> dataNotificationModelFine = [];
   List<NotificationModel> dataNotificationModelTempSession = [];
   String searchValue = "";
-  // List<String> collections = [
-  //   "dataNotificationModelRequest",
-  //   "dataNotificationModelSend",
-  //   "dataNotificationModelSession",
-  //   "dataNotificationModeldSuit",
-  //   "dataNotificationModelFine",
-  //   "dataNotificationModelTempSession"
-  // ];
 
   get myNotificationList =>
       searchValue == "" ? dataNotificationModel : dataNotificationModelFiltered;
@@ -54,26 +46,26 @@ class ProviderNotificationModel extends ChangeNotifier {
                 : [];
 
         if (type == "dataNotificationModel") {
-          dataNotificationModel = caseDataList;
+          dataNotificationModel = await changeDate(caseDataList);
         } else if (type == "dataNotificationModelRequest") {
-          dataNotificationModelRequest = caseDataList;
+          dataNotificationModelRequest = await changeDate(caseDataList);
         } else if (type == "dataNotificationModelSend") {
-          dataNotificationModelSend = caseDataList;
+          dataNotificationModelSend = await changeDate(caseDataList);
         } else if (type == "dataNotificationModelSession") {
-          dataNotificationModelSession = caseDataList;
+          dataNotificationModelSession = await changeDate(caseDataList);
         } else if (type == "dataNotificationModeldSuit") {
-          dataNotificationModeldSuit = caseDataList;
+          dataNotificationModeldSuit = await changeDate(caseDataList);
         } else if (type == "dataNotificationModelFine") {
-          dataNotificationModelFine = caseDataList;
+          dataNotificationModelFine = await changeDate(caseDataList);
         } else if (type == "dataNotificationModelTempSession") {
-          dataNotificationModelTempSession = caseDataList;
+          dataNotificationModelTempSession = await changeDate(caseDataList);
         }
 
-        for (int i = 0; dataNotificationModel.length - 1 > i; i++) {
-          dataNotificationModel[i].notificationDataArabic =
-              await dataWithCurrentLanguage(
-                  dataNotificationModel[i].notificationData!);
-        }
+        // for (int i = 0; dataNotificationModel.length - 1 > i; i++) {
+        //   dataNotificationModel[i].notificationDataArabic =
+        //       await dataWithCurrentLanguage(
+        //           dataNotificationModel[i].notificationData!);
+        // }
         notifyListeners();
         // print('casesData length: ${caseDataList.length}');
         // print(caseDataList[1].notificationDesc.toString());
@@ -89,25 +81,25 @@ class ProviderNotificationModel extends ChangeNotifier {
     }
   }
 
-  Future<void> changeDataToCurrentLanguage() async {
-    for (int i = 0; dataNotificationModel.length - 1 > i; i++) {
-      dataNotificationModel[i].notificationDataArabic =
-          await dataWithCurrentLanguage(
-              dataNotificationModel[i].notificationData!);
-    }
-    for (int i = 0; dataNotificationModel.length - 1 > i; i++) {
-      dataNotificationModel[i].notificationDataArabic =
-          await dataWithCurrentLanguage(
-              dataNotificationModel[i].notificationData!);
-    }
-  }
+  // Future<void> changeDataToCurrentLanguage() async {
+  //   for (int i = 0; dataNotificationModel.length - 1 > i; i++) {
+  //     dataNotificationModel[i].notificationDataArabic =
+  //         await dataWithCurrentLanguage(
+  //             dataNotificationModel[i].notificationData!);
+  //   }
+  //   for (int i = 0; dataNotificationModel.length - 1 > i; i++) {
+  //     dataNotificationModel[i].notificationDataArabic =
+  //         await dataWithCurrentLanguage(
+  //             dataNotificationModel[i].notificationData!);
+  //   }
+  // }
 
-  Future<void> changeDateInList(List<NotificationModel> myList) async {
-    for (int i = 0; myList.length - 1 > i; i++) {
-      myList[i].notificationDataArabic =
-          await dataWithCurrentLanguage(myList[i].notificationData!);
-    }
-  }
+  // Future<void> changeDateInList(List<NotificationModel> myList) async {
+  //   for (int i = 0; myList.length - 1 > i; i++) {
+  //     myList[i].notificationDataArabic =
+  //         await dataWithCurrentLanguage(myList[i].notificationData!);
+  //   }
+  // }
 
   deleteTempData() {
     dataNotificationModel = [];
@@ -120,5 +112,17 @@ class ProviderNotificationModel extends ChangeNotifier {
     dataNotificationModelTempSession = [];
     searchValue = "";
     notifyListeners();
+  }
+
+  Future<List<NotificationModel>> changeDate(
+      List<NotificationModel> currentList) async {
+    for (int i = 0; currentList.length - 1 > i; i++) {
+      currentList[i].notificationDataArabic =
+          await dataWithCurrentLanguage(currentList[i].notificationData!, "ar");
+      currentList[i].notificationDataEnglish =
+          await dataWithCurrentLanguage(currentList[i].notificationData!, "en");
+    }
+
+    return currentList;
   }
 }

@@ -89,10 +89,13 @@ class LanguageProvider extends ChangeNotifier {
   };
   void changelanguage(String? type) {
     language = type;
+    notifyListeners();
   }
 
-  getCurrentData(String key) {
-    if (language == "en") {
+  getCurrentData(String key, BuildContext context) {
+    Locale myLocale = Localizations.localeOf(context);
+    print(myLocale.toLanguageTag());
+    if (myLocale.toLanguageTag() == "en") {
       return languageDataEn['en'][key];
     } else {
       return languageDataAr['ar'][key];

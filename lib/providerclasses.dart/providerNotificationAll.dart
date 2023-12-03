@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 import '../api/CRUD.dart';
-import '../functions/arabicTime.dart';
+import '../functions/currentDate.dart';
 import '../model/NotificationModel.dart';
 
 class ProviderNotificationAllModel extends ChangeNotifier {
@@ -34,16 +34,16 @@ class ProviderNotificationAllModel extends ChangeNotifier {
                   }).toList()
                 : [];
         dataNotificationModel = caseDataList;
-        for (int i = 0; dataNotificationModel.length - 1 > i; i++) {
-          dataNotificationModel[i].notificationDataArabic =
-              await dataWithCurrentLanguage(
-                  dataNotificationModel[i].notificationData!);
-          // DateTime date = DateFormat("yyyy-MM-dd hh:mm:ss")
-          //     .parse(dataNotificationModel[i].notificationData!);
-          // // DateTime date = DateTime(dataNotificationModel[i].notificationData!)
-          // dataNotificationModel[i].notificationDataEnglish =
-          //     await englishDate(date);
-        }
+        // for (int i = 0; dataNotificationModel.length - 1 > i; i++) {
+        //   dataNotificationModel[i].notificationDataArabic =
+        //       await dataWithCurrentLanguage(
+        //           dataNotificationModel[i].notificationData!);
+        //   // DateTime date = DateFormat("yyyy-MM-dd hh:mm:ss")
+        //   //     .parse(dataNotificationModel[i].notificationData!);
+        //   // // DateTime date = DateTime(dataNotificationModel[i].notificationData!)
+        //   // dataNotificationModel[i].notificationDataEnglish =
+        //   //     await englishDate(date);
+        // }
         print('casesData length: ${caseDataList.length}');
         notifyListeners();
         print('casesData length: ${caseDataList.length}');
@@ -65,5 +65,17 @@ class ProviderNotificationAllModel extends ChangeNotifier {
     dataNotificationModel = [];
     dataNotificationModelFiltered = [];
     notifyListeners();
+  }
+
+  Future<List<NotificationModel>> changeDate(
+      List<NotificationModel> currentList) async {
+    for (int i = 0; currentList.length - 1 > i; i++) {
+      currentList[i].notificationDataArabic =
+          await dataWithCurrentLanguage(currentList[i].notificationData!, "ar");
+      currentList[i].notificationDataEnglish =
+          await dataWithCurrentLanguage(currentList[i].notificationData!, "en");
+    }
+
+    return currentList;
   }
 }

@@ -5,6 +5,7 @@ import '../data/staticdata.dart';
 import '../functions/mediaquery.dart';
 
 import '../page/NotificationList.dart';
+import '../page/categoryNotification.dart';
 import '../providerclasses.dart/controllerNotification.dart';
 import '../providerclasses.dart/providerlanguage.dart';
 import 'cutomMaterialApp.dart';
@@ -46,42 +47,111 @@ class BodyHomePage extends StatelessWidget {
           padding: const EdgeInsets.all(10),
           children: <Widget>[
             cellDesign(context, "requestedOrder", Icons.south_outlined,
-                providerNotificationModel.dataNotificationModelRequest.length),
+                providerNotificationModel.dataNotificationModelRequest.length,
+                () {
+              if (providerNotificationModel
+                      .dataNotificationModelRequest.length !=
+                  0) {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => CategoryNotification(
+                            currentList: providerNotificationModel
+                                .dataNotificationModelRequest,
+                          )),
+                );
+              }
+            }),
             cellDesign(context, "sendedOrder", Icons.north_outlined,
-                providerNotificationModel.dataNotificationModelSend.length),
+                providerNotificationModel.dataNotificationModelSend.length, () {
+              if (providerNotificationModel.dataNotificationModelSend.length !=
+                  0) {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => CategoryNotification(
+                            currentList: providerNotificationModel
+                                .dataNotificationModelSend,
+                          )),
+                );
+              }
+            }),
             cellDesign(context, "sessions", Icons.gavel,
-                providerNotificationModel.dataNotificationModelSession.length),
+                providerNotificationModel.dataNotificationModelSession.length,
+                () {
+              if (providerNotificationModel
+                      .dataNotificationModelSession.length !=
+                  0) {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => CategoryNotification(
+                            currentList: providerNotificationModel
+                                .dataNotificationModelSession,
+                          )),
+                );
+              }
+            }),
             cellDesign(context, "suits", Icons.how_to_vote,
-                providerNotificationModel.dataNotificationModeldSuit.length),
+                providerNotificationModel.dataNotificationModeldSuit.length,
+                () {
+              if (providerNotificationModel.dataNotificationModeldSuit.length !=
+                  0) {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => CategoryNotification(
+                            currentList: providerNotificationModel
+                                .dataNotificationModeldSuit,
+                          )),
+                );
+              }
+            }),
             cellDesign(context, "fines", Icons.account_balance_wallet,
-                providerNotificationModel.dataNotificationModelFine.length),
+                providerNotificationModel.dataNotificationModelFine.length, () {
+              if (providerNotificationModel.dataNotificationModelFine.length !=
+                  0) {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => CategoryNotification(
+                            currentList: providerNotificationModel
+                                .dataNotificationModelFine,
+                          )),
+                );
+              }
+            }),
             cellDesign(
                 context,
                 "adjurndedSessions",
                 Icons.access_time,
                 providerNotificationModel
-                    .dataNotificationModelTempSession.length),
+                    .dataNotificationModelTempSession.length, () {
+              if (providerNotificationModel
+                      .dataNotificationModelTempSession.length !=
+                  0) {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => CategoryNotification(
+                            currentList: providerNotificationModel
+                                .dataNotificationModelTempSession,
+                          )),
+                );
+              }
+            }),
           ],
         ),
       ),
     );
   }
 
-  Widget cellDesign(
-    BuildContext context,
-    String type,
-    IconData icon,
-    int count,
-  ) {
+  Widget cellDesign(BuildContext context, String type, IconData icon, int count,
+      void Function()? onTap) {
     return Visibility(
       visible: true,
       child: GestureDetector(
-        onTap: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => NotificationPage()),
-          );
-        },
+        onTap: onTap,
         child: Card(
           elevation: 10,
           color: StaticData.button,
@@ -101,7 +171,7 @@ class BodyHomePage extends StatelessWidget {
                 ),
                 SizedBox(height: 5),
                 Text(
-                  languageProvider.getCurrentData(type),
+                  languageProvider.getCurrentData(type, context),
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
                     color: StaticData.backgroundColors,
