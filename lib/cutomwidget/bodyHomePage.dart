@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../data/staticdata.dart';
-import '../page/categoryNotification.dart';
+import '../functions/mediaquery.dart';
+
+import '../page/NotificationList.dart';
 import '../providerclasses.dart/controllerNotification.dart';
 import '../providerclasses.dart/providerlanguage.dart';
 import 'cutomMaterialApp.dart';
@@ -43,104 +45,22 @@ class BodyHomePage extends StatelessWidget {
           primary: false,
           padding: const EdgeInsets.all(10),
           children: <Widget>[
+            cellDesign(context, "requestedOrder", Icons.south_outlined,
+                providerNotificationModel.dataNotificationModelRequest.length),
+            cellDesign(context, "sendedOrder", Icons.north_outlined,
+                providerNotificationModel.dataNotificationModelSend.length),
+            cellDesign(context, "sessions", Icons.gavel,
+                providerNotificationModel.dataNotificationModelSession.length),
+            cellDesign(context, "suits", Icons.how_to_vote,
+                providerNotificationModel.dataNotificationModeldSuit.length),
+            cellDesign(context, "fines", Icons.account_balance_wallet,
+                providerNotificationModel.dataNotificationModelFine.length),
             cellDesign(
                 context,
-                languageProvider.getCurrentData("requestedOrder"),
-                Icons.south_outlined,
-                providerNotificationModel.dataNotificationModelRequest.length,
-                () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => CategoryNotification(
-                        currentList: providerNotificationModel
-                            .dataNotificationModelRequest)),
-              );
-
-              print("object");
-            }),
-            cellDesign(
-                context,
-                languageProvider.getCurrentData("sendedOrder"),
-                Icons.north_outlined,
-                providerNotificationModel.dataNotificationModelSend.length, () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => CategoryNotification(
-                        currentList: providerNotificationModel
-                            .dataNotificationModelSend)),
-              );
-            }),
-            cellDesign(
-                context,
-                languageProvider.getCurrentData("sessions"),
-                Icons.gavel,
-                providerNotificationModel.dataNotificationModelSession.length,
-                () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => CategoryNotification(
-                        currentList: providerNotificationModel
-                            .dataNotificationModelSession)),
-              );
-            }),
-            cellDesign(
-                context,
-                languageProvider.getCurrentData("suits"),
-                Icons.how_to_vote,
-                providerNotificationModel.dataNotificationModeldSuit.length,
-                () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => CategoryNotification(
-                        currentList: providerNotificationModel
-                            .dataNotificationModeldSuit)),
-              );
-            }),
-            cellDesign(
-                context,
-                languageProvider.getCurrentData("fines"),
-                Icons.account_balance_wallet,
-                providerNotificationModel.dataNotificationModelFine.length, () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => CategoryNotification(
-                        currentList: providerNotificationModel
-                            .dataNotificationModelFine)),
-              );
-            }),
-            cellDesign(
-                context,
-                languageProvider.getCurrentData("adjurndedSessions"),
+                "adjurndedSessions",
                 Icons.access_time,
                 providerNotificationModel
-                    .dataNotificationModelTempSession.length, () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => CategoryNotification(
-                        currentList: providerNotificationModel
-                            .dataNotificationModelTempSession)),
-              );
-            }),
-            cellDesign(
-                context,
-                languageProvider.getCurrentData("other"),
-                Icons.access_time,
-                providerNotificationModel
-                    .dataNotificationModelTempSession.length, () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => CategoryNotification(
-                        currentList:
-                            providerNotificationModel.dataNotificationOther)),
-              );
-            }),
+                    .dataNotificationModelTempSession.length),
           ],
         ),
       ),
@@ -152,72 +72,61 @@ class BodyHomePage extends StatelessWidget {
     String type,
     IconData icon,
     int count,
-    void Function()? onPressed,
   ) {
-    return CutomMaterialApp(
-      onPressed: onPressed,
-      count: count,
-      color: StaticData.button,
-      fontFamily: StaticData.fontFamily,
-      iconData: icon,
-      name: type,
-      textColor: StaticData.backgroundColors,
+    return Visibility(
+      visible: true,
+      child: GestureDetector(
+        onTap: () {
+          Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) =>  NotificationPage(notificationType: type,lengthNotification:count )),
+            );
+        },
+        child: Card(
+          elevation: 10,
+          color: StaticData.button,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(5),
+          ),
+          child: Container(
+            padding: EdgeInsets.all(10), // Adjust padding as needed
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Icon(
+                  icon,
+                  size: 40, // Adjust the size according to your needs
+                  color: StaticData.backgroundColors, // Add color to the icon
+                ),
+                SizedBox(height: 5),
+                Text(
+                  languageProvider.getCurrentData(type),
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                    color: StaticData.backgroundColors,
+                    fontFamily: StaticData.fontFamily,
+                    fontSize:
+                        17, // Adjust the font size according to your needs
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                SizedBox(height: 5),
+                Text(
+                  '$count',
+                  style: TextStyle(
+                    color: StaticData.backgroundColors,
+                    fontFamily: StaticData.fontFamily,
+                    fontSize:
+                        20, // Adjust the font size according to your needs
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
     );
-    // Visibility(
-    //   visible: true,
-    //   child: GestureDetector(
-    //     onTap: onTap,
-    //     //() {
-    //     // Navigator.push(
-    //     //     context,
-    //     //     MaterialPageRoute(builder: (context) =>  NotificationPage(notificationType: type,lengthNotification:count )),
-    //     //   );
-    //     // },
-    //     child: Card(
-    //       elevation: 10,
-    //       color: StaticData.button,
-    //       shape: RoundedRectangleBorder(
-    //         borderRadius: BorderRadius.circular(5),
-    //       ),
-    //       child: Container(
-    //         padding: EdgeInsets.all(10), // Adjust padding as needed
-    //         child: Column(
-    //           mainAxisAlignment: MainAxisAlignment.center,
-    //           crossAxisAlignment: CrossAxisAlignment.center,
-    //           children: [
-    //             Icon(
-    //               icon,
-    //               size: 40, // Adjust the size according to your needs
-    //               color: StaticData.backgroundColors, // Add color to the icon
-    //             ),
-    //             SizedBox(height: 5),
-    //             Text(
-    //               languageProvider.getCurrentData(type),
-    //               overflow: TextOverflow.ellipsis,
-    //               style: TextStyle(
-    //                 color: StaticData.backgroundColors,
-    //                 fontFamily: StaticData.fontFamily,
-    //                 fontSize:
-    //                     17, // Adjust the font size according to your needs
-    //                 fontWeight: FontWeight.bold,
-    //               ),
-    //             ),
-    //             SizedBox(height: 5),
-    //             Text(
-    //               '$count',
-    //               style: TextStyle(
-    //                 color: StaticData.backgroundColors,
-    //                 fontFamily: StaticData.fontFamily,
-    //                 fontSize:
-    //                     20, // Adjust the font size according to your needs
-    //                 fontWeight: FontWeight.bold,
-    //               ),
-    //             ),
-    //           ],
-    //         ),
-    //       ),
-    //     ),
-    //   ),
-    // );
   }
 }

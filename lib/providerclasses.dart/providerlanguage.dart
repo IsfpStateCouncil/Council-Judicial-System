@@ -43,7 +43,6 @@ class LanguageProvider extends ChangeNotifier {
       "dateTo": "إلي تاريخ",
       "errorinusernameorpassword": "خطأ في اسم المستخدم او كلمة السر",
       "texthintsearch": "بحث .....",
-      "other": "آخرى"
     }
   };
   Map<String, dynamic> languageDataEn = {
@@ -86,7 +85,6 @@ class LanguageProvider extends ChangeNotifier {
       "dateTo": "Date To",
       "errorinusernameorpassword": "Error In Username Or Password",
       "texthintsearch": "Search .....",
-      "other": "Other"
     }
   };
   void changelanguage(String? type) {

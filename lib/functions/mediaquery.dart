@@ -16,7 +16,7 @@ double getSizePage(
       } else {
         return 1;
       }
-    } else if (namePage == "notification_All_list_screen") {
+    } else if (namePage == "notification_All_list_screen" || namePage=="notification_list_screen") {
       if (dimestion == 1) //width
       {
         size = (MediaQuery.of(context).size.width * precentage * 2) / 100;

@@ -4,7 +4,6 @@ import 'package:council_of_state/data/staticdata.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../api/CRUD.dart';
 import '../page/DataTableSearch.dart';
 import '../page/NotificationAllPage.dart';
 import '../page/Splashscreen.dart';
@@ -31,11 +30,9 @@ class _NavBarState extends State<NavBar> {
   String? userName;
   String? password;
   String? arabicName;
-  Crud crud = Crud();
-  String? userToken;
   static const home = 'home_screen';
   static const datatableSearch = 'parameter_search';
-  static const lisrNotification = 'notification_list_screen';
+  static const lisrNotification = 'notification_All_list_screen';
 
   @override
   void initState() {
@@ -100,7 +97,7 @@ class _NavBarState extends State<NavBar> {
               onTap: () {
                 BarChartAPIState.loopingFlag = 0;
                 if (widget.currentRoute != home) {
-                  Navigator.pushReplacement(
+                  Navigator.push(
                     context,
                     MaterialPageRoute(builder: (context) => const Home()),
                   );
@@ -130,15 +127,15 @@ class _NavBarState extends State<NavBar> {
               //leading: const Icon(Icons.home),
               onTap: () {
                 BarChartAPIState.loopingFlag = 0;
-                //if (widget.currentRoute != lisrNotification) {
+                if (widget.currentRoute != lisrNotification) {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
                       builder: (context) => const NotificationAllPage()),
                 );
-                //} else {
-                //  Navigator.of(context).pop();
-                // }
+                } else {
+                  Navigator.of(context).pop();
+                 }
               },
             ),
           ),
@@ -163,15 +160,6 @@ class _NavBarState extends State<NavBar> {
                 BarChartAPIState.loopingFlag = 0;
                 final SharedPreferences prefs =
                     await SharedPreferences.getInstance();
-                userToken = prefs.getString("firebaseToken");
-                await crud.postRequest(
-                    StaticData.urlConnectionConst +
-                        StaticData.removeTokenForUser,
-                    {
-                      "userName": userName,
-                      "password": password,
-                      "userToken": userToken
-                    });
                 String? name = prefs.getString("language");
                 await prefs.clear();
                 prefs.remove('userToken');
