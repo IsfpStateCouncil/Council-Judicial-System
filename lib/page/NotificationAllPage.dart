@@ -31,6 +31,7 @@ class _NotificationAllPageState extends State<NotificationAllPage> {
   String? userName;
   String? password;
   String? userType;
+  String? language;
   TextEditingController searchController = TextEditingController();
   @override
   Widget build(BuildContext context) {
@@ -49,6 +50,7 @@ class _NotificationAllPageState extends State<NotificationAllPage> {
         userName = userData.getString("userName").toString();
         password = userData.getString("password").toString();
         userType = userData.getString("userType");
+        language = userData.getString("language");
         final myDataProvider =
             // ignore: use_build_context_synchronously
             Provider.of<ProviderNotificationAllModel>(context, listen: false);
@@ -67,12 +69,13 @@ class _NotificationAllPageState extends State<NotificationAllPage> {
       final languageProvider = Provider.of<LanguageProvider>(context);
       return Scaffold(
         appBar: PreferredSize(
-            preferredSize: 
-            MediaQuery.of(context).orientation.toString() ==
-            "Orientation.landscape" ?
-               Size.fromHeight(getSizePage(context, 1, 7, "appBar")) :  Size.fromHeight(getSizePage(context, 2, 7, "appBar")), 
+            preferredSize: MediaQuery.of(context).orientation.toString() ==
+                    "Orientation.landscape"
+                ? Size.fromHeight(getSizePage(context, 1, 7, "appBar"))
+                : Size.fromHeight(getSizePage(context, 2, 7, "appBar")),
             child: CustomAppBar(
-              languageProvider: languageProvider,namePage: NotificationAllPage.routeName,
+              languageProvider: languageProvider,
+              namePage: NotificationAllPage.routeName,
             )),
         drawer: NavBar(
             context: context, currentRoute: NotificationAllPage.routeName),
@@ -128,9 +131,13 @@ class _NotificationAllPageState extends State<NotificationAllPage> {
                         child: ListTile(
                           contentPadding: const EdgeInsets.all(16),
                           title: Text(
-                            providerNotificationAllModel
-                                .dataNotificationModel[index]
-                                .notificationDataArabic!,
+                            languageProvider.language == "en"
+                                ? providerNotificationAllModel
+                                    .dataNotificationModel[index]
+                                    .notificationDataEnglish!
+                                : providerNotificationAllModel
+                                    .dataNotificationModel[index]
+                                    .notificationDataArabic!,
                             // textDirection: StaticData.arabicTextDirection,
                             style: TextStyle(
                                 color: StaticData.font,

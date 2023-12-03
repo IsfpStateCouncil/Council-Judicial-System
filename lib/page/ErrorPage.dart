@@ -14,9 +14,13 @@ class ErrorPage extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: StaticData.appBarColor, //<-- SEE HERE
 
-        title: Text(languageProvider.getCurrentData('EgyptianStateCouncil'),  style: TextStyle(
-                fontFamily: StaticData.fontFamily,fontSize: 20,color: StaticData.backgroundColors
-                // Add other text styles as needed
+        title: Text(
+          languageProvider.getCurrentData('EgyptianStateCouncil', context),
+          style: TextStyle(
+              fontFamily: StaticData.fontFamily,
+              fontSize: 20,
+              color: StaticData.backgroundColors
+              // Add other text styles as needed
               ),
         ),
         elevation: 0,
@@ -44,12 +48,15 @@ class ErrorPage extends StatelessWidget {
             ),
             const SizedBox(height: 100),
             Text(
-              languageProvider.getCurrentData('errorinusernameorpassword'),
+              languageProvider.getCurrentData(
+                  'errorinusernameorpassword', context),
               //_boxLogin.get("errorMessage"),
               style: TextStyle(
-                fontFamily: StaticData.fontFamily,fontSize: 20,color: StaticData.font
-                // Add other text styles as needed
-              ),
+                  fontFamily: StaticData.fontFamily,
+                  fontSize: 20,
+                  color: StaticData.font
+                  // Add other text styles as needed
+                  ),
               textAlign: TextAlign.center,
             ),
           ],

@@ -86,7 +86,7 @@ class _NavBarState extends State<NavBar> {
                 size: 32,
               ),
               title: Text(
-                languageProvider.getCurrentData('mainPage'),
+                languageProvider.getCurrentData('mainPage', context),
                 style: TextStyle(
                     fontSize: 20,
                     color: StaticData.font,
@@ -117,7 +117,7 @@ class _NavBarState extends State<NavBar> {
                 size: 32,
               ),
               title: Text(
-                languageProvider.getCurrentData('allNotification'),
+                languageProvider.getCurrentData('allNotification', context),
                 style: TextStyle(
                     fontSize: 20,
                     color: StaticData.font,
@@ -128,14 +128,14 @@ class _NavBarState extends State<NavBar> {
               onTap: () {
                 BarChartAPIState.loopingFlag = 0;
                 if (widget.currentRoute != lisrNotification) {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => const NotificationAllPage()),
-                );
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const NotificationAllPage()),
+                  );
                 } else {
                   Navigator.of(context).pop();
-                 }
+                }
               },
             ),
           ),
@@ -149,7 +149,7 @@ class _NavBarState extends State<NavBar> {
                 size: 32,
               ),
               title: Text(
-                languageProvider.getCurrentData('logout'),
+                languageProvider.getCurrentData('logout', context),
                 style: TextStyle(
                     fontSize: 20,
                     color: StaticData.font,
@@ -165,7 +165,7 @@ class _NavBarState extends State<NavBar> {
                 prefs.remove('userToken');
                 prefs.remove('userId');
                 prefs.remove("language");
-                prefs.setString("language", name!);
+                //             prefs.setString("language", name!);
                 Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(builder: (context) => const SplashScreen()),

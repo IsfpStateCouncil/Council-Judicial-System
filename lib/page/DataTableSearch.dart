@@ -75,17 +75,19 @@ class DataTableSearch extends State<parameterSearch> {
             children: [
               CustomTextFieldSearch(
                   controllerCaseNumber: _controllerCaseNumber,
-                  labelText: languageProvider.getCurrentData('squance')),
+                  labelText:
+                      languageProvider.getCurrentData('squance', context)),
               CustomTextFieldSearch(
                   controllerCaseNumber: _controllerCaseYear,
-                  labelText: languageProvider.getCurrentData('year')),
+                  labelText: languageProvider.getCurrentData('year', context)),
               Text(
-                languageProvider.getCurrentData('casestatus'),
+                languageProvider.getCurrentData('casestatus', context),
                 style: const TextStyle(fontWeight: FontWeight.bold),
               ),
               DropdownButton(
                 value: dropdownvalue,
-                hint: Text(languageProvider.getCurrentData('casestatus')),
+                hint: Text(
+                    languageProvider.getCurrentData('casestatus', context)),
                 items: providerDataTableSearch.datacaseDataList.map((item) {
                   return DropdownMenuItem(
                     value: item.id.toString(),
@@ -101,12 +103,13 @@ class DataTableSearch extends State<parameterSearch> {
                 },
               ),
               Text(
-                languageProvider.getCurrentData('casestatus'),
+                languageProvider.getCurrentData('casestatus', context),
                 style: const TextStyle(fontWeight: FontWeight.bold),
               ),
               DropdownButton<String>(
                 value: dropdownvalueJudgicalYea,
-                hint: Text(languageProvider.getCurrentData('casestatus')),
+                hint: Text(
+                    languageProvider.getCurrentData('casestatus', context)),
                 items: providerDataTableSearch.JudgicalYears.map<
                     DropdownMenuItem<String>>((item) {
                   return DropdownMenuItem<String>(
@@ -127,10 +130,12 @@ class DataTableSearch extends State<parameterSearch> {
               ),
               CustomTextFieldCurrenDate(
                   controllerFromDate: _controllerFromDate,
-                  lableString: languageProvider.getCurrentData('datefrom')),
+                  lableString:
+                      languageProvider.getCurrentData('datefrom', context)),
               CustomTextFieldCurrenDate(
                   controllerFromDate: _controllerToDate,
-                  lableString: languageProvider.getCurrentData('dateTo')),
+                  lableString:
+                      languageProvider.getCurrentData('dateTo', context)),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   primary: StaticData.button, // Background color
@@ -156,7 +161,7 @@ class DataTableSearch extends State<parameterSearch> {
                     print("Length of data: $length");
                   });
                 },
-                child: Text(languageProvider.getCurrentData('search')),
+                child: Text(languageProvider.getCurrentData('search', context)),
               ),
               const SizedBox(
                 height: 20,
@@ -165,18 +170,20 @@ class DataTableSearch extends State<parameterSearch> {
                 leading: CircleAvatar(
                   radius: 40,
                   child: Text(
-                    languageProvider.getCurrentData('EgyptianStateCouncil'),
+                    languageProvider.getCurrentData(
+                        'EgyptianStateCouncil', context),
                     style: const TextStyle(fontSize: 13),
                   ),
                 ),
-                title: Text(languageProvider.getCurrentData('thecourt'),
+                title: Text(
+                    languageProvider.getCurrentData('thecourt', context),
                     style: const TextStyle(
                         fontSize: 20,
                         color: Colors.black,
                         fontWeight: FontWeight.bold)),
                 subtitle: const Text(""),
                 trailing: Text(
-                  languageProvider.getCurrentData('thenextsession'),
+                  languageProvider.getCurrentData('thenextsession', context),
                   style: const TextStyle(fontWeight: FontWeight.bold),
                 ),
               ),

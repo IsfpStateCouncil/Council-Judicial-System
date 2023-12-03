@@ -27,7 +27,7 @@ class _LanguagePageState extends State<LanguagePage> {
           changerLanguageButton(() async {
             final languageProvider =
                 Provider.of<LanguageProvider>(context, listen: false);
-            languageProvider.changelanguage("ar");
+            //  languageProvider.changelanguage("ar");
             languageProvider.language = "ar";
             SharedPreferences sharedPreferences =
                 await SharedPreferences.getInstance();

@@ -7,13 +7,19 @@ import '../page/NotificationList.dart';
 import '../providerclasses.dart/controllerNotification.dart';
 import 'package:council_of_state/main.dart' as mainapp;
 
+import '../providerclasses.dart/providerlanguage.dart';
+
 class CustomAppBar extends StatefulWidget {
   final languageProvider;
   final String? namePage;
+  final String? language;
+  final void Function()? onPressed;
   CustomAppBar({
     Key? key,
     this.languageProvider,
     this.namePage,
+    this.language,
+    this.onPressed,
   }) : super(key: key);
 
   @override
@@ -27,20 +33,20 @@ class CustomAppBarState extends State<CustomAppBar> {
     currentLanguage = sharedPreferences.getString("language");
   }
 
-  Future<void> setCurrentLanguage(String language) async {
-    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    sharedPreferences.setString("language", language);
-    widget.languageProvider.changelanguage(language);
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     getCurrentLanguage();
-
+    final languageProvider = Provider.of<LanguageProvider>(context);
     return AppBar(
       backgroundColor: StaticData.appBarColor, //<-- SEE HERE
       title: Text(
-        "${widget.languageProvider.getCurrentData('EgyptianStateCouncil')}",
+        "${languageProvider.getCurrentData('EgyptianStateCouncil', context)}",
         style: TextStyle(
           fontSize: 17,
           fontFamily: StaticData.fontFamily,
@@ -52,12 +58,20 @@ class CustomAppBarState extends State<CustomAppBar> {
       actions: [
         TextButton(
           onPressed: () async {
+            SharedPreferences sharedPreferences =
+                await SharedPreferences.getInstance();
+            final languageProvider =
+                Provider.of<LanguageProvider>(context, listen: false);
             if (currentLanguage == "ar") {
-              await setCurrentLanguage("en");
+              sharedPreferences.setString("language", "en");
+              languageProvider.changelanguage("en");
               currentLanguage = "en";
+              widget.onPressed;
             } else {
-              await setCurrentLanguage("ar");
+              sharedPreferences.setString("language", "ar");
+              languageProvider.changelanguage("ar");
               currentLanguage = "ar";
+              widget.onPressed;
             }
 
             setState(() {

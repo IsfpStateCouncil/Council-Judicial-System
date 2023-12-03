@@ -60,7 +60,7 @@ class _LoginState extends State<Login> {
                 ),
                 const SizedBox(height: 10),
                 Text(
-                  languageProvider.getCurrentData('login'),
+                  languageProvider.getCurrentData('login', context),
                   style: TextStyle(
                       fontSize: 40,
                       color: StaticData.font,
@@ -73,7 +73,8 @@ class _LoginState extends State<Login> {
                   keyboardType: TextInputType.name,
                   //textDirection: TextDirection.rtl,
                   decoration: InputDecoration(
-                    labelText: languageProvider.getCurrentData('userName'),
+                    labelText:
+                        languageProvider.getCurrentData('userName', context),
                     prefixIcon: const Icon(Icons.person_outline),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10),
@@ -88,8 +89,8 @@ class _LoginState extends State<Login> {
                   onEditingComplete: () => _focusNodePassword.requestFocus(),
                   validator: (String? value) {
                     if (value == null || value.trim().isEmpty) {
-                      return languageProvider
-                          .getCurrentData('plzEnterUserName');
+                      return languageProvider.getCurrentData(
+                          'plzEnterUserName', context);
                     }
                     return null;
                   },
@@ -102,7 +103,8 @@ class _LoginState extends State<Login> {
                   //textDirection: TextDirection.rtl,
                   //keyboardType: TextInputType.visiblePassword,
                   decoration: InputDecoration(
-                    labelText: languageProvider.getCurrentData('password'),
+                    labelText:
+                        languageProvider.getCurrentData('password', context),
                     prefixIcon: const Icon(Icons.password_outlined),
                     suffixIcon: IconButton(
                         onPressed: () {
@@ -128,8 +130,8 @@ class _LoginState extends State<Login> {
                   ),
                   validator: (String? value) {
                     if (value == null || value.isEmpty) {
-                      return languageProvider
-                          .getCurrentData('plzEnterPassword');
+                      return languageProvider.getCurrentData(
+                          'plzEnterPassword', context);
                     }
 
                     return null;
@@ -151,14 +153,15 @@ class _LoginState extends State<Login> {
                         ),
                         onPressed: () async {
                           var userName = _controllerUsername.text.trim();
-                          user_data.setterUser(userName,
-                              _controllerPassword.text.trim());
+                          user_data.setterUser(
+                              userName, _controllerPassword.text.trim());
                           await user_data.login(
                               context,
                               _controllerUsername.text.trim(),
                               _controllerPassword.text.trim());
                         },
-                        child: Text(languageProvider.getCurrentData('login'),
+                        child: Text(
+                            languageProvider.getCurrentData('login', context),
                             style: TextStyle(
                                 fontSize: 20,
                                 fontFamily: StaticData.fontFamily)),
