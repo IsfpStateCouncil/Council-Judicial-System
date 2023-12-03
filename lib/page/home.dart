@@ -36,7 +36,7 @@ class BarChartAPIState extends State<Home> {
   static int loopingFlag = 0;
   @override
   void initState() {
-    fbm.getToken().then((value) {
+    fbm.getToken().then((value) async {
       final Locale locale = Localizations.localeOf(context);
       print(locale);
       userToken = value;
@@ -48,6 +48,8 @@ class BarChartAPIState extends State<Home> {
                 btnOkOnPress: () {})
             .show();
       });
+      final SharedPreferences prefs = await SharedPreferences.getInstance();
+      prefs.setString("firebaseToken", value ?? "");
     });
 
     super.initState();
@@ -89,6 +91,8 @@ class BarChartAPIState extends State<Home> {
             "userToken": userToken
           });
         }
+        final SharedPreferences prefs = await SharedPreferences.getInstance();
+        prefs.setString("firebaseToken", userToken ?? "");
       } else {
         // ignore: use_build_context_synchronously
         await createAwesome(context, languageProvider);
@@ -101,9 +105,10 @@ class BarChartAPIState extends State<Home> {
         currentRoute: Home.routeName,
       ),
       appBar: PreferredSize(
-          preferredSize:   MediaQuery.of(context).orientation.toString() ==
-            "Orientation.landscape" ?
-               Size.fromHeight(getSizePage(context, 1, 7, "appBar")) :  Size.fromHeight(getSizePage(context, 2, 7, "appBar")),
+          preferredSize: MediaQuery.of(context).orientation.toString() ==
+                  "Orientation.landscape"
+              ? Size.fromHeight(getSizePage(context, 1, 7, "appBar"))
+              : Size.fromHeight(getSizePage(context, 2, 7, "appBar")),
           child: CustomAppBar(
             languageProvider: languageProvider,
           )),

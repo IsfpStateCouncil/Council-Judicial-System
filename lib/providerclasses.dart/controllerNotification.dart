@@ -16,6 +16,7 @@ class ProviderNotificationModel extends ChangeNotifier {
   List<NotificationModel> dataNotificationModeldSuit = [];
   List<NotificationModel> dataNotificationModelFine = [];
   List<NotificationModel> dataNotificationModelTempSession = [];
+  List<NotificationModel> dataNotificationOther = [];
   String searchValue = "";
   // List<String> collections = [
   //   "dataNotificationModelRequest",
@@ -54,26 +55,29 @@ class ProviderNotificationModel extends ChangeNotifier {
                 : [];
 
         if (type == "dataNotificationModel") {
-          dataNotificationModel = caseDataList;
+          dataNotificationModel = await changeDateInList(caseDataList);
         } else if (type == "dataNotificationModelRequest") {
-          dataNotificationModelRequest = caseDataList;
+          dataNotificationModelRequest = await changeDateInList(caseDataList);
         } else if (type == "dataNotificationModelSend") {
-          dataNotificationModelSend = caseDataList;
+          dataNotificationModelSend = await changeDateInList(caseDataList);
         } else if (type == "dataNotificationModelSession") {
-          dataNotificationModelSession = caseDataList;
+          dataNotificationModelSession = await changeDateInList(caseDataList);
         } else if (type == "dataNotificationModeldSuit") {
-          dataNotificationModeldSuit = caseDataList;
+          dataNotificationModeldSuit = await changeDateInList(caseDataList);
         } else if (type == "dataNotificationModelFine") {
-          dataNotificationModelFine = caseDataList;
+          dataNotificationModelFine = await changeDateInList(caseDataList);
         } else if (type == "dataNotificationModelTempSession") {
-          dataNotificationModelTempSession = caseDataList;
+          dataNotificationModelTempSession =
+              await changeDateInList(caseDataList);
+        } else if (type == "dataNotificationOther") {
+          dataNotificationOther = await changeDateInList(caseDataList);
         }
 
-        for (int i = 0; dataNotificationModel.length - 1 > i; i++) {
-          dataNotificationModel[i].notificationDataArabic =
-              await dataWithCurrentLanguage(
-                  dataNotificationModel[i].notificationData!);
-        }
+        // for (int i = 0; dataNotificationModel.length - 1 > i; i++) {
+        //   dataNotificationModel[i].notificationDataArabic =
+        //       await dataWithCurrentLanguage(
+        //           dataNotificationModel[i].notificationData!);
+        // }
         notifyListeners();
         // print('casesData length: ${caseDataList.length}');
         // print(caseDataList[1].notificationDesc.toString());
@@ -102,11 +106,13 @@ class ProviderNotificationModel extends ChangeNotifier {
     }
   }
 
-  Future<void> changeDateInList(List<NotificationModel> myList) async {
+  Future<List<NotificationModel>> changeDateInList(
+      List<NotificationModel> myList) async {
     for (int i = 0; myList.length - 1 > i; i++) {
       myList[i].notificationDataArabic =
           await dataWithCurrentLanguage(myList[i].notificationData!);
     }
+    return myList;
   }
 
   deleteTempData() {

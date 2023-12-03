@@ -4,6 +4,7 @@ import 'package:council_of_state/data/staticdata.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../api/CRUD.dart';
 import '../page/DataTableSearch.dart';
 import '../page/NotificationAllPage.dart';
 import '../page/Splashscreen.dart';
@@ -30,6 +31,8 @@ class _NavBarState extends State<NavBar> {
   String? userName;
   String? password;
   String? arabicName;
+  Crud crud = Crud();
+  String? userToken;
   static const home = 'home_screen';
   static const datatableSearch = 'parameter_search';
   static const lisrNotification = 'notification_list_screen';
@@ -160,6 +163,15 @@ class _NavBarState extends State<NavBar> {
                 BarChartAPIState.loopingFlag = 0;
                 final SharedPreferences prefs =
                     await SharedPreferences.getInstance();
+                userToken = prefs.getString("firebaseToken");
+                await crud.postRequest(
+                    StaticData.urlConnectionConst +
+                        StaticData.removeTokenForUser,
+                    {
+                      "userName": userName,
+                      "password": password,
+                      "userToken": userToken
+                    });
                 String? name = prefs.getString("language");
                 await prefs.clear();
                 prefs.remove('userToken');

@@ -9,6 +9,7 @@ class CutomMaterialApp extends StatelessWidget {
     required this.iconData,
     required this.textColor,
     required this.fontFamily,
+    this.onPressed,
   });
   final String name;
   final int count;
@@ -16,12 +17,13 @@ class CutomMaterialApp extends StatelessWidget {
   final IconData iconData;
   final Color textColor;
   final String fontFamily;
+  final void Function()? onPressed;
   @override
   Widget build(BuildContext context) {
     return MaterialButton(
-      onPressed: () {},
+      onPressed: onPressed,
       color: color,
-      elevation: 20,
+      elevation: 30,
       child: Column(
         children: [
           Container(
