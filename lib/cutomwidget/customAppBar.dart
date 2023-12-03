@@ -12,8 +12,7 @@ class CustomAppBar extends StatefulWidget {
   final String? namePage;
   CustomAppBar({
     Key? key,
-    this.languageProvider,
-    this.namePage,
+    this.languageProvider, this.namePage,
   }) : super(key: key);
 
   @override
@@ -22,9 +21,9 @@ class CustomAppBar extends StatefulWidget {
 
 class CustomAppBarState extends State<CustomAppBar> {
   String? currentLanguage;
-  late SharedPreferences sharedPreferences;
   Future<void> getCurrentLanguage() async {
-    sharedPreferences = await SharedPreferences.getInstance();
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    currentLanguage = sharedPreferences.getString("language");
   }
 
   Future<void> setCurrentLanguage(String language) async {
@@ -33,22 +32,10 @@ class CustomAppBarState extends State<CustomAppBar> {
     widget.languageProvider.changelanguage(language);
   }
 
-  late SharedPreferences _sharedPreferences;
-  @override
-  void initState() {
-    super.initState();
-    _loadLanguage(); // Load stored data when the widget initializes
-  }
-
-  Future<void> _loadLanguage() async {
-    _sharedPreferences = await SharedPreferences.getInstance();
-    setState(() {
-      currentLanguage = _sharedPreferences.getString('language') ?? '';
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
+    getCurrentLanguage();
+    
     return AppBar(
       backgroundColor: StaticData.appBarColor, //<-- SEE HERE
       title: Text(
@@ -89,44 +76,39 @@ class CustomAppBarState extends State<CustomAppBar> {
                   style: const TextStyle(color: StaticData.button),
                 ),
         ),
-        widget.namePage != "notification_list_screen" &&
-                widget.namePage != "notification_All_list_screen"
-            ? badges.Badge(
-                badgeContent: Consumer<ProviderNotificationModel>(
-                    builder: (context, providerNotificationModel, child) {
-                  return Text(
-                    "${providerNotificationModel.dataNotificationModel.length}",
-                    style: TextStyle(color: Colors.white),
-                  );
-                }),
-                position: badges.BadgePosition.topEnd(top: 5, end: 5),
-                child: IconButton(
-                  icon: const Icon(
-                    Icons.notifications,
-                    color: StaticData.button,
-                    size: 35,
-                  ),
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const NotificationPage(
-                                notificationType: '',
-                              )),
-                    );
-                  },
-                ),
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const NotificationPage(
-                              notificationType: '',
-                            )),
-                  );
-                },
-              )
-            : Text(""),
+      widget.namePage != "notification_list_screen" && widget.namePage != "notification_All_list_screen" ?   badges.Badge(
+          badgeContent: Consumer<ProviderNotificationModel>(
+              builder: (context, providerNotificationModel, child) {
+            return Text(
+              "${providerNotificationModel.dataNotificationModel.length}",
+              style: TextStyle(color: Colors.white),
+            );
+          }),
+          position: badges.BadgePosition.topEnd(top: 5, end: 5),
+          
+               child: IconButton(
+            icon: const Icon(
+              Icons.notifications,
+              color: StaticData.button,
+              size: 35,
+            ),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => const NotificationPage( notificationType: '',)),
+              );
+            },
+          ),
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const NotificationPage(notificationType: '',)),
+            );
+          }
+         
+          ,
+        ) : Text(""),
       ],
     );
   }

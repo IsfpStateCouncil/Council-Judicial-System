@@ -5,7 +5,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../data/staticdata.dart';
 import '../providerclasses.dart/providerUserData.dart';
 import '../providerclasses.dart/providerlanguage.dart';
-import 'home.dart';
 
 class Login extends StatefulWidget {
   const Login({
@@ -152,8 +151,8 @@ class _LoginState extends State<Login> {
                         ),
                         onPressed: () async {
                           var userName = _controllerUsername.text.trim();
-                          user_data.setterUser(
-                              userName, _controllerPassword.text.trim());
+                          user_data.setterUser(userName,
+                              _controllerPassword.text.trim());
                           await user_data.login(
                               context,
                               _controllerUsername.text.trim(),
