@@ -36,8 +36,485 @@ class _NotificationPageState extends State<NotificationPage> {
 
   @override
   Widget build(BuildContext context) {
+<<<<<<< HEAD
     LanguageProvider languageProvider = Provider.of<LanguageProvider>(context);
     return Selector<ProviderNotificationModel, List<NotificationModel>>(
+=======
+    final languageProvider = Provider.of<LanguageProvider>(context);
+    if (widget.notificationType == "sessions" &&
+        widget.lengthNotification != 0) {
+      return Selector<ProviderNotificationModel, List<NotificationModel>>(
+          selector: (context, providerNotificationModel) =>
+              providerNotificationModel.dataNotificationModelSession,
+          builder: (context, dataNotificationModelSession, child) {
+            final providerNotificationModel =
+                Provider.of<ProviderNotificationModel>(context, listen: false);
+            void getDataFromProvider() async {
+              SharedPreferences userData = await PublicShread.getSheardUser();
+              userName = userData.getString("userName").toString();
+              password = userData.getString("password").toString();
+
+              await providerNotificationModel.getUnreadNotifications(
+                  "${StaticData.urlConnectionConst}${StaticData.notificationConst}?userName=$userName&password=$password",
+                  "dataNotificationModel");
+            }
+
+            final myDataProvider =
+                Provider.of<ProviderNotificationModel>(context, listen: false);
+            if (myDataProvider.dataNotificationModel.isEmpty) {
+              getDataFromProvider();
+            }
+            SchedulerBinding.instance.addPostFrameCallback((_) async {
+              if (await InternetConnectionChecker().hasConnection) {
+                //getDataNotification(context);
+              } else {
+                await createAwesome(context, languageProvider);
+              }
+            });
+            return Scaffold(
+              appBar: PreferredSize(
+                  preferredSize: MediaQuery.of(context)
+                              .orientation
+                              .toString() ==
+                          "Orientation.landscape"
+                      ? Size.fromHeight(getSizePage(context, 1, 7, "appBar"))
+                      : Size.fromHeight(getSizePage(context, 2, 7, "appBar")),
+                  child: CustomAppBar(
+                    languageProvider: languageProvider,
+                    namePage: NotificationPage.routeName,
+                  )),
+              body: providerNotificationModel
+                      .dataNotificationModelSession.isEmpty
+                  ? const Center(
+                      child: CircularProgressIndicator(),
+                    )
+                  : Column(children: [
+                      SearchTextField(
+                        searchController: searchController,
+                        onChanged: (value) {
+                          providerNotificationModel.searchValue = value;
+                          providerNotificationModel.filterData(value);
+                        },
+                      ),
+                      Expanded(
+                        child: ListView.separated(
+                          shrinkWrap: true,
+                          separatorBuilder: (context, index) {
+                            return const Divider(
+                              thickness: 4,
+                            );
+                          },
+                          itemCount: searchController.text.isEmpty
+                              ? providerNotificationModel
+                                  .dataNotificationModelSession.length
+                              : providerNotificationModel
+                                  .dataNotificationModelFiltered.length,
+                          itemBuilder: (context, index) {
+                            final notification = providerNotificationModel
+                                .dataNotificationModel[index];
+                            // String data = arabicTime(
+                            //     context, notification.notificationData!);
+                            return Dismissible(
+                              key: UniqueKey(),
+                              background: Container(
+                                alignment: Alignment.centerRight,
+                                color: StaticData
+                                    .button, // Change the background color to your desired color
+                                child: const Padding(
+                                  padding: EdgeInsets.only(right: 16),
+                                  child: Center(
+                                    child: Icon(
+                                      Icons.delete,
+                                      color: Colors.white,
+                                      size: 70,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              onDismissed: (direction) async {
+                                SharedPreferences userData =
+                                    await PublicShread.getSheardUser();
+                                userName =
+                                    userData.getString("userName").toString();
+                                password =
+                                    userData.getString("password").toString();
+                                await crud.postRequest(
+                                    "${StaticData.urlConnectionConst}${StaticData.editNotifictaionConst}",
+                                    {
+                                      "notificationId":
+                                          providerNotificationModel
+                                              .dataNotificationModelSession[
+                                                  index]
+                                              .id
+                                              .toString(),
+                                      "opended": providerNotificationModel
+                                          .dataNotificationModelSession[index]
+                                          .opened
+                                          .toString(),
+                                      "userName": userName,
+                                      "password": password
+                                    });
+
+                                // ignore: use_build_context_synchronously
+                                await getDataNotification(context);
+                              },
+                              child: Card(
+                                // Wrap each item in a Card for a better design
+                                elevation: 2,
+                                margin: const EdgeInsets.symmetric(
+                                    horizontal: 16, vertical: 8),
+                                child: ListTile(
+                                  contentPadding: const EdgeInsets.all(16),
+                                  title: Text(
+                                    providerNotificationModel
+                                            .dataNotificationModelSession[index]
+                                            .notificationDataArabic ??
+                                        '',
+                                    textDirection:
+                                        StaticData.arabicTextDirection,
+                                    style: TextStyle(
+                                        color: StaticData.font,
+                                        fontFamily: StaticData.fontFamily,
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                  subtitle: Text(
+                                    notification.notificationDesc ?? '',
+                                    textDirection:
+                                        StaticData.arabicTextDirection,
+                                    style: TextStyle(
+                                        color: StaticData.font,
+                                        fontSize: 16,
+                                        fontFamily: StaticData.fontFamily),
+                                  ),
+                                  trailing: const Icon(Icons.notifications),
+                                ),
+                              ),
+                            );
+                          },
+                        ),
+                      ),
+                    ]),
+            );
+          });
+    } else if (widget.notificationType == "adjurndedSessions" &&
+        widget.lengthNotification != 0) {
+      return Selector<ProviderNotificationModel, List<NotificationModel>>(
+          selector: (context, providerNotificationModel) =>
+              providerNotificationModel.dataNotificationModelTempSession,
+          builder: (context, dataNotificationModelTempSession, child) {
+            final providerNotificationModel =
+                Provider.of<ProviderNotificationModel>(context, listen: false);
+            void getDataFromProvider() async {
+              SharedPreferences userData = await PublicShread.getSheardUser();
+              userName = userData.getString("userName").toString();
+              password = userData.getString("password").toString();
+
+              await providerNotificationModel.getUnreadNotifications(
+                  "${StaticData.urlConnectionConst}${StaticData.notificationConst}?userName=$userName&password=$password",
+                  "dataNotificationModel");
+            }
+
+            final myDataProvider =
+                Provider.of<ProviderNotificationModel>(context, listen: false);
+            if (myDataProvider.dataNotificationModel.isEmpty) {
+              getDataFromProvider();
+            }
+            SchedulerBinding.instance.addPostFrameCallback((_) async {
+              if (await InternetConnectionChecker().hasConnection) {
+                //getDataNotification(context);
+              } else {
+                await createAwesome(context, languageProvider);
+              }
+            });
+            return Scaffold(
+              appBar: PreferredSize(
+                  preferredSize: MediaQuery.of(context)
+                              .orientation
+                              .toString() ==
+                          "Orientation.landscape"
+                      ? Size.fromHeight(getSizePage(context, 1, 7, "appBar"))
+                      : Size.fromHeight(getSizePage(context, 2, 7, "appBar")),
+                  child: CustomAppBar(
+                    languageProvider: languageProvider,
+                    namePage: NotificationPage.routeName,
+                  )),
+              body: providerNotificationModel
+                      .dataNotificationModelTempSession.isEmpty
+                  ? const Center(
+                      child: CircularProgressIndicator(),
+                    )
+                  : Column(children: [
+                      SearchTextField(
+                        searchController: searchController,
+                        onChanged: (value) {
+                          providerNotificationModel.searchValue = value;
+                          providerNotificationModel.filterData(value);
+                        },
+                      ),
+                      Expanded(
+                        child: ListView.separated(
+                          shrinkWrap: true,
+                          separatorBuilder: (context, index) {
+                            return const Divider(
+                              thickness: 4,
+                            );
+                          },
+                          itemCount: searchController.text.isEmpty
+                              ? providerNotificationModel
+                                  .dataNotificationModelTempSession.length
+                              : providerNotificationModel
+                                  .dataNotificationModelFiltered.length,
+                          itemBuilder: (context, index) {
+                            final notification = providerNotificationModel
+                                .dataNotificationModel[index];
+                            // String data = arabicTime(
+                            //     context, notification.notificationData!);
+                            return Dismissible(
+                              key: UniqueKey(),
+                              background: Container(
+                                alignment: Alignment.centerRight,
+                                color: StaticData
+                                    .button, // Change the background color to your desired color
+                                child: const Padding(
+                                  padding: EdgeInsets.only(right: 16),
+                                  child: Center(
+                                    child: Icon(
+                                      Icons.delete,
+                                      color: Colors.white,
+                                      size: 70,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              onDismissed: (direction) async {
+                                SharedPreferences userData =
+                                    await PublicShread.getSheardUser();
+                                userName =
+                                    userData.getString("userName").toString();
+                                password =
+                                    userData.getString("password").toString();
+                                await crud.postRequest(
+                                    "${StaticData.urlConnectionConst}${StaticData.editNotifictaionConst}",
+                                    {
+                                      "notificationId":
+                                          providerNotificationModel
+                                              .dataNotificationModelTempSession[
+                                                  index]
+                                              .id
+                                              .toString(),
+                                      "opended": providerNotificationModel
+                                          .dataNotificationModelTempSession[
+                                              index]
+                                          .opened
+                                          .toString(),
+                                      "userName": userName,
+                                      "password": password
+                                    });
+
+                                // ignore: use_build_context_synchronously
+                                await getDataNotification(context);
+                              },
+                              child: Card(
+                                // Wrap each item in a Card for a better design
+                                elevation: 2,
+                                margin: const EdgeInsets.symmetric(
+                                    horizontal: 16, vertical: 8),
+                                child: ListTile(
+                                  contentPadding: const EdgeInsets.all(16),
+                                  title: Text(
+                                    providerNotificationModel
+                                            .dataNotificationModelTempSession[
+                                                index]
+                                            .notificationDataArabic ??
+                                        '',
+                                    textDirection:
+                                        StaticData.arabicTextDirection,
+                                    style: TextStyle(
+                                        color: StaticData.font,
+                                        fontFamily: StaticData.fontFamily,
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                  subtitle: Text(
+                                    notification.notificationDesc ?? '',
+                                    textDirection:
+                                        StaticData.arabicTextDirection,
+                                    style: TextStyle(
+                                        color: StaticData.font,
+                                        fontSize: 16,
+                                        fontFamily: StaticData.fontFamily),
+                                  ),
+                                  trailing: const Icon(Icons.notifications),
+                                ),
+                              ),
+                            );
+                          },
+                        ),
+                      ),
+                    ]),
+            );
+          });
+    } else if ((widget.notificationType == "requestedOrder" ||
+            widget.notificationType == "sendedOrder" ||
+            widget.notificationType == "suits" ||
+            widget.notificationType == "fines") &&
+        widget.lengthNotification != 0) {
+      return Selector<ProviderNotificationModel, List<NotificationModel>>(
+          selector: (context, providerNotificationModel) =>
+              providerNotificationModel.dataNotificationModelFine,
+          builder: (context, dataNotificationModelFine, child) {
+            final providerNotificationModel =
+                Provider.of<ProviderNotificationModel>(context, listen: false);
+            void getDataFromProvider() async {
+              SharedPreferences userData = await PublicShread.getSheardUser();
+              userName = userData.getString("userName").toString();
+              password = userData.getString("password").toString();
+
+              await providerNotificationModel.getUnreadNotifications(
+                  "${StaticData.urlConnectionConst}${StaticData.notificationConst}?userName=$userName&password=$password",
+                  "dataNotificationModel");
+            }
+
+            final myDataProvider =
+                Provider.of<ProviderNotificationModel>(context, listen: false);
+            if (myDataProvider.dataNotificationModel.isEmpty) {
+              getDataFromProvider();
+            }
+            SchedulerBinding.instance.addPostFrameCallback((_) async {
+              if (await InternetConnectionChecker().hasConnection) {
+                //getDataNotification(context);
+              } else {
+                await createAwesome(context, languageProvider);
+              }
+            });
+            return Scaffold(
+              appBar: PreferredSize(
+                  preferredSize: MediaQuery.of(context)
+                              .orientation
+                              .toString() ==
+                          "Orientation.landscape"
+                      ? Size.fromHeight(getSizePage(context, 1, 7, "appBar"))
+                      : Size.fromHeight(getSizePage(context, 2, 7, "appBar")),
+                  child: CustomAppBar(
+                    languageProvider: languageProvider,
+                    namePage: NotificationPage.routeName,
+                  )),
+              body: providerNotificationModel.dataNotificationModelFine.isEmpty
+                  ? const Center(
+                      child: CircularProgressIndicator(),
+                    )
+                  : Column(children: [
+                      SearchTextField(
+                        searchController: searchController,
+                        onChanged: (value) {
+                          providerNotificationModel.searchValue = value;
+                          providerNotificationModel.filterData(value);
+                        },
+                      ),
+                      Expanded(
+                        child: ListView.separated(
+                          shrinkWrap: true,
+                          separatorBuilder: (context, index) {
+                            return const Divider(
+                              thickness: 4,
+                            );
+                          },
+                          itemCount: searchController.text.isEmpty
+                              ? providerNotificationModel
+                                  .dataNotificationModelFine.length
+                              : providerNotificationModel
+                                  .dataNotificationModelFiltered.length,
+                          itemBuilder: (context, index) {
+                            final notification = providerNotificationModel
+                                .dataNotificationModel[index];
+                            // String data = arabicTime(
+                            //     context, notification.notificationData!);
+                            return Dismissible(
+                              key: UniqueKey(),
+                              background: Container(
+                                alignment: Alignment.centerRight,
+                                color: StaticData
+                                    .button, // Change the background color to your desired color
+                                child: const Padding(
+                                  padding: EdgeInsets.only(right: 16),
+                                  child: Center(
+                                    child: Icon(
+                                      Icons.delete,
+                                      color: Colors.white,
+                                      size: 70,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              onDismissed: (direction) async {
+                                SharedPreferences userData =
+                                    await PublicShread.getSheardUser();
+                                userName =
+                                    userData.getString("userName").toString();
+                                password =
+                                    userData.getString("password").toString();
+                                await crud.postRequest(
+                                    "${StaticData.urlConnectionConst}${StaticData.editNotifictaionConst}",
+                                    {
+                                      "notificationId":
+                                          providerNotificationModel
+                                              .dataNotificationModelFine[index]
+                                              .id
+                                              .toString(),
+                                      "opended": providerNotificationModel
+                                          .dataNotificationModelFine[index]
+                                          .opened
+                                          .toString(),
+                                      "userName": userName,
+                                      "password": password
+                                    });
+
+                                // ignore: use_build_context_synchronously
+                                await getDataNotification(context);
+                              },
+                              child: Card(
+                                // Wrap each item in a Card for a better design
+                                elevation: 2,
+                                margin: const EdgeInsets.symmetric(
+                                    horizontal: 16, vertical: 8),
+                                child: ListTile(
+                                  contentPadding: const EdgeInsets.all(16),
+                                  title: Text(
+                                    providerNotificationModel
+                                            .dataNotificationModelFine[index]
+                                            .notificationDataArabic ??
+                                        '',
+                                    textDirection:
+                                        StaticData.arabicTextDirection,
+                                    style: TextStyle(
+                                        color: StaticData.font,
+                                        fontFamily: StaticData.fontFamily,
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                  subtitle: Text(
+                                    notification.notificationDesc ?? '',
+                                    textDirection:
+                                        StaticData.arabicTextDirection,
+                                    style: TextStyle(
+                                        color: StaticData.font,
+                                        fontSize: 16,
+                                        fontFamily: StaticData.fontFamily),
+                                  ),
+                                  trailing: const Icon(Icons.notifications),
+                                ),
+                              ),
+                            );
+                          },
+                        ),
+                      ),
+                    ]),
+            );
+          });
+    } else if (widget.lengthNotification == 0) {
+      return Selector<ProviderNotificationModel, List<NotificationModel>>(
+>>>>>>> a1494abd147130476674b89e829209eadff92cae
         selector: (context, providerNotificationModel) =>
             providerNotificationModel.myNotificationList,
         builder: (context, myNotificationList, child) {
@@ -48,6 +525,7 @@ class _NotificationPageState extends State<NotificationPage> {
             userName = userData.getString("userName").toString();
             password = userData.getString("password").toString();
 
+<<<<<<< HEAD
             await providerNotificationModel.getUnreadNotifications(
                 "${StaticData.urlConnectionConst}${StaticData.notificationConst}?userName=$userName&password=$password",
                 "dataNotificationModel");
@@ -69,6 +547,16 @@ class _NotificationPageState extends State<NotificationPage> {
             appBar: PreferredSize(
                 preferredSize:
                     Size.fromHeight(getSizePage(context, 2, 7, "appBar")),
+=======
+          // Check if the length of notifications is zero
+          if (myNotificationList.isEmpty) {
+            return Scaffold(
+              appBar: PreferredSize(
+                preferredSize: MediaQuery.of(context).orientation.toString() ==
+                        "Orientation.landscape"
+                    ? Size.fromHeight(getSizePage(context, 1, 7, "appBar"))
+                    : Size.fromHeight(getSizePage(context, 2, 7, "appBar")),
+>>>>>>> a1494abd147130476674b89e829209eadff92cae
                 child: CustomAppBar(
                   languageProvider: languageProvider,
                   namePage: NotificationPage.routeName,
@@ -140,6 +628,7 @@ class _NotificationPageState extends State<NotificationPage> {
                                     "password": password
                                   });
 
+<<<<<<< HEAD
                               // ignore: use_build_context_synchronously
                               await getDataNotification(context);
                             },
@@ -174,6 +663,85 @@ class _NotificationPageState extends State<NotificationPage> {
                               ),
                             ),
                           );
+=======
+          // Rest of your existing code...
+          return Scaffold(
+            appBar: PreferredSize(
+              preferredSize: MediaQuery.of(context).orientation.toString() ==
+                      "Orientation.landscape"
+                  ? Size.fromHeight(getSizePage(context, 1, 7, "appBar"))
+                  : Size.fromHeight(getSizePage(context, 2, 7, "appBar")),
+              child: CustomAppBar(
+                languageProvider: languageProvider,
+                namePage: NotificationPage.routeName,
+              ),
+            ),
+            body: Column(
+              children: [
+                SearchTextField(
+                  searchController: searchController,
+                  onChanged: (value) {
+                    providerNotificationModel.searchValue = value;
+                    providerNotificationModel.filterData(value);
+                  },
+                ),
+              ],
+            ),
+          );
+        },
+      );
+    } else {
+      return Selector<ProviderNotificationModel, List<NotificationModel>>(
+          selector: (context, providerNotificationModel) =>
+              providerNotificationModel.myNotificationList,
+          builder: (context, myNotificationList, child) {
+            final providerNotificationModel =
+                Provider.of<ProviderNotificationModel>(context, listen: false);
+            void getDataFromProvider() async {
+              SharedPreferences userData = await PublicShread.getSheardUser();
+              userName = userData.getString("userName").toString();
+              password = userData.getString("password").toString();
+
+              await providerNotificationModel.getUnreadNotifications(
+                  "${StaticData.urlConnectionConst}${StaticData.notificationConst}?userName=$userName&password=$password",
+                  "dataNotificationModel");
+            }
+
+            final myDataProvider =
+                Provider.of<ProviderNotificationModel>(context, listen: false);
+            if (myDataProvider.dataNotificationModel.isEmpty) {
+              getDataFromProvider();
+            }
+            SchedulerBinding.instance.addPostFrameCallback((_) async {
+              if (await InternetConnectionChecker().hasConnection) {
+                //getDataNotification(context);
+              } else {
+                await createAwesome(context, languageProvider);
+              }
+            });
+            return Scaffold(
+              appBar: PreferredSize(
+                  preferredSize: MediaQuery.of(context)
+                              .orientation
+                              .toString() ==
+                          "Orientation.landscape"
+                      ? Size.fromHeight(getSizePage(context, 1, 7, "appBar"))
+                      : Size.fromHeight(getSizePage(context, 2, 7, "appBar")),
+                  child: CustomAppBar(
+                    languageProvider: languageProvider,
+                    namePage: NotificationPage.routeName,
+                  )),
+              body: providerNotificationModel.dataNotificationModel.isEmpty
+                  ? const Center(
+                      child: CircularProgressIndicator(),
+                    )
+                  : Column(children: [
+                      SearchTextField(
+                        searchController: searchController,
+                        onChanged: (value) {
+                          providerNotificationModel.searchValue = value;
+                          providerNotificationModel.filterData(value);
+>>>>>>> a1494abd147130476674b89e829209eadff92cae
                         },
                       ),
                     ),
