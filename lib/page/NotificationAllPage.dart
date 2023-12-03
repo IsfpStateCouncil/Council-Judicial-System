@@ -67,13 +67,12 @@ class _NotificationAllPageState extends State<NotificationAllPage> {
       final languageProvider = Provider.of<LanguageProvider>(context);
       return Scaffold(
         appBar: PreferredSize(
-            preferredSize: MediaQuery.of(context).orientation.toString() ==
-                    "Orientation.landscape"
-                ? Size.fromHeight(getSizePage(context, 1, 7, "appBar"))
-                : Size.fromHeight(getSizePage(context, 2, 7, "appBar")),
+            preferredSize: 
+            MediaQuery.of(context).orientation.toString() ==
+            "Orientation.landscape" ?
+               Size.fromHeight(getSizePage(context, 1, 7, "appBar")) :  Size.fromHeight(getSizePage(context, 2, 7, "appBar")), 
             child: CustomAppBar(
-              languageProvider: languageProvider,
-              namePage: NotificationAllPage.routeName,
+              languageProvider: languageProvider,namePage: NotificationAllPage.routeName,
             )),
         drawer: NavBar(
             context: context, currentRoute: NotificationAllPage.routeName),
@@ -130,9 +129,8 @@ class _NotificationAllPageState extends State<NotificationAllPage> {
                           contentPadding: const EdgeInsets.all(16),
                           title: Text(
                             providerNotificationAllModel
-                                    .dataNotificationModel[index]
-                                    .notificationDataArabic ??
-                                "",
+                                .dataNotificationModel[index]
+                                .notificationDataArabic!,
                             // textDirection: StaticData.arabicTextDirection,
                             style: TextStyle(
                                 color: StaticData.font,

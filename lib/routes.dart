@@ -14,9 +14,7 @@ class MyRoutes {
     return {
       '/': (BuildContext context) => SplashScreen(),
       '/home': (BuildContext context) => Home(),
-      '/Notification': (BuildContext context) => NotificationPage(
-            notificationType: '',
-          ),
+      '/Notification': (BuildContext context) => NotificationPage(),
       '/login': (BuildContext context) => Login(),
       '/error': (BuildContext context) => ErrorPage(),
       '/NotificationAll': (BuildContext context) => NotificationAllPage(),
@@ -50,10 +48,7 @@ class MyRoutes {
           settings: const RouteSettings(arguments: Home.routeName),
         );
       case '/Notification':
-        return MaterialPageRoute(
-            builder: (_) => const NotificationPage(
-                  notificationType: '',
-                ));
+        return MaterialPageRoute(builder: (_) => const NotificationPage());
       case '/login':
         return MaterialPageRoute(builder: (_) => const Login());
       case '/error':

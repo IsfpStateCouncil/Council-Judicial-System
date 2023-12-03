@@ -11,8 +11,7 @@ Future<void> getDataNotification(context) async {
     "dataNotificationModelSession": [1, 2, 3, 8, 9, 10, 11, 12, 13, 15, 21, 22],
     "dataNotificationModeldSuit": [25, 26],
     "dataNotificationModelFine": [14],
-    "dataNotificationModelTempSession": [4, 5],
-    "dataNotificationOther": [6, 7, 13, 23, 24, 4],
+    "dataNotificationModelTempSession": [4, 5]
   };
   final SharedPreferences prefs = await SharedPreferences.getInstance();
   // await prefs.setString("language", "ar");

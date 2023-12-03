@@ -6,7 +6,6 @@ class NotificationModel {
   String? notificationDataEnglish;
   String? opened;
   int? userId;
-  int? notificationEventId;
 
   NotificationModel(
       {this.id,
@@ -15,8 +14,7 @@ class NotificationModel {
       this.opened,
       this.userId,
       this.notificationDataArabic,
-      this.notificationDataEnglish,
-      this.notificationEventId});
+      this.notificationDataEnglish});
 
   NotificationModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -24,7 +22,6 @@ class NotificationModel {
     notificationDesc = json['notificationDesc'];
     opened = json['opened'];
     userId = json['userId'];
-    notificationEventId = json['notificationEventId'];
   }
 
   Map<String, dynamic> toJson() {
@@ -34,7 +31,6 @@ class NotificationModel {
     data['notificationDesc'] = this.notificationDesc;
     data['opened'] = this.opened;
     data['userId'] = this.userId;
-    data['notificationEventId'] = this.notificationEventId;
     return data;
   }
 }

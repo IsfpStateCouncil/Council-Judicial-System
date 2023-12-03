@@ -20,7 +20,6 @@ class SearchTextField extends StatelessWidget {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
       child: TextField(
-          textDirection: StaticData.arabicTextDirection,
           decoration: InputDecoration(
               focusedBorder: const OutlineInputBorder(
                 borderRadius: BorderRadius.all(Radius.circular(20)),
