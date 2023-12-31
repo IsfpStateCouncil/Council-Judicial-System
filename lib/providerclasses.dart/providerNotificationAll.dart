@@ -33,7 +33,7 @@ class ProviderNotificationAllModel extends ChangeNotifier {
                     return NotificationModel.fromJson(i);
                   }).toList()
                 : [];
-        dataNotificationModel = caseDataList;
+        dataNotificationModel = await changeDate(caseDataList);
         // for (int i = 0; dataNotificationModel.length - 1 > i; i++) {
         //   dataNotificationModel[i].notificationDataArabic =
         //       await dataWithCurrentLanguage(

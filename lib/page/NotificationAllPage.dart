@@ -137,7 +137,7 @@ class _NotificationAllPageState extends State<NotificationAllPage> {
                                     .notificationDataEnglish!
                                 : providerNotificationAllModel
                                         .dataNotificationModel[index]
-                                        .notificationDataEnglish ??
+                                        .notificationDataArabic ??
                                     "",
                             // textDirection: StaticData.arabicTextDirection,
                             style: TextStyle(
