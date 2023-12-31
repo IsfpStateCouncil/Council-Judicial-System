@@ -145,7 +145,7 @@ class _NotificationPageState extends State<NotificationPage> {
                                               .notificationDataEnglish!
                                           : providerNotificationModel
                                               .dataNotificationModel[index]
-                                              .notificationDataArabic!,
+                                              .notificationDataArabic ?? "",
                                       style: TextStyle(
                                           fontFamily: StaticData.fontFamily,
                                           fontSize: 18,

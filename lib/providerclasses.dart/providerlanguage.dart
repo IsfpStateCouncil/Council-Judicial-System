@@ -89,7 +89,7 @@ class LanguageProvider extends ChangeNotifier {
   };
   void changelanguage(String? type) {
     language = type;
-    notifyListeners();
+    //notifyListeners();
   }
 
   getCurrentData(String key, BuildContext context) {

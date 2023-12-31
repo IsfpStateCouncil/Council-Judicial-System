@@ -70,10 +70,14 @@ class ProviderNotificationAllModel extends ChangeNotifier {
   Future<List<NotificationModel>> changeDate(
       List<NotificationModel> currentList) async {
     for (int i = 0; currentList.length - 1 > i; i++) {
-      currentList[i].notificationDataArabic =
-          await dataWithCurrentLanguage(currentList[i].notificationData!, "ar");
-      currentList[i].notificationDataEnglish =
-          await dataWithCurrentLanguage(currentList[i].notificationData!, "en");
+      if (currentList[i].notificationData != null) {
+        currentList[i].notificationDataArabic = await dataWithCurrentLanguage(
+            currentList[i].notificationData!, "ar");
+        currentList[i].notificationDataEnglish = await dataWithCurrentLanguage(
+            currentList[i].notificationData!, "en");
+      } else {
+        print("${currentList[i].id} this Id not have Date ");
+      }
     }
 
     return currentList;
