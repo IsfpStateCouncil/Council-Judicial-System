@@ -48,6 +48,7 @@ class CustomAppBarState extends State<CustomAppBar> {
       title: Text(
         "${languageProvider.getCurrentData('EgyptianStateCouncil', context)}",
         style: TextStyle(
+          color: StaticData.backgroundColors,
           fontSize: 17,
           fontFamily: StaticData.fontFamily,
           // Add other text styles as needed
