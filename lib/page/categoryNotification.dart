@@ -1,3 +1,4 @@
+import 'package:council_of_state/providerclasses.dart/controllerNotification.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
@@ -12,6 +13,7 @@ import '../functions/mediaquery.dart';
 import '../functions/sheardpref.dart';
 import '../model/NotificationModel.dart';
 
+import '../providerclasses.dart/providerNotificationAll.dart';
 import '../providerclasses.dart/providerlanguage.dart';
 
 class CategoryNotification extends StatefulWidget {
@@ -30,6 +32,7 @@ class _CategoryNotification extends State<CategoryNotification> {
   @override
   void initState() {
     getUserData();
+    notificationList = widget.currentList;
     List<NotificationModel> currentList = widget.currentList;
     super.initState();
   }
@@ -42,6 +45,7 @@ class _CategoryNotification extends State<CategoryNotification> {
   @override
   Widget build(BuildContext context) {
     LanguageProvider languageProvider = Provider.of<LanguageProvider>(context);
+
     SchedulerBinding.instance.addPostFrameCallback((_) async {
       if (await InternetConnectionChecker().hasConnection) {
         //getDataNotification(context);
@@ -70,7 +74,13 @@ class _CategoryNotification extends State<CategoryNotification> {
               SearchTextField(
                 searchController: searchController,
                 onChanged: (value) {
-                  // providerNotificationAllModel.filterData(value);
+                  setState(() {
+                    notificationList = widget.currentList
+                        .where((element) =>
+                    element.notificationDesc != null &&
+                        element.notificationDesc!.contains(value))
+                        .toList();
+                  });
                 },
               ),
               Expanded(
@@ -82,18 +92,18 @@ class _CategoryNotification extends State<CategoryNotification> {
                     );
                   },
                   itemCount: searchController.text.isEmpty
-                      ? widget.currentList.length
-                      : widget.currentList.length,
+                      ? notificationList.length
+                      : notificationList.length,
                   itemBuilder: (context, index) {
-                    final notification = widget.currentList[index];
+                    final notification = notificationList[index];
                     return Card(
-                      color: widget.currentList[index].opened == "3"
+                      color: notificationList[index].opened == "3"
                           ? Colors.amber.shade200
                           : userType == "4"
-                              ? widget.currentList[index].opened == "1"
+                              ? notificationList[index].opened == "1"
                                   ? Colors.amber.shade200
                                   : Colors.white
-                              : widget.currentList[index].opened == "2"
+                              : notificationList[index].opened == "2"
                                   ? Colors.amber.shade200
                                   : Colors.white,
                       // Wrap each item in a Card for a better design
@@ -103,8 +113,7 @@ class _CategoryNotification extends State<CategoryNotification> {
                       child: ListTile(
                         contentPadding: const EdgeInsets.all(16),
                         title: Text(
-                          widget.currentList[index].notificationDataArabic ??
-                              "",
+                          notificationList[index].notificationDataArabic ?? "",
                           // textDirection: StaticData.arabicTextDirection,
                           style: TextStyle(
                               color: StaticData.font,
@@ -120,14 +129,14 @@ class _CategoryNotification extends State<CategoryNotification> {
                               fontSize: 16,
                               fontFamily: StaticData.fontFamily),
                         ),
-                        trailing: widget.currentList[index].opened == "3"
+                        trailing: notificationList[index].opened == "3"
                             ? const Icon(Icons.notifications_active)
                             // ignore: unrelated_type_equality_checks
                             : userType == "4"
-                                ? widget.currentList[index].opened == "1"
+                                ? notificationList[index].opened == "1"
                                     ? const Icon(Icons.notifications_active)
                                     : const Icon(Icons.notifications)
-                                : widget.currentList[index].opened == "2"
+                                : notificationList[index].opened == "2"
                                     ? const Icon(Icons.notifications_active)
                                     : const Icon(Icons.notifications),
                       ),

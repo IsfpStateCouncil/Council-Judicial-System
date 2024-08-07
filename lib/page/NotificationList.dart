@@ -84,14 +84,12 @@ class _NotificationPageState extends State<NotificationPage> {
                             thickness: 4,
                           );
                         },
-                        itemCount: searchController.text.isEmpty
-                            ? providerNotificationModel
-                                .dataNotificationModel.length
-                            : providerNotificationModel
-                                .dataNotificationModelFiltered.length,
+                        itemCount:  providerNotificationModel
+                                .myNotificationList.length
+                            ,
                         itemBuilder: (context, index) {
                           final notification = providerNotificationModel
-                              .dataNotificationModel[index];
+                              .myNotificationList[index];
                           return Dismissible(
                             key: UniqueKey(),
                             background: Container(
@@ -117,10 +115,10 @@ class _NotificationPageState extends State<NotificationPage> {
                                   "${StaticData.urlConnectionConst}${StaticData.editNotifictaionConst}",
                                   {
                                     "notificationId": providerNotificationModel
-                                        .dataNotificationModel[index].id
+                                        .myNotificationList[index].id
                                         .toString(),
                                     "opended": providerNotificationModel
-                                        .dataNotificationModel[index].opened
+                                        .myNotificationList[index].opened
                                         .toString(),
                                     "userName": userName,
                                     "password": password
@@ -141,10 +139,10 @@ class _NotificationPageState extends State<NotificationPage> {
                                     return Text(
                                       model.language == "en"
                                           ? providerNotificationModel
-                                              .dataNotificationModel[index]
+                                              .myNotificationList[index]
                                               .notificationDataEnglish!
                                           : providerNotificationModel
-                                              .dataNotificationModel[index]
+                                              .myNotificationList[index]
                                               .notificationDataArabic ?? "",
                                       style: TextStyle(
                                           fontFamily: StaticData.fontFamily,
