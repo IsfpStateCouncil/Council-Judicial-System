@@ -28,9 +28,10 @@ Future<void> main() async {
       ChangeNotifierProvider(create: (context) => ProviderNotificationModel()),
       ChangeNotifierProvider<LanguageProvider>(
         create: (context) {
-          if (currentLanguage != null) {
-            LanguageProvider().changelanguage(currentLanguage);
-          }
+          // if (currentLanguage != null) {
+          //   LanguageProvider().changelanguage(currentLanguage);
+          // }
+          LanguageProvider().changelanguage("ar");
           return LanguageProvider();
         },
       ),

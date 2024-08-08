@@ -138,7 +138,7 @@ class DataTableSearch extends State<parameterSearch> {
                       languageProvider.getCurrentData('dateTo', context)),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  primary: StaticData.button, // Background color
+                  backgroundColor: StaticData.button, // Background color
                   minimumSize: const Size.fromHeight(50),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(20),
