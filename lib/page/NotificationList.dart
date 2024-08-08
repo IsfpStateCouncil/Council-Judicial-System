@@ -58,6 +58,7 @@ class _NotificationPageState extends State<NotificationPage> {
                 preferredSize:
                     Size.fromHeight(getSizePage(context, 2, 7, "appBar")),
                 child: CustomAppBar(
+                    namePage:NotificationPage.routeName,
                   onPressed: () {
                     setState(() {});
                   },

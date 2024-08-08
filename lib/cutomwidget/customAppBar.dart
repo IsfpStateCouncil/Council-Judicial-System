@@ -4,6 +4,7 @@ import 'package:badges/badges.dart' as badges;
 import 'package:shared_preferences/shared_preferences.dart';
 import '../data/staticdata.dart';
 import '../page/NotificationList.dart';
+import '../page/categoryNotification.dart';
 import '../providerclasses.dart/controllerNotification.dart';
 import 'package:council_of_state/main.dart' as mainapp;
 
@@ -44,6 +45,18 @@ class CustomAppBarState extends State<CustomAppBar> {
     getCurrentLanguage();
     final languageProvider = Provider.of<LanguageProvider>(context);
     return AppBar(
+      leading: widget.namePage == "notification_list_screen" ||
+              widget.namePage == CategoryNotification.routeName
+          ? IconButton(
+              icon: const Icon(
+                Icons.arrow_back,
+                color: StaticData.button,
+              ),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+            )
+          : null,
       backgroundColor: StaticData.appBarColor, //<-- SEE HERE
       title: Text(
         "${languageProvider.getCurrentData('EgyptianStateCouncil', context)}",
@@ -125,7 +138,7 @@ class CustomAppBarState extends State<CustomAppBar> {
                   );
                 },
               )
-            : Text(""),
+            : SizedBox.shrink(),
       ],
     );
   }
