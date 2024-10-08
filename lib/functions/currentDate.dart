@@ -6,8 +6,12 @@ Future<String> dataWithCurrentLanguage(String date, String language) async {
   if (date != null) {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     //String? language = sharedPreferences.getString("language");
-    await Jiffy.locale(language);
-    String? arabicDate = Jiffy(date).yMMMMEEEEdjm;
+    await Jiffy.setLocale(language);
+    Jiffy jiffyDate = Jiffy.parseFromDateTime(DateTime.parse(date));
+
+    // Use DateFormat from intl for date formatting
+    DateFormat dateFormat = DateFormat.yMMMMEEEEd(language).add_jm();
+    String arabicDate = dateFormat.format(jiffyDate.dateTime);
     return arabicDate;
   } else {
     return "";

@@ -70,41 +70,41 @@ class CustomAppBarState extends State<CustomAppBar> {
       centerTitle: true,
       elevation: 0,
       actions: [
-        TextButton(
-          onPressed: () async {
-            SharedPreferences sharedPreferences =
-                await SharedPreferences.getInstance();
-            final languageProvider =
-                Provider.of<LanguageProvider>(context, listen: false);
-            if (currentLanguage == "ar") {
-              sharedPreferences.setString("language", "en");
-              languageProvider.changelanguage("en");
-              currentLanguage = "en";
-              widget.onPressed;
-            } else {
-              sharedPreferences.setString("language", "ar");
-              languageProvider.changelanguage("ar");
-              currentLanguage = "ar";
-              widget.onPressed;
-            }
-
-            setState(() {
-              mainapp.main();
-            });
-            //
-          },
-          child: currentLanguage == "ar"
-              // ignore: prefer_const_constructors
-              ? Text(
-                  "EN",
-                  style: const TextStyle(color: StaticData.button),
-                )
-              // ignore: prefer_const_constructors
-              : Text(
-                  "AR",
-                  style: const TextStyle(color: StaticData.button),
-                ),
-        ),
+        // TextButton(
+        //   onPressed: () async {
+        //     SharedPreferences sharedPreferences =
+        //         await SharedPreferences.getInstance();
+        //     final languageProvider =
+        //         Provider.of<LanguageProvider>(context, listen: false);
+        //     if (currentLanguage == "ar") {
+        //       sharedPreferences.setString("language", "en");
+        //       languageProvider.changelanguage("en");
+        //       currentLanguage = "en";
+        //       widget.onPressed;
+        //     } else {
+        //       sharedPreferences.setString("language", "ar");
+        //       languageProvider.changelanguage("ar");
+        //       currentLanguage = "ar";
+        //       widget.onPressed;
+        //     }
+        //
+        //     setState(() {
+        //       mainapp.main();
+        //     });
+        //     //
+        //   },
+        //   child: currentLanguage == "ar"
+        //       // ignore: prefer_const_constructors
+        //       ? Text(
+        //           "EN",
+        //           style: const TextStyle(color: StaticData.button),
+        //         )
+        //       // ignore: prefer_const_constructors
+        //       : Text(
+        //           "AR",
+        //           style: const TextStyle(color: StaticData.button),
+        //         ),
+        // ),
         widget.namePage != "notification_list_screen" &&
                 widget.namePage != "notification_All_list_screen"
             ? badges.Badge(
