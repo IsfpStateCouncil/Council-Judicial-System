@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:council_of_state/page/Splashscreen.dart';
 import 'package:council_of_state/page/languagePage.dart';
 
@@ -14,8 +16,10 @@ import 'api/firebase_api.dart';
 import 'package:council_of_state/functions/sheardpref.dart';
 // ignore: depend_on_referenced_packages
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'myHttpOverrides.dart';
 
 Future<void> main() async {
+  HttpOverrides.global = MyHttpOverrides();
   String? currentLanguage;
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
